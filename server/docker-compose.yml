@@ -1,0 +1,10 @@
+﻿version: "3.8"
+services:
+  soccer-server:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JUHE_KEY=d32c45035fd5e2a88c67b2435aa443c7
+    restart: unless-stopped

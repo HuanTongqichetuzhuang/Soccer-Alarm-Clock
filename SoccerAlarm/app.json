@@ -1,0 +1,53 @@
+﻿{
+    "expo":  {
+                 "name":  "瓒崇悆闂归挓",
+                 "slug":  "soccer-alarm",
+                 "version":  "1.0.0",
+                 "orientation":  "portrait",
+                 "icon":  "./assets/icon.png",
+                 "userInterfaceStyle":  "dark",
+                 "newArchEnabled":  true,
+                 "splash":  {
+                                "image":  "./assets/splash-icon.png",
+                                "resizeMode":  "contain",
+                                "backgroundColor":  "#0d1117"
+                            },
+                 "ios":  {
+                             "supportsTablet":  true,
+                             "bundleIdentifier":  "com.socceralarm.app"
+                         },
+                 "android":  {
+                                 "adaptiveIcon":  {
+                                                      "foregroundImage":  "./assets/adaptive-icon.png",
+                                                      "backgroundColor":  "#0d1117"
+                                                  },
+                                 "package":  "com.socceralarm.app",
+                                 "permissions":  [
+                                                     "android.permission.RECEIVE_BOOT_COMPLETED",
+                                                     "android.permission.VIBRATE",
+                                                     "android.permission.SCHEDULE_EXACT_ALARM",
+                                                     "android.permission.POST_NOTIFICATIONS"
+                                                 ]
+                             },
+                 "platforms":  [
+                                   "ios",
+                                   "android",
+                                   "web"
+                               ],
+                 "web":  {
+                             "favicon":  "./assets/favicon.png",
+                             "bundler":  "metro"
+                         },
+                 "plugins":  [
+                                 [
+                                     "expo-notifications",
+                                     {
+                                         "sounds":  [
+
+                                                    ]
+                                     }
+                                 ]
+                             ],
+                 "jsEngine":  "jsc"
+             }
+}
