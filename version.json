@@ -1,0 +1,5 @@
+﻿{
+  "versionCode": 36,
+  "versionName": "2.36",
+  "changelog": "v2.36: fix tz + check update + download"
+}

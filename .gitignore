@@ -1,89 +1,38 @@
-﻿# ===== 构建产物 =====
-*.apk
-*.ap_
-*.zip
-
-# ===== Node =====
-node_modules/
-
-# ===== Gradle =====
+﻿# Gradle
 .gradle/
 build/
-SoccerAlarm/android/build/
-SoccerAlarm/android/app/build/
-SoccerAlarm/android/.gradle/
-SoccerAlarm/android/local.properties
+*.apk
+!archives/*.apk
 
-# ===== IDE =====
+# Node
+node_modules/
+*.log
+
+# IDE
 .idea/
 *.iml
 .vscode/
 
-# ===== 存档 =====
-archives/
-
-# ===== 解包/分析工具 =====
-apktool/
-apk_extracted/
-apk_v223_extracted/
-capacitor-app/
-SoccerAlarmAPK/
-SoccerAlarmRebuild/
-ios/
-dongqiudi_analysis/
-
-# ===== 临时/测试文件 =====
-build_log*.txt
-build_v*.txt
-temp_check.js
-simple_test.py
-check_*.py
-check_*.js
-gen*.py
-generate_*.py
-test_*.py
-verify_*.js
-deep_runtime_check.js
-gen_badge_aliases.js
-scrape_7m_cups.py
-
-# ===== 临时数据 =====
-ringtons/
-cup_data/
-铃声/
-
-# ===== 临时 HTML =====
-AlarmPermissionTest.html
-SoccerAlarmAllLeagues.html
-league_logos_preview.html
-README.html
-sw.js
-
-# ===== 根级杂项 =====
-manifest.json
-package.json
-package-lock.json
-accept_licenses.txt
-dongqiudi_scores.png
-
-# ===== 旧版本文档 =====
-v21_安装测试指南.md
-v24_安装测试指南.md
-v24_更新日志.md
-完整功能回归测试清单.md
-构建APK.bat
-闹钟弹出页面布局.xml
-图标/
-
-# ===== 音频 =====
-*.ogg
-*.wav
-*.mp3
-
-# ===== OS =====
+# OS
 .DS_Store
 Thumbs.db
 
-# ===== 私密 =====
-*.env
-*.pem
+# Temp
+*.tmp
+temp/
+*.pyc
+
+# Secrets (DO NOT COMMIT)
+**/Dd26554032
+**/password
+
+# Archives (keep baseline but not build outputs)
+SoccerAlarmPro_v*.apk
+!archives/
+
+# Server
+server/apk/
+server/node_modules/
+
+# Python
+__pycache__/
