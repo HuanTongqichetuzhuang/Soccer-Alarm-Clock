@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>SoccerAlarmPro</string>
+    <key>CFBundleDisplayName</key>
+    <string>足球闹钟Pro</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.socceralarm.pro</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array><string>UIInterfaceOrientationPortrait</string></array>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleDarkContent</string>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    
+    <!-- 闹钟相关权限 -->
+    <key>NSCalendarsUsageDescription</key>
+    <string>用于在系统日历中添加比赛提醒，确保不错过重要比赛</string>
+    
+    <!-- 后台模式 -->
+    <key>UIBackgroundModes</key>
+    <array><string>fetch</string></array>
+    
+    <!-- 网络 -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+</dict>
+</plist>

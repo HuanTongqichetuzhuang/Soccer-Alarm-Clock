@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="var(--bg)">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>足球闹钟APP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- 错误调试面板 -->
+<div id="initError" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a0000;color:#ff4444;padding:16px;font-size:12px;font-family:monospace;white-space:pre-wrap;max-height:50vh;overflow-y:auto;border-bottom:3px solid #ff4444"></div>
+
+<!-- 离线提示横幅 -->
+<div id="offlineBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:var(--warn);color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:600">
+  ⚠ 网络连接断开 · 显示缓存数据 · <span id="offlineRetryCount" style="opacity:0.7">正在重试...</span>
+</div>
+<div class="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1><img src="data:image/png;base64,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" style="width:22px;height:22px;vertical-align:middle;margin-right:4px;border-radius:4px"><span>足球闹钟</span>APP</h1>
+      <p><span class="live-dot"></span>自动联网 · 实时数据</p>
+    </div>
+    <div class="header-right">
+<button class="refresh-btn" id="refreshBtn" onclick="refreshCurrentPage()">🔄 刷新</button>
+    </div>
+  </div>
+
+  <!-- Pages -->
+  <!-- 1. 赛程 -->
+  <div class="page active" id="page-schedule">
+    <div class="league-tabs" id="scheduleTabs"></div>
+    <!-- 日期选择器 -->
+    <div style="padding:8px 16px;display:flex;align-items:center;gap:8px;">
+      <input type="date" id="scheduleDate" style="flex:1;padding:8px 12px;background:var(--s08);border:1px solid var(--s12);border-radius:10px;color:var(--txt);font-size:13px;" onchange="onDateChange()">
+      <button onclick="goToToday()" style="padding:8px 14px;background:var(--abg);border:1px solid var(--accent);border-radius:10px;color:var(--accent);font-size:12px;cursor:pointer;">今天</button>
+    </div>
+    <div id="scheduleContent"></div>
+  </div>
+
+
+  <!-- 2. 结果 -->
+  <div class="page" id="page-results">
+    <div class="league-tabs" id="resultsTabs"></div>
+    <div id="resultsContent"></div>
+  </div>
+
+  <!-- 4. 积分/射手 -->
+  <div class="page" id="page-standings">
+    <div class="league-tabs" id="standingsTabs"></div>
+    <div id="standingsContent"></div>
+  </div>
+
+  <!-- 4. 闹钟 -->
+  <div class="page" id="page-alarm">
+    <div class="section-title">⏰ 自定义闹钟</div>
+    <!-- Custom Alarm Creator -->
+    <div class="custom-alarm-card">
+      <h3>⏰ 新建闹钟</h3>
+      <div class="form-row">
+        <div class="form-label">闹钟名称</div>
+        <input class="form-input" id="customAlarmLabel" type="text" placeholder="例：看球时间" maxlength="20">
+      </div>
+      <div class="form-row">
+        <div class="form-label">时间</div>
+        <input class="form-input" id="customAlarmTime" type="time" value="19:45">
+      </div>
+      <div class="form-row">
+        <div class="form-label">重复</div>
+        <div class="repeat-grid" id="repeatGrid">
+          <div class="repeat-btn" data-day="1" onclick="toggleRepeat(this)">周一</div>
+          <div class="repeat-btn" data-day="2" onclick="toggleRepeat(this)">周二</div>
+          <div class="repeat-btn" data-day="3" onclick="toggleRepeat(this)">周三</div>
+          <div class="repeat-btn" data-day="4" onclick="toggleRepeat(this)">周四</div>
+          <div class="repeat-btn" data-day="5" onclick="toggleRepeat(this)">周五</div>
+          <div class="repeat-btn" data-day="6" onclick="toggleRepeat(this)">周六</div>
+          <div class="repeat-btn" data-day="0" onclick="toggleRepeat(this)">周日</div>
+        </div>
+      </div>
+      <button class="add-alarm-btn" onclick="addCustomAlarm()">✅ 保存闹钟</button>
+    </div>
+
+    <!-- Test Alarm -->
+    <div style="padding:8px 16px">
+      <button class="test-alarm-btn" onclick="sendTestAlarm()">⏰ 测试闹钟（5秒后响）</button>
+    </div>
+    <div style="padding:8px 16px">
+      <button class="test-alarm-btn" onclick="checkAlarmDiagnostics()" style="background:#ff9800;color:white">🔍 闹钟诊断</button>
+    </div>
+
+    <!-- Ringtone Selection (可折叠) -->
+    <div class="ringtone-collapse-header" id="ringtoneCollapseHeader" onclick="toggleRingtonePanel()">
+      <div class="ringtone-collapse-left">
+        <span>🔔 闹钟铃声</span>
+        <span class="badge" id="selectedRingtoneName">默认</span>
+      </div>
+      <span class="ringtone-collapse-arrow" id="ringtoneCollapseArrow">▶</span>
+    </div>
+    <div class="ringtone-collapse-body" id="ringtoneCollapseBody">
+      <div class="custom-alarm-card" style="border-color:var(--abg3)">
+        <div id="ringtoneList">
+          <div style="text-align:center;color:var(--txt-muted);padding:10px">点击展开选择铃声</div>
+        </div>
+        <!-- 音量控制面板由JS动态插入 -->
+      </div>
+    </div>
+
+    <!-- Alarm List -->
+    <div class="section-title">🔔 我的闹钟 <span class="badge" id="alarmCount">0</span></div>
+    <div id="alarmListContent"></div>
+
+    <!-- System Alarm Warning -->
+    <div id="alarmPermissionBanner" style="display:none;margin:8px 16px;padding:10px 14px;background:rgba(255,160,0,.15);border:1px solid rgba(255,160,0,.4);border-radius:10px;font-size:12px;color:#ffb74d">
+      ⚠️ 系统闹钟应用不可用，请检查设置。<br>
+      <button onclick="openClockApp()" style="margin-top:6px;padding:5px 12px;background:#ff9800;border:none;border-radius:6px;color:var(--txt);font-size:12px;cursor:pointer">打开时钟应用</button>
+    </div>
+
+    <!-- Battery Whitelist Warning (ColorOS/MIUI 专用) -->
+    <div id="batteryWhitelistBanner" style="display:none;margin:8px 16px;padding:10px 14px;background:rgba(255,50,50,.15);border:1px solid rgba(255,50,50,.4);border-radius:10px;font-size:12px;color:#ff8a80">
+      🔴 OPPO/国产系统必须：关闭电池优化，否则闹钟被系统杀死！<br>
+      <button onclick="requestBatteryWhitelist()" style="margin-top:6px;padding:5px 12px;background:#e53935;border:none;border-radius:6px;color:var(--txt);font-size:12px;cursor:pointer">去关闭电池优化</button>
+    </div>
+
+    <!-- Match Alarms -->
+    <div class="section-title">⭐ 比赛提醒 <span class="badge" id="matchAlarmCount">0</span></div>
+    <div id="matchAlarmContent"></div>
+  </div>
+
+  <!-- 5. 我的 -->
+  <div class="page" id="page-my">
+    <!-- 权限引导卡片 -->
+    <div id="permissionGuideCard" style="margin-bottom:14px;background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.3);border-radius:16px;padding:14px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="font-size:18px">🔐</span>
+        <span style="font-size:14px;font-weight:700;color:#ffb74d">权限设置</span>
+        <span id="permProgress" style="font-size:11px;color:var(--txt-muted);margin-left:auto"></span>
+      </div>
+      <div id="permissionList" style="display:flex;flex-direction:column;gap:8px"></div>
+      <button onclick="openAllMissingPermissions()" style="width:100%;margin-top:10px;padding:10px;background:linear-gradient(135deg,#ff9800,#f57c00);border:none;border-radius:10px;color:var(--txt);font-size:13px;font-weight:700;cursor:pointer">
+        🔧 一键修复缺失权限
+      </button>
+    </div>
+    <div class="section-title">⭐ 主队比赛 <span class="badge" id="myMatchesCount">0</span></div>
+    <div id="myMatchesContent"></div>
+    <div class="section-title">📅 主队今日赛事 <span class="badge" id="todayMatchesCount">0</span></div>
+    <div id="todayMatchesContent"></div>
+    <div class="section-title">❤️ 选择主队</div>
+    <div class="league-tabs" id="favLeagueTabs"></div>
+    <div class="team-search"><input type="text" id="teamSearchInput" placeholder="搜索球队..." oninput="filterTeams()"></div>
+    <div class="team-grid" id="teamGridContent"></div>
+
+  </div>
+
+
+  <!-- 6. 更多 -->
+  <div class="page" id="page-more">
+    <div class="section-title">⚙️ 更多功能</div>
+    
+    <div style="display:flex;flex-direction:column;gap:12px;padding:0 2px">
+      <div onclick="checkForUpdate()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
+        <span style="font-size:24px">🔄</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:600;margin-bottom:3px">检查更新</div>
+          <div style="font-size:11px;color:var(--txt-muted)">检查并下载最新版本</div>
+        </div>
+        <span style="font-size:14px;color:var(--txt-muted)">›</span>
+      </div>
+      
+      <div onclick="toggleTheme()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
+        <span style="font-size:24px">🌓</span>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:600;margin-bottom:3px">切换主题</div>
+          <div style="font-size:11px;color:var(--txt-muted)">切换深色/浅色模式</div>
+        </div>
+        <span style="font-size:14px;color:var(--txt-muted)">›</span>
+      </div>
+      
+      <div style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:24px">📱</span>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:600;margin-bottom:3px">关于足球闹钟APP</div>
+            <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本 v2.29</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Nav (6 tabs) -->
+  <nav class="nav">
+    <div class="nav-item active" onclick="switchPage('schedule',0)" id="nav0">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      赛程
+    </div>
+    <div class="nav-item" onclick="switchPage('results',1)" id="nav1">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      结果
+    </div>
+    <div class="nav-item" onclick="switchPage('standings',2)" id="nav2">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      积分榜
+    </div>
+    <div class="nav-item" onclick="switchPage('alarm',3)" id="nav3">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M5 3 2 6m20-3-3 3M12 9v4l3 3"/><path d="M7 3h10"/></svg>
+      闹钟
+    </div>
+    <div class="nav-item" onclick="switchPage('my',4)" id="nav4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      我的
+    </div>
+
+    <div class="nav-item" onclick="switchPage('more',5)" id="nav5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      更多
+    </div>
+  </nav>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- 球队详情浮层 -->
+<div class="team-overlay" id="teamOverlay" onclick="closeTeamDetail()"></div>
+<div class="team-detail" id="teamDetail">
+  <div class="team-detail-header">
+    <button class="team-detail-back" onclick="closeTeamDetail()">←</button>
+    <div class="team-detail-logo" id="tdLogo"></div>
+    <div class="team-detail-info">
+      <div class="team-detail-name" id="tdName"></div>
+      <div class="team-detail-league" id="tdLeague"></div>
+    </div>
+    <button class="team-detail-fav-btn" id="tdFavBtn" onclick="toggleTeamDetailFav()"></button>
+  </div>
+  <div id="teamDetailContent" style="padding-top:8px"></div>
+</div>
+
+<script src="badge_map.js"></script>
+<script src="ringtone_selector.js"></script>
+<script src="cup_data.js"></script>
+<script>
+
+(function(){
+  if(localStorage.getItem('soccerAlarmTheme')==='light'){
+    document.documentElement.setAttribute('data-theme','light');
+  }
+})();
+function toggleTheme(){
+  var h=document.documentElement;
+  if(h.getAttribute('data-theme')==='light'){
+    h.removeAttribute('data-theme');
+    localStorage.setItem('soccerAlarmTheme','dark');
+  }else{
+    h.setAttribute('data-theme','light');
+    localStorage.setItem('soccerAlarmTheme','light');
+  }
+}
+// ===== 早期错误捕获（在任何其他代码之前）=====
+window.onerror = function(msg, url, line, col, error) {
+  var errDiv = document.getElementById('initError');
+  if (errDiv) {
+    errDiv.style.display = 'block';
+    errDiv.textContent += '\nJS错误 L' + line + ': ' + msg;
+  } else {
+    // DOM还没加载，写document.body
+    document.addEventListener('DOMContentLoaded', function() {
+      var d = document.createElement('div');
+      d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a0000;color:#ff4444;padding:16px;font-size:12px;font-family:monospace;white-space:pre-wrap';
+      d.textContent = 'JS错误 L' + line + ': ' + msg;
+      document.body.prepend(d);
+    });
+  }
+  console.error('Global error:', msg, url, line, col, error);
+};
+</script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

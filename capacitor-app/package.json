@@ -1,0 +1,25 @@
+{
+  "name": "soccer-alarm-pro",
+  "version": "2.17.0",
+  "description": "SoccerAlarmPro - 跨平台足球闹钟",
+  "scripts": {
+    "dev": "npx cap copy && npx cap open android",
+    "sync": "npx cap sync",
+    "build:android": "npx cap copy android && cd android && ./gradlew assembleDebug",
+    "build:ios": "npx cap copy ios",
+    "open:android": "npx cap open android",
+    "open:ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@capacitor/local-notifications": "^6.0.0",
+    "@capacitor/filesystem": "^6.0.0",
+    "@capacitor/device": "^6.0.0",
+    "@capacitor/app": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}

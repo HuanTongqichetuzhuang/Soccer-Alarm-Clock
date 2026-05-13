@@ -1,0 +1,538 @@
+{
+  "name": "Copa del Rey",
+  "name_cn": "国王杯",
+  "league_id": "CDR",
+  "country": "es",
+  "season": "2025-26",
+  "source": "https://data.7m.com.cn/matches_data/54/gb/index.shtml",
+  "matches": [
+    {
+      "round": "3rd Round",
+      "date": "2025-12-17",
+      "time": "02:00",
+      "team1": "Deportivo La Coruna",
+      "team2": "RCD Mallorca",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "拉科鲁尼亚",
+      "team2_cn": "马洛卡",
+      "_source": "7m.com.cn ID:54 R:3 M:0"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-17",
+      "time": "02:00",
+      "team1": "SD Eibar",
+      "team2": "Elche CF",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "埃瓦尔",
+      "team2_cn": "埃尔切",
+      "_source": "7m.com.cn ID:54 R:3 M:1"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-17",
+      "time": "04:00",
+      "team1": "CD Eldense",
+      "team2": "Real Sociedad",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "埃登斯",
+      "team2_cn": "皇家社会",
+      "_source": "7m.com.cn ID:54 R:3 M:2"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-17",
+      "time": "04:00",
+      "team1": "Sporting Gijon",
+      "team2": "Valencia CF",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "希洪竞技",
+      "team2_cn": "巴伦西亚",
+      "_source": "7m.com.cn ID:54 R:3 M:3"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-17",
+      "time": "04:30",
+      "team1": "CD瓜达拉哈拉",
+      "team2": "FC Barcelona",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "CD瓜达拉哈拉",
+      "team2_cn": "巴塞罗那",
+      "_source": "7m.com.cn ID:54 R:3 M:4"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "01:00",
+      "team1": "Cultural Leonesa",
+      "team2": "Levante UD",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "莱昂文化体育",
+      "team2_cn": "莱万特",
+      "_source": "7m.com.cn ID:54 R:3 M:5"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "02:00",
+      "team1": "Albacete Balompie",
+      "team2": "Celta Vigo",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "阿尔瓦塞特",
+      "team2_cn": "塞尔塔",
+      "_source": "7m.com.cn ID:54 R:3 M:6"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "02:00",
+      "team1": "SD Huesca",
+      "team2": "CA Osasuna",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "韦斯卡",
+      "team2_cn": "奥萨苏纳",
+      "_source": "7m.com.cn ID:54 R:3 M:7"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "02:00",
+      "team1": "Racing Santander",
+      "team2": "Villarreal CF",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "桑坦德竞技",
+      "team2_cn": "比利亚雷亚尔",
+      "_source": "7m.com.cn ID:54 R:3 M:8"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "02:00",
+      "team1": "Baleares CF",
+      "team2": "Atletico Madrid",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "巴利阿里",
+      "team2_cn": "马德里竞技",
+      "_source": "7m.com.cn ID:54 R:3 M:9"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "04:00",
+      "team1": "Deportivo Alaves",
+      "team2": "Sevilla FC",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "阿拉维斯",
+      "team2_cn": "塞维利亚",
+      "_source": "7m.com.cn ID:54 R:3 M:10"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-18",
+      "time": "04:00",
+      "team1": "CD Teruel",
+      "team2": "Real Madrid",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "达拉维拉瑞纳",
+      "team2_cn": "皇家马德里",
+      "_source": "7m.com.cn ID:54 R:3 M:11"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-19",
+      "time": "02:00",
+      "team1": "Burgos CF",
+      "team2": "Getafe CF",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "布尔戈斯",
+      "team2_cn": "赫塔费",
+      "_source": "7m.com.cn ID:54 R:3 M:12"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-19",
+      "time": "02:00",
+      "team1": "CD Ourense",
+      "team2": "Athletic Bilbao",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "欧伦塞",
+      "team2_cn": "毕尔巴鄂竞技",
+      "_source": "7m.com.cn ID:54 R:3 M:13"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-19",
+      "time": "04:00",
+      "team1": "Real Murcia",
+      "team2": "Real Betis",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "穆尔西亚",
+      "team2_cn": "皇家贝蒂斯",
+      "_source": "7m.com.cn ID:54 R:3 M:14"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-07",
+      "time": "02:00",
+      "team1": "Granada CF",
+      "team2": "Rayo Vallecano",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "格拉纳达",
+      "team2_cn": "巴列卡诺",
+      "_source": "7m.com.cn ID:54 R:3 M:15"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-14",
+      "time": "04:00",
+      "team1": "Cultural Leonesa",
+      "team2": "Athletic Bilbao",
+      "score": {
+        "ft": [
+          3,
+          3
+        ]
+      },
+      "team1_cn": "莱昂文化体育",
+      "team2_cn": "毕尔巴鄂竞技",
+      "_source": "7m.com.cn ID:54 R:4 M:0"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-14",
+      "time": "04:00",
+      "team1": "Deportivo La Coruna",
+      "team2": "Atletico Madrid",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "拉科鲁尼亚",
+      "team2_cn": "马德里竞技",
+      "_source": "7m.com.cn ID:54 R:4 M:1"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-14",
+      "time": "04:00",
+      "team1": "Real Sociedad",
+      "team2": "CA Osasuna",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "皇家社会",
+      "team2_cn": "奥萨苏纳",
+      "_source": "7m.com.cn ID:54 R:4 M:2"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-15",
+      "time": "04:00",
+      "team1": "Deportivo Alaves",
+      "team2": "Rayo Vallecano",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "阿拉维斯",
+      "team2_cn": "巴列卡诺",
+      "_source": "7m.com.cn ID:54 R:4 M:3"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-15",
+      "time": "04:00",
+      "team1": "Albacete Balompie",
+      "team2": "Real Madrid",
+      "score": {
+        "ft": [
+          3,
+          2
+        ]
+      },
+      "team1_cn": "阿尔瓦塞特",
+      "team2_cn": "皇家马德里",
+      "_source": "7m.com.cn ID:54 R:4 M:4"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-15",
+      "time": "04:00",
+      "team1": "Real Betis",
+      "team2": "Elche CF",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "皇家贝蒂斯",
+      "team2_cn": "埃尔切",
+      "_source": "7m.com.cn ID:54 R:4 M:5"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-16",
+      "time": "04:00",
+      "team1": "Burgos CF",
+      "team2": "Valencia CF",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "布尔戈斯",
+      "team2_cn": "巴伦西亚",
+      "_source": "7m.com.cn ID:54 R:4 M:6"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-01-16",
+      "time": "04:15",
+      "team1": "Racing Santander",
+      "team2": "FC Barcelona",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "桑坦德竞技",
+      "team2_cn": "巴塞罗那",
+      "_source": "7m.com.cn ID:54 R:4 M:7"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-04",
+      "time": "04:00",
+      "team1": "Albacete Balompie",
+      "team2": "FC Barcelona",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "阿尔瓦塞特",
+      "team2_cn": "巴塞罗那",
+      "_source": "7m.com.cn ID:54 R:5 M:0"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-05",
+      "time": "04:00",
+      "team1": "Deportivo Alaves",
+      "team2": "Real Sociedad",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "阿拉维斯",
+      "team2_cn": "皇家社会",
+      "_source": "7m.com.cn ID:54 R:5 M:1"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-05",
+      "time": "04:00",
+      "team1": "Valencia CF",
+      "team2": "Athletic Bilbao",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "巴伦西亚",
+      "team2_cn": "毕尔巴鄂竞技",
+      "_source": "7m.com.cn ID:54 R:5 M:2"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-06",
+      "time": "04:00",
+      "team1": "Real Betis",
+      "team2": "Atletico Madrid",
+      "score": {
+        "ft": [
+          0,
+          5
+        ]
+      },
+      "team1_cn": "皇家贝蒂斯",
+      "team2_cn": "马德里竞技",
+      "_source": "7m.com.cn ID:54 R:5 M:3"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-02-12",
+      "time": "04:00",
+      "team1": "Athletic Bilbao",
+      "team2": "Real Sociedad",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "毕尔巴鄂竞技",
+      "team2_cn": "皇家社会",
+      "_source": "7m.com.cn ID:54 R:6 M:0"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-02-13",
+      "time": "04:00",
+      "team1": "Atletico Madrid",
+      "team2": "FC Barcelona",
+      "score": {
+        "ft": [
+          4,
+          0
+        ]
+      },
+      "team1_cn": "马德里竞技",
+      "team2_cn": "巴塞罗那",
+      "_source": "7m.com.cn ID:54 R:6 M:1"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-03-04",
+      "time": "04:00",
+      "team1": "FC Barcelona",
+      "team2": "Atletico Madrid",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "巴塞罗那",
+      "team2_cn": "马德里竞技",
+      "_source": "7m.com.cn ID:54 R:6 M:2"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-03-05",
+      "time": "04:00",
+      "team1": "Real Sociedad",
+      "team2": "Athletic Bilbao",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "皇家社会",
+      "team2_cn": "毕尔巴鄂竞技",
+      "_source": "7m.com.cn ID:54 R:6 M:3"
+    },
+    {
+      "round": "Final",
+      "date": "2026-04-19",
+      "time": "03:00",
+      "team1": "Atletico Madrid",
+      "team2": "Real Sociedad",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "马德里竞技",
+      "team2_cn": "皇家社会",
+      "_source": "7m.com.cn ID:54 R:7 M:0"
+    }
+  ]
+}

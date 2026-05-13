@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>联赛LOGO预览</title>
+<style>
+body{background:#0a1628;color:#fff;font-family:-apple-system,sans-serif;padding:20px}
+h2{color:#00d4aa;font-size:16px;margin:20px 0 10px}
+.league-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px}
+.league-row img{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 0 2px rgba(255,255,255,.2))}
+.league-row .name{font-size:16px;font-weight:700}
+.league-row .en{font-size:12px;color:#7f8c9a}
+.tabs-demo{display:flex;gap:0;overflow-x:auto;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px}
+.tab{display:inline-flex;align-items:center;gap:4px;padding:9px 14px;font-size:13px;color:#7f8c9a;font-weight:500;white-space:nowrap;border-bottom:2.5px solid transparent;cursor:pointer}
+.tab.active{color:#00d4aa;font-weight:700;border-bottom-color:#00d4aa}
+.tab img{width:18px;height:18px;object-fit:contain;filter:drop-shadow(0 0 1px rgba(255,255,255,.2))}
+.card-demo{display:flex;align-items:center;padding:10px 12px;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.06);min-height:72px;border-radius:8px;margin-bottom:6px}
+.card-side{display:flex;flex-direction:column;align-items:center;width:70px;gap:4px}
+.card-side img{width:34px;height:34px;object-fit:contain}
+.card-center{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.card-league{font-size:9px;color:#7f8c9a;display:flex;align-items:center;gap:2px}
+.card-league img{width:10px;height:10px;object-fit:contain}
+.card-score{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px}
+</style>
+</head><body>
+
+<h2>🏆 联赛LOGO一览</h2>
+<div class="league-row"><img src="file:///android_asset/leagues/pl.png"><div><div class="name">英超</div><div class="en">Premier League</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/pd.png"><div><div class="name">西甲</div><div class="en">La Liga</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/sa.png"><div><div class="name">意甲</div><div class="en">Serie A</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/bl1.png"><div><div class="name">德甲</div><div class="en">Bundesliga</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/fl1.png"><div><div class="name">法甲</div><div class="en">Ligue 1</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/cl.png"><div><div class="name">欧冠</div><div class="en">UEFA Champions League</div></div></div>
+<div class="league-row"><img src="file:///android_asset/leagues/wc.png"><div><div class="name">世界杯</div><div class="en">FIFA World Cup</div></div></div>
+
+<h2>Tab栏效果模拟</h2>
+<div class="tabs-demo">
+  <div class="tab active"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/pl.png">英超</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/pd.png">西甲</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/sa.png">意甲</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/bl1.png">德甲</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/fl1.png">法甲</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/cl.png">欧冠</div>
+  <div class="tab"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/wc.png">世界杯</div>
+</div>
+
+<h2>比赛卡片效果模拟</h2>
+<div class="card-demo">
+  <div class="card-side"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/badges/liverpool_fc.png"><div style="font-size:11px;color:#ccc">利物浦</div></div>
+  <div class="card-center">
+    <div class="card-league"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/pl.png">英超</div>
+    <div class="card-score">2 - 1</div>
+    <div style="font-size:9px;color:#2ecc71;font-weight:600">进行中</div>
+  </div>
+  <div class="card-side"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/badges/arsenal.png"><div style="font-size:11px;color:#ccc">阿森纳</div></div>
+</div>
+
+<div class="card-demo">
+  <div class="card-side"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/badges/fc_barcelona.png"><div style="font-size:11px;color:#ccc">巴塞罗那</div></div>
+  <div class="card-center">
+    <div class="card-league"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/leagues/cl.png">欧冠</div>
+    <div class="card-score">3 - 2</div>
+    <div style="font-size:9px;color:#7f8c9a">已结束</div>
+  </div>
+  <div class="card-side"><img src="E:/项目/SoccerAlarmPro/SoccerAlarmAPK/app/src/main/assets/badges/paris_saint_germain.png"><div style="font-size:11px;color:#ccc">巴黎圣日耳曼</div></div>
+</div>
+
+</body></html>

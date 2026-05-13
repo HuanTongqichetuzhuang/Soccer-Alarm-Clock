@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ 足球闹钟 - SoccerAlarmPro</title>
+<style>
+:root {
+  --bg: #0a0f1a; --card: #131a2e; --border: #1e2d4a;
+  --accent: #3b82f6; --accent2: #8b5cf6; --gold: #f59e0b;
+  --text: #e2e8f0; --muted: #64748b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.bg-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(245,158,11,0.05) 0%, transparent 50%);
+}
+.hero {
+  position: relative; z-index: 1;
+  text-align: center; padding: 60px 24px 40px;
+}
+.hero-icon { font-size: 64px; margin-bottom: 16px; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.hero h1 {
+  font-size: clamp(28px, 6vw, 42px); font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #fbbf24);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+.hero .subtitle { color: var(--muted); font-size: 16px; margin-bottom: 8px; }
+.hero .version {
+  display: inline-block; background: rgba(59,130,246,0.15); color: #60a5fa;
+  padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  margin-bottom: 32px;
+}
+.hero .features {
+  display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 8px;
+}
+.feature-item {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 14px;
+}
+.feature-item span { font-size: 18px; }
+.download-section {
+  position: relative; z-index: 1;
+  max-width: 800px; margin: 0 auto; padding: 0 24px 60px;
+}
+.download-section h2 {
+  text-align: center; font-size: 20px; margin-bottom: 32px;
+  color: var(--muted); font-weight: 500;
+}
+.download-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.download-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 24px; text-align: center;
+  transition: all 0.3s ease;
+  position: relative; overflow: hidden;
+}
+.download-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.download-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.download-card.direct::before { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+.download-card.baidu::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+.download-card.quark::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+.download-card .card-icon {
+  width: 52px; height: 52px; border-radius: 14px; display: flex;
+  align-items: center; justify-content: center; margin: 0 auto 16px;
+  font-size: 24px;
+}
+.download-card.direct .card-icon { background: rgba(59,130,246,0.15); }
+.download-card.baidu .card-icon { background: rgba(245,158,11,0.15); }
+.download-card.quark .card-icon { background: rgba(139,92,246,0.15); }
+.download-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.download-card .desc { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.qr-wrap {
+  width: 120px; height: 120px; margin: 0 auto 16px;
+  background: #fff; border-radius: 12px; padding: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.qr-wrap img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+.btn {
+  display: inline-block; padding: 10px 24px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; border: none;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #2563eb; transform: scale(1.02); }
+.btn-outline {
+  background: transparent; border: 1px solid var(--border); color: var(--text);
+}
+.btn-outline:hover { border-color: var(--muted); }
+.copy-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin: 10px 0;
+}
+.copy-code {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; font-size: 12px;
+  color: var(--accent); font-family: 'SF Mono', monospace;
+  font-weight: 600; letter-spacing: 0.5px;
+}
+.btn-copy {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 6px; padding: 4px 10px; font-size: 11px;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { border-color: var(--accent); color: var(--accent); }
+.footer {
+  text-align: center; padding: 24px; color: var(--muted);
+  font-size: 12px; position: relative; z-index: 1;
+}
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #22c55e; color: #fff; padding: 10px 24px;
+  border-radius: 10px; font-size: 14px; font-weight: 600;
+  z-index: 100; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+@media (max-width: 520px) {
+  .hero { padding: 40px 16px 24px; }
+  .download-grid { grid-template-columns: 1fr; }
+  .features { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<section class="hero">
+  <div class="hero-icon">⚽</div>
+  <h1>足球闹钟</h1>
+  <p class="subtitle">全球足球赛事追踪 · 比赛提醒 · 积分榜 · 赛程</p>
+  <div class="version">v2.34 · Android</div>
+  <div class="features">
+    <div class="feature-item"><span>🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> 英超</div>
+    <div class="feature-item"><span>🇪🇸</span> 西甲</div>
+    <div class="feature-item"><span>🇮🇹</span> 意甲</div>
+    <div class="feature-item"><span>🇩🇪</span> 德甲</div>
+    <div class="feature-item"><span>🇫🇷</span> 法甲</div>
+    <div class="feature-item"><span>🇨🇳</span> 中超</div>
+    <div class="feature-item"><span>🏆</span> 欧冠</div>
+  </div>
+</section>
+
+<section class="download-section">
+  <h2>— 选择下载方式 —</h2>
+  <div class="download-grid">
+
+    <div class="download-card direct">
+      <div class="card-icon">⚡</div>
+      <h3>官方直连</h3>
+      <p class="desc">高速服务器 · 无需安装额外APP</p>
+      <a href="/apk/SoccerAlarmPro_v2.34.apk" class="btn btn-primary">📥 立即下载</a>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px">约 40MB</p>
+    </div>
+
+    <div class="download-card baidu">
+      <div class="card-icon">📦</div>
+      <h3>百度网盘</h3>
+      <p class="desc">扫码或复制链接下载</p>
+      <div class="qr-wrap">
+        <img src="/img/qr-baidu.jpg" alt="百度网盘二维码" onerror="this.parentElement.innerHTML='📱 扫码下载'">
+      </div>
+      <div class="copy-row">
+        <span class="copy-code">提取码: 6666</span>
+        <button class="btn-copy" onclick="copyText('6666')">复制</button>
+      </div>
+      <a href="https://pan.baidu.com/s/1o2K7nubgI6KZRPtksiUZVQ?pwd=6666" target="_blank" class="btn btn-outline" style="width:100%;text-align:center;">🔗 打开链接</a>
+    </div>
+
+    <div class="download-card quark">
+      <div class="card-icon">☁️</div>
+      <h3>夸克网盘</h3>
+      <p class="desc">扫码或复制链接下载</p>
+      <div class="qr-wrap">
+        <img src="/img/qr-quark.png" alt="夸克网盘二维码" onerror="this.parentElement.innerHTML='📱 扫码下载'">
+      </div>
+      <div class="copy-row">
+        <span class="copy-code">提取码: dKd5</span>
+        <button class="btn-copy" onclick="copyText('dKd5')">复制</button>
+      </div>
+      <a href="https://pan.quark.cn/s/5c89de286ec1?pwd=dKd5" target="_blank" class="btn btn-outline" style="width:100%;text-align:center;">🔗 打开链接</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">足球闹钟 SoccerAlarmPro · 让每一场比赛都不错过</footer>
+
+<div class="toast" id="toast">✅ 已复制</div>
+
+<script>
+function copyText(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      var t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 1500);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-999px';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    var t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 1500);
+  }
+}
+</script>
+</body>
+</html>

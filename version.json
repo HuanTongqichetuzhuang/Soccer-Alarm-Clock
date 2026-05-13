@@ -1,5 +1,5 @@
 ﻿{
-  "versionCode": 36,
-  "versionName": "2.36",
-  "changelog": "v2.36: fix tz + check update + download"
+    "versionCode":  37,
+    "versionName":  "2.37",
+    "changelog":  "v2.37: fix CSL badge in MyMatches"
 }

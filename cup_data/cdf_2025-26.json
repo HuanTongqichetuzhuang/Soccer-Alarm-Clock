@@ -1,0 +1,500 @@
+{
+  "name": "Coupe de France",
+  "name_cn": "法国杯",
+  "league_id": "CDF",
+  "country": "fr",
+  "season": "2025-26",
+  "source": "https://data.7m.com.cn/matches_data/101/gb/index.shtml",
+  "matches": [
+    {
+      "round": "Round of 32",
+      "date": "2026-01-10",
+      "time": "22:30",
+      "team1": "Angers SCO",
+      "team2": "Toulouse FC",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "昂热",
+      "team2_cn": "图卢兹",
+      "_source": "7m.com.cn ID:101 R:3 M:0"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-10",
+      "time": "22:30",
+      "team1": "SC Bastia",
+      "team2": "ESTAC Troyes",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "巴斯蒂亚",
+      "team2_cn": "特鲁瓦",
+      "_source": "7m.com.cn ID:101 R:3 M:1"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-10",
+      "time": "22:30",
+      "team1": "蒙特勒伊FC",
+      "team2": "Amiens SC",
+      "score": {
+        "ft": [
+          2,
+          4
+        ]
+      },
+      "team1_cn": "蒙特勒伊FC",
+      "team2_cn": "亚眠",
+      "_source": "7m.com.cn ID:101 R:3 M:2"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-10",
+      "time": "22:30",
+      "team1": "US Orleans",
+      "team2": "AS Monaco",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "奥兰斯",
+      "team2_cn": "摩纳哥",
+      "_source": "7m.com.cn ID:101 R:3 M:3"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-11",
+      "time": "01:00",
+      "team1": "阿夫朗甚",
+      "team2": "Racing Strasbourg",
+      "score": {
+        "ft": [
+          0,
+          6
+        ]
+      },
+      "team1_cn": "阿夫朗甚",
+      "team2_cn": "斯特拉斯堡",
+      "_source": "7m.com.cn ID:101 R:3 M:4"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-11",
+      "time": "01:00",
+      "team1": "哈特里昂",
+      "team2": "FC Lorient",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "哈特里昂",
+      "team2_cn": "洛里昂",
+      "_source": "7m.com.cn ID:101 R:3 M:5"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-11",
+      "time": "01:00",
+      "team1": "FC Istres",
+      "team2": "Stade Lavallois",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "伊斯特",
+      "team2_cn": "拉瓦勒",
+      "_source": "7m.com.cn ID:101 R:3 M:6"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-11",
+      "time": "01:00",
+      "team1": "Le Puy Foot 43",
+      "team2": "Stade de Reims",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "勒皮",
+      "team2_cn": "兰斯",
+      "_source": "7m.com.cn ID:101 R:3 M:7"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-11",
+      "time": "21:00",
+      "team1": "FC Sochaux-Montbeliard",
+      "team2": "Racing Club Lens",
+      "score": {
+        "ft": [
+          0,
+          3
+        ]
+      },
+      "team1_cn": "索肖",
+      "team2_cn": "朗斯",
+      "_source": "7m.com.cn ID:101 R:3 M:8"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-12",
+      "time": "01:00",
+      "team1": "尚蒂利",
+      "team2": "Stade Rennais",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "尚蒂利",
+      "team2_cn": "雷恩",
+      "_source": "7m.com.cn ID:101 R:3 M:9"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-12",
+      "time": "01:00",
+      "team1": "Le Mans FC",
+      "team2": "AS Nancy-Lorraine",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "勒芒",
+      "team2_cn": "南锡",
+      "_source": "7m.com.cn ID:101 R:3 M:10"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-12",
+      "time": "01:00",
+      "team1": "FC Metz",
+      "team2": "Montpellier HSC",
+      "score": {
+        "ft": [
+          0,
+          4
+        ]
+      },
+      "team1_cn": "梅斯",
+      "team2_cn": "蒙彼利埃",
+      "_source": "7m.com.cn ID:101 R:3 M:11"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-12",
+      "time": "01:00",
+      "team1": "FC Nantes",
+      "team2": "OGC Nice",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "南特",
+      "team2_cn": "尼斯",
+      "_source": "7m.com.cn ID:101 R:3 M:12"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-12",
+      "time": "04:00",
+      "team1": "Lille OSC",
+      "team2": "Olympique Lyon",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "里尔",
+      "team2_cn": "里昂",
+      "_source": "7m.com.cn ID:101 R:3 M:13"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-13",
+      "time": "04:10",
+      "team1": "Paris Saint-Germain",
+      "team2": "Paris FC",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "巴黎圣日耳曼",
+      "team2_cn": "巴黎FC",
+      "_source": "7m.com.cn ID:101 R:3 M:14"
+    },
+    {
+      "round": "Round of 32",
+      "date": "2026-01-14",
+      "time": "04:00",
+      "team1": "贝叶",
+      "team2": "Olympique Marseille",
+      "score": {
+        "ft": [
+          0,
+          9
+        ]
+      },
+      "team1_cn": "贝叶",
+      "team2_cn": "马赛",
+      "_source": "7m.com.cn ID:101 R:3 M:15"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-04",
+      "time": "03:30",
+      "team1": "Stade de Reims",
+      "team2": "Le Mans FC",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "兰斯",
+      "team2_cn": "勒芒",
+      "_source": "7m.com.cn ID:101 R:4 M:0"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-04",
+      "time": "04:10",
+      "team1": "Olympique Marseille",
+      "team2": "Stade Rennais",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "马赛",
+      "team2_cn": "雷恩",
+      "_source": "7m.com.cn ID:101 R:4 M:1"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-05",
+      "time": "03:30",
+      "team1": "FC Lorient",
+      "team2": "Paris FC",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "洛里昂",
+      "team2_cn": "巴黎FC",
+      "_source": "7m.com.cn ID:101 R:4 M:2"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-05",
+      "time": "03:30",
+      "team1": "Olympique Lyon",
+      "team2": "Stade Lavallois",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "里昂",
+      "team2_cn": "拉瓦勒",
+      "_source": "7m.com.cn ID:101 R:4 M:3"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-05",
+      "time": "03:30",
+      "team1": "OGC Nice",
+      "team2": "Montpellier HSC",
+      "score": {
+        "ft": [
+          3,
+          2
+        ]
+      },
+      "team1_cn": "尼斯",
+      "team2_cn": "蒙彼利埃",
+      "_source": "7m.com.cn ID:101 R:4 M:4"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-05",
+      "time": "03:30",
+      "team1": "Toulouse FC",
+      "team2": "Amiens SC",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "图卢兹",
+      "team2_cn": "亚眠",
+      "_source": "7m.com.cn ID:101 R:4 M:5"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-05",
+      "time": "04:00",
+      "team1": "ESTAC Troyes",
+      "team2": "Racing Club Lens",
+      "score": {
+        "ft": [
+          2,
+          4
+        ]
+      },
+      "team1_cn": "特鲁瓦",
+      "team2_cn": "朗斯",
+      "_source": "7m.com.cn ID:101 R:4 M:6"
+    },
+    {
+      "round": "Round of 16",
+      "date": "2026-02-06",
+      "time": "04:00",
+      "team1": "Racing Strasbourg",
+      "team2": "AS Monaco",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "斯特拉斯堡",
+      "team2_cn": "摩纳哥",
+      "_source": "7m.com.cn ID:101 R:4 M:7"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-03-04",
+      "time": "04:00",
+      "team1": "Racing Strasbourg",
+      "team2": "Stade de Reims",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "斯特拉斯堡",
+      "team2_cn": "兰斯",
+      "_source": "7m.com.cn ID:101 R:5 M:0"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-03-05",
+      "time": "03:30",
+      "team1": "FC Lorient",
+      "team2": "OGC Nice",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "洛里昂",
+      "team2_cn": "尼斯",
+      "_source": "7m.com.cn ID:101 R:5 M:1"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-03-05",
+      "time": "04:00",
+      "team1": "Olympique Marseille",
+      "team2": "Toulouse FC",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "马赛",
+      "team2_cn": "图卢兹",
+      "_source": "7m.com.cn ID:101 R:5 M:2"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-03-06",
+      "time": "04:10",
+      "team1": "Olympique Lyon",
+      "team2": "Racing Club Lens",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "里昂",
+      "team2_cn": "朗斯",
+      "_source": "7m.com.cn ID:101 R:5 M:3"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-22",
+      "time": "03:10",
+      "team1": "Racing Club Lens",
+      "team2": "Toulouse FC",
+      "score": {
+        "ft": [
+          4,
+          1
+        ]
+      },
+      "team1_cn": "朗斯",
+      "team2_cn": "图卢兹",
+      "_source": "7m.com.cn ID:101 R:6 M:0"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-23",
+      "time": "03:00",
+      "team1": "Racing Strasbourg",
+      "team2": "OGC Nice",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "斯特拉斯堡",
+      "team2_cn": "尼斯",
+      "_source": "7m.com.cn ID:101 R:6 M:1"
+    },
+    {
+      "round": "Final",
+      "date": "2026-05-23",
+      "time": "03:00",
+      "team1": "Racing Club Lens",
+      "team2": "OGC Nice",
+      "team1_cn": "朗斯",
+      "team2_cn": "尼斯",
+      "_source": "7m.com.cn ID:101 R:7 M:0"
+    }
+  ]
+}

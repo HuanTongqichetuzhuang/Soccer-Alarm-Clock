@@ -161,7 +161,7 @@
     <div class="section-title">⚙️ 更多功能</div>
     
     <div style="display:flex;flex-direction:column;gap:12px;padding:0 2px">
-      <div onclick="checkForUpdate()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
+      <div id="checkUpdateBtn" id="checkUpdateBtn" onclick="checkForUpdate()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
         <span style="font-size:24px">🔄</span>
         <div style="flex:1">
           <div style="font-size:14px;font-weight:600;margin-bottom:3px">检查更新</div>
@@ -184,10 +184,13 @@
           <span style="font-size:24px">📱</span>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:600;margin-bottom:3px">关于足球闹钟APP</div>
-            <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本 v2.29</div>
+            <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本 v2.35</div>
           </div>
         </div>
       </div>
+      
+      <!-- 动态内容容器（刷新全部数据 + 打赏支持） -->
+      <div id="moreContent"></div>
     </div>
   </div>
 

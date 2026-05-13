@@ -316,3 +316,53 @@
     .theme-toggle-btn:active{transform:scale(.9);background:var(--s15)}
 
   
+/* ========== 打赏支持 ========== */
+.donate-wrap { margin: 14px 0; }
+.donate-toggle {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(239,68,68,0.08));
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 14px; padding: 14px 16px; cursor: pointer;
+  transition: all 0.3s;
+}
+.donate-toggle.open { border-radius: 14px 14px 0 0; border-bottom: none; }
+.donate-toggle-icon { font-size: 26px; flex-shrink: 0; }
+.donate-toggle-info { flex: 1; text-align: left; min-width: 0; }
+.donate-toggle-title { font-size: 15px; font-weight: 700; color: #f59e0b; }
+.donate-toggle-sub { font-size: 12px; color: var(--txt-muted); margin-top: 2px; }
+.donate-arrow { font-size: 12px; color: var(--txt-muted); transition: transform 0.3s; }
+.donate-arrow.open { transform: rotate(180deg); }
+.donate-panel {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  background: var(--card-bg); border-radius: 0 0 14px 14px;
+  border: 1px solid rgba(245,158,11,0.25); border-top: none;
+}
+.donate-panel.open { max-height: 800px; }
+.donate-content { padding: 16px 14px; }
+.donate-support-img {
+  width: 100%; border-radius: 12px; margin-bottom: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.donate-msg {
+  text-align: center; font-size: 14px; font-weight: 700;
+  color: #fbbf24; margin-bottom: 16px; line-height: 1.6;
+}
+.donate-qr-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.donate-qr-card {
+  flex: 1; text-align: center; background: rgba(255,255,255,0.03);
+  border-radius: 12px; padding: 12px 8px; border: 1px solid var(--border);
+}
+.donate-qr-card img { width: 100%; max-width: 140px; border-radius: 8px; aspect-ratio: 1; object-fit: contain; }
+.donate-qr-label { font-size: 12px; color: var(--txt-muted); margin-top: 6px; }
+.donate-alipay-row {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: rgba(59,130,246,0.08); border-radius: 10px; padding: 10px 12px;
+  border: 1px solid rgba(59,130,246,0.2);
+}
+.donate-al-icon { font-size: 18px; flex-shrink: 0; }
+.donate-al-text { font-size: 13px; color: #60a5fa; font-weight: 500; word-break: break-all; }
+.donate-copy-btn {
+  background: var(--accent, #3b82f6); border: none; color: #fff; padding: 5px 12px;
+  border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+

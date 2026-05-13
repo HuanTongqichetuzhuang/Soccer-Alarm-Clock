@@ -1,0 +1,16 @@
+{
+  "appId": "com.socceralarm.pro",
+  "appName": "足球闹钟Pro",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_alarm",
+      "iconColor": "#00d4aa"
+    }
+  }
+}

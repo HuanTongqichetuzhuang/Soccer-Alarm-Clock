@@ -1,0 +1,11 @@
+{
+  "name": "soccer-alarm-server",
+  "version": "1.0.0",
+  "description": "SoccerAlarmPro Data Server - API proxy with caching and scraping fallback",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=18" }
+}

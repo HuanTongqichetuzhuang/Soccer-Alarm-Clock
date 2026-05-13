@@ -1,0 +1,500 @@
+{
+  "name": "DFB-Pokal",
+  "name_cn": "德国杯",
+  "league_id": "DFB",
+  "country": "de",
+  "season": "2025-26",
+  "source": "https://data.7m.com.cn/matches_data/52/gb/index.shtml",
+  "matches": [
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "01:30",
+      "team1": "Eintracht Frankfurt",
+      "team2": "Borussia Dortmund",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "法兰克福",
+      "team2_cn": "多特蒙德",
+      "_source": "7m.com.cn ID:52 R:1 M:0"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "01:30",
+      "team1": "1. FC Heidenheim",
+      "team2": "Hamburger SV",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "海登海姆",
+      "team2_cn": "汉堡",
+      "_source": "7m.com.cn ID:52 R:1 M:1"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "01:30",
+      "team1": "Hertha BSC",
+      "team2": "SV Elversberg",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "柏林赫塔",
+      "team2_cn": "埃尔沃斯堡",
+      "_source": "7m.com.cn ID:52 R:1 M:2"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "01:30",
+      "team1": "VfL Wolfsburg",
+      "team2": "Holstein Kiel",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "沃尔夫斯堡",
+      "team2_cn": "基尔",
+      "_source": "7m.com.cn ID:52 R:1 M:3"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "03:45",
+      "team1": "FC Augsburg",
+      "team2": "VfL Bochum",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "奥格斯堡",
+      "team2_cn": "波鸿",
+      "_source": "7m.com.cn ID:52 R:1 M:4"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "03:45",
+      "team1": "Borussia M'gladbach",
+      "team2": "Karlsruher SC",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "门兴格拉德巴赫",
+      "team2_cn": "卡尔斯鲁厄",
+      "_source": "7m.com.cn ID:52 R:1 M:5"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "03:45",
+      "team1": "Energie Cottbus",
+      "team2": "RB Leipzig",
+      "score": {
+        "ft": [
+          1,
+          4
+        ]
+      },
+      "team1_cn": "科特布斯",
+      "team2_cn": "莱比锡红牛",
+      "_source": "7m.com.cn ID:52 R:1 M:6"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-29",
+      "time": "03:45",
+      "team1": "FC St. Pauli",
+      "team2": "TSG Hoffenheim",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "圣保利",
+      "team2_cn": "霍芬海姆",
+      "_source": "7m.com.cn ID:52 R:1 M:7"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "01:00",
+      "team1": "Greuther Furth",
+      "team2": "1. FC Kaiserslautern",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "菲尔特",
+      "team2_cn": "凯泽斯劳滕",
+      "_source": "7m.com.cn ID:52 R:1 M:8"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "01:00",
+      "team1": "FC 08 Homburg",
+      "team2": "1. FC Magdeburg",
+      "score": {
+        "ft": [
+          0,
+          3
+        ]
+      },
+      "team1_cn": "勒蒂森",
+      "team2_cn": "马格德堡",
+      "_source": "7m.com.cn ID:52 R:1 M:9"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "01:00",
+      "team1": "1. FSV Mainz 05",
+      "team2": "VfB Stuttgart",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "美因茨",
+      "team2_cn": "斯图加特",
+      "_source": "7m.com.cn ID:52 R:1 M:10"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "01:00",
+      "team1": "SC Paderborn 07",
+      "team2": "Bayer Leverkusen",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "帕德博恩",
+      "team2_cn": "勒沃库森",
+      "_source": "7m.com.cn ID:52 R:1 M:11"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "03:45",
+      "team1": "SV Darmstadt 98",
+      "team2": "FC Schalke 04",
+      "score": {
+        "ft": [
+          4,
+          0
+        ]
+      },
+      "team1_cn": "达姆斯塔特",
+      "team2_cn": "沙尔克04",
+      "_source": "7m.com.cn ID:52 R:1 M:12"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "03:45",
+      "team1": "Fortuna Dusseldorf",
+      "team2": "SC Freiburg",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "杜塞尔多夫",
+      "team2_cn": "弗赖堡",
+      "_source": "7m.com.cn ID:52 R:1 M:13"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "03:45",
+      "team1": "1. FC Koln",
+      "team2": "FC Bayern Munich",
+      "score": {
+        "ft": [
+          1,
+          4
+        ]
+      },
+      "team1_cn": "科隆",
+      "team2_cn": "拜仁慕尼黑",
+      "_source": "7m.com.cn ID:52 R:1 M:14"
+    },
+    {
+      "round": "2nd Round",
+      "date": "2025-10-30",
+      "time": "03:45",
+      "team1": "FC Union Berlin",
+      "team2": "Arminia Bielefeld",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "柏林联合",
+      "team2_cn": "比勒菲尔德",
+      "_source": "7m.com.cn ID:52 R:1 M:15"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-03",
+      "time": "01:00",
+      "team1": "Borussia M'gladbach",
+      "team2": "FC St. Pauli",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "门兴格拉德巴赫",
+      "team2_cn": "圣保利",
+      "_source": "7m.com.cn ID:52 R:2 M:0"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-03",
+      "time": "01:00",
+      "team1": "Hertha BSC",
+      "team2": "1. FC Kaiserslautern",
+      "score": {
+        "ft": [
+          6,
+          1
+        ]
+      },
+      "team1_cn": "柏林赫塔",
+      "team2_cn": "凯泽斯劳滕",
+      "_source": "7m.com.cn ID:52 R:2 M:1"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-03",
+      "time": "04:00",
+      "team1": "Borussia Dortmund",
+      "team2": "Bayer Leverkusen",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "多特蒙德",
+      "team2_cn": "勒沃库森",
+      "_source": "7m.com.cn ID:52 R:2 M:2"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-03",
+      "time": "04:00",
+      "team1": "RB Leipzig",
+      "team2": "1. FC Magdeburg",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "莱比锡红牛",
+      "team2_cn": "马格德堡",
+      "_source": "7m.com.cn ID:52 R:2 M:3"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-04",
+      "time": "01:00",
+      "team1": "VfL Bochum",
+      "team2": "VfB Stuttgart",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "波鸿",
+      "team2_cn": "斯图加特",
+      "_source": "7m.com.cn ID:52 R:2 M:4"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-04",
+      "time": "01:00",
+      "team1": "SC Freiburg",
+      "team2": "SV Darmstadt 98",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "弗赖堡",
+      "team2_cn": "达姆斯塔特",
+      "_source": "7m.com.cn ID:52 R:2 M:5"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-04",
+      "time": "03:45",
+      "team1": "Hamburger SV",
+      "team2": "Holstein Kiel",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "汉堡",
+      "team2_cn": "基尔",
+      "_source": "7m.com.cn ID:52 R:2 M:6"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2025-12-04",
+      "time": "03:45",
+      "team1": "FC Union Berlin",
+      "team2": "FC Bayern Munich",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "柏林联合",
+      "team2_cn": "拜仁慕尼黑",
+      "_source": "7m.com.cn ID:52 R:2 M:7"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-04",
+      "time": "03:45",
+      "team1": "Bayer Leverkusen",
+      "team2": "FC St. Pauli",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "勒沃库森",
+      "team2_cn": "圣保利",
+      "_source": "7m.com.cn ID:52 R:3 M:0"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-05",
+      "time": "03:45",
+      "team1": "Holstein Kiel",
+      "team2": "VfB Stuttgart",
+      "score": {
+        "ft": [
+          0,
+          3
+        ]
+      },
+      "team1_cn": "基尔",
+      "team2_cn": "斯图加特",
+      "_source": "7m.com.cn ID:52 R:3 M:1"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-11",
+      "time": "03:45",
+      "team1": "Hertha BSC",
+      "team2": "SC Freiburg",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "柏林赫塔",
+      "team2_cn": "弗赖堡",
+      "_source": "7m.com.cn ID:52 R:3 M:2"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-02-12",
+      "time": "03:45",
+      "team1": "FC Bayern Munich",
+      "team2": "RB Leipzig",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "拜仁慕尼黑",
+      "team2_cn": "莱比锡红牛",
+      "_source": "7m.com.cn ID:52 R:3 M:3"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-23",
+      "time": "02:45",
+      "team1": "Bayer Leverkusen",
+      "team2": "FC Bayern Munich",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "勒沃库森",
+      "team2_cn": "拜仁慕尼黑",
+      "_source": "7m.com.cn ID:52 R:4 M:0"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-24",
+      "time": "02:45",
+      "team1": "VfB Stuttgart",
+      "team2": "SC Freiburg",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "斯图加特",
+      "team2_cn": "弗赖堡",
+      "_source": "7m.com.cn ID:52 R:4 M:1"
+    },
+    {
+      "round": "Final",
+      "date": "2026-05-24",
+      "time": "02:00",
+      "team1": "FC Bayern Munich",
+      "team2": "VfB Stuttgart",
+      "team1_cn": "拜仁慕尼黑",
+      "team2_cn": "斯图加特",
+      "_source": "7m.com.cn ID:52 R:5 M:0"
+    }
+  ]
+}

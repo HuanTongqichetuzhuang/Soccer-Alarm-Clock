@@ -2,6 +2,9 @@ package com.socceralarm.pro
 
 import android.Manifest
 import android.content.Intent
+import android.content.ClipboardManager
+import android.content.ClipData
+import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -9,6 +12,10 @@ import android.provider.Settings
 import android.util.Log
 import android.webkit.*
 import android.media.MediaPlayer
+import android.os.Environment
+import android.provider.MediaStore
+import java.io.File
+import java.io.FileOutputStream
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.view.WindowManager
@@ -103,6 +110,25 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "网络安全错误", Toast.LENGTH_LONG).show()
                 }
             }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                val url = request?.url?.toString() ?: return false
+                Log.i("SoccerAlarm", "shouldOverride: url=$url")
+                if (url.startsWith("alipays://") || url.startsWith("alipayqr://") ||
+                    url.startsWith("weixin://") || url.startsWith("alipay://")) {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        Log.i("SoccerAlarm", "shouldOverride: started intent")
+                        return true
+                    } catch (e: Exception) {
+                        Log.e("SoccerAlarm", "shouldOverride: failed", e)
+                        return true
+                    }
+                }
+                return false
+            }
         }
 
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidAlarm")
@@ -166,9 +192,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }
 
 class WebAppInterface(private val activity: MainActivity) {
+
+    var testMediaPlayer: android.media.MediaPlayer? = null
 
     @android.webkit.JavascriptInterface
     fun showToast(message: String) {
@@ -467,31 +496,148 @@ class WebAppInterface(private val activity: MainActivity) {
     
 
     @android.webkit.JavascriptInterface
+    fun copyToClipboard(text: String) {
+        try {
+            val clipboard = activity.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            val clip = android.content.ClipData.newPlainText("label", text)
+            clipboard.setPrimaryClip(clip)
+            activity.runOnUiThread {
+                Toast.makeText(activity, "已复制: $text", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            activity.runOnUiThread {
+                Toast.makeText(activity, "复制失败", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    @android.webkit.JavascriptInterface
     fun nativeFetch(url: String): String {
-        try {
-            val conn = java.net.URL(url).openConnection() as java.net.HttpURLConnection
-            conn.connectTimeout = 8000; conn.readTimeout = 8000
-            conn.setRequestProperty("User-Agent", "SoccerAlarmApp/2.0")
-            val body = conn.inputStream.bufferedReader().readText()
-            conn.disconnect()
-            return body
+        return try {
+            val connection = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            connection.connectTimeout = 10000
+            connection.readTimeout = 10000
+            connection.setRequestProperty("User-Agent", "SoccerAlarmPro/2.35")
+            val code = connection.responseCode
+            if (code in 200..299) {
+                connection.inputStream.bufferedReader().use { it.readText() }
+            } else {
+                "{\"error\":\"HTTP $code\"}"
+            }
         } catch (e: Exception) {
-            return "{\"error\":\"" + e.message + "\"}"
-        }
-    }
-    fun clearCustomRingtone() {
-        try {
-            val prefs = activity.getSharedPreferences("soccer_alarm_settings", android.content.Context.MODE_PRIVATE)
-            prefs.edit()
-                .remove("selected_ringtone_uri")
-                .remove("custom_ringtone_name")
-                .putString("selected_ringtone", "default")
-                .apply()
-        } catch (e: Exception) {
-            Log.e("WebAppInterface", "清除自定义铃声失败", e)
+            "{\"error\":\"${e.message}\"}"
         }
     }
 
-    private var testMediaPlayer: MediaPlayer? = null
+    @android.webkit.JavascriptInterface
+    fun saveImageToGallery(base64Data: String): String {
+        Log.i("SoccerAlarm", "saveImageToGallery: called, data length=${base64Data.length}")
+        try {
+            val pureBase64 = if (base64Data.contains(",")) base64Data.split(",")[1] else base64Data
+            val bytes = android.util.Base64.decode(pureBase64, android.util.Base64.DEFAULT)
+            Log.i("SoccerAlarm", "saveImageToGallery: decoded ${bytes.size} bytes")
 
+            val filename = "SoccerAlarm_QR_${System.currentTimeMillis()}.jpg"
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            
+            val resolver = activity.contentResolver
+            val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                resolver.insert(MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
+            } else {
+                @Suppress("DEPRECATION")
+                resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            }
+            Log.i("SoccerAlarm", "saveImageToGallery: insert uri=${uri}")
+            
+            if (uri != null) {
+                resolver.openOutputStream(uri)?.use { os -> os.write(bytes) }
+                Log.i("SoccerAlarm", "saveImageToGallery: saved successfully")
+                activity.runOnUiThread {
+                    Toast.makeText(activity, "已保存到相册", Toast.LENGTH_LONG).show()
+                }
+                val json = org.json.JSONObject()
+                json.put("success", true)
+                return json.toString()
+            } else {
+                Log.w("SoccerAlarm", "saveImageToGallery: falling back to file")
+                val dir = java.io.File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_PICTURES), "SoccerAlarm")
+                if (!dir.exists()) dir.mkdirs()
+                val file = java.io.File(dir, filename)
+                java.io.FileOutputStream(file).use { it.write(bytes) }
+                val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+                scanIntent.data = Uri.fromFile(file)
+                activity.sendBroadcast(scanIntent)
+                activity.runOnUiThread {
+                    Toast.makeText(activity, "已保存到相册", Toast.LENGTH_LONG).show()
+                }
+                val json = org.json.JSONObject()
+                json.put("success", true)
+                return json.toString()
+            }
+        } catch (e: Exception) {
+            val msg = e.message ?: "未知错误"
+            Log.e("SoccerAlarm", "saveImageToGallery: exception", e)
+            activity.runOnUiThread {
+                Toast.makeText(activity, "保存失败: $msg", Toast.LENGTH_LONG).show()
+            }
+            val json = org.json.JSONObject()
+            json.put("success", false)
+            json.put("message", msg)
+            return json.toString()
+        }
     }
+
+    @android.webkit.JavascriptInterface
+    fun openExternalApp(packageName: String, fallbackScheme: String): String {
+        return try {
+            val intent = activity.packageManager.getLaunchIntentForPackage(packageName)
+            if (intent != null) {
+                activity.startActivity(intent)
+                val json = org.json.JSONObject()
+                json.put("success", true)
+                return json.toString()
+            } else if (fallbackScheme.isNotEmpty()) {
+                // Fallback: use URL scheme
+                Log.i("SoccerAlarm", "openExternalApp: trying scheme $fallbackScheme")
+                try {
+                    val schemeIntent = Intent(Intent.ACTION_VIEW, Uri.parse(fallbackScheme))
+                    schemeIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    activity.startActivity(schemeIntent)
+                    Log.i("SoccerAlarm", "openExternalApp: scheme launched")
+                    val json = org.json.JSONObject()
+                    json.put("success", true)
+                    return json.toString()
+                } catch (e2: Exception) {
+                    Log.e("SoccerAlarm", "openExternalApp: scheme failed", e2)
+                    val json = org.json.JSONObject()
+                    json.put("success", false)
+                    json.put("message", "scheme failed")
+                    return json.toString()
+                }
+            } else {
+                val json = org.json.JSONObject()
+                json.put("success", false)
+                return json.toString()
+            }
+        } catch (e: Exception) {
+            val json = org.json.JSONObject()
+            json.put("success", false)
+            json.put("message", e.message)
+            json.toString()
+        }
+    }
+    @JavascriptInterface
+    fun openBrowser(url: String) {
+        Log.i("SoccerAlarm", "openBrowser: $url")
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            activity.startActivity(intent)
+            Log.i("SoccerAlarm", "openBrowser: launched")
+        } catch (e: Exception) {
+            Log.e("SoccerAlarm", "openBrowser error: ${e.message}")
+        }
+    }
+}

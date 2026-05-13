@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SoccerAlarm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00d4aa</item>
+        <item name="colorPrimaryVariant">#00a080</item>
+        <item name="colorOnPrimary">#0a1628</item>
+        <item name="colorSecondary">#e94560</item>
+        <item name="colorSecondaryVariant">#c53030</item>
+        <item name="colorOnSecondary">#ffffff</item>
+        <item name="android:statusBarColor">#0a1628</item>
+        <item name="android:navigationBarColor">#0a1628</item>
+        <item name="android:windowBackground">#0a1628</item>
+    </style>
+    <!-- 全屏闹钟主题：锁屏上弹出，无系统状态栏 -->
+    <style name="Theme.SoccerAlarm.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">#D32F2F</item>
+        <item name="android:navigationBarColor">#D32F2F</item>
+        <item name="android:windowBackground">#D32F2F</item>
+    </style>
+</resources>

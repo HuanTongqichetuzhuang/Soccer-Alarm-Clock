@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoccerAlarm Pro - 20s Ringtone Preview</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+        h1 { color: #333; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .ringtone-list { display: grid; gap: 20px; }
+        .ringtone-item { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .ringtone-item:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .ringtone-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #2196F3; }
+        .ringtone-desc { color: #666; margin-bottom: 10px; line-height: 1.6; }
+        .ringtone-info { background: #f0f8ff; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px; color: #444; }
+        .ringtone-info span { display: inline-block; background: #2196F3; color: white; padding: 2px 8px; border-radius: 3px; margin-right: 5px; margin-bottom: 5px; }
+        .btn-group { display: flex; gap: 10px; align-items: center; }
+        button { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+        button:hover { background: #1976D2; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .status { margin-top: 10px; font-weight: bold; min-height: 24px; }
+        .section { margin-top: 40px; }
+        .section-title { font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #333; border-bottom: 2px solid #2196F3; padding-bottom: 5px; }
+        .note { background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 30px; line-height: 1.8; }
+        .note strong { color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>SoccerAlarm Pro - 20s Ringtone Preview</h1>
+    <p class="subtitle">10 rich, structured, melodic ringtones (20 seconds each)</p>
+    
+    <div class="section">
+        <div class="section-title">20-Second Rich Melodic Ringtones</div>
+        <div class="ringtone-list">
+            <div class="ringtone-item">
+                <div class="ringtone-name">1. rich20_1_inspiring.wav</div>
+                <div class="ringtone-desc">Inspiring - Bright major key, progressive layers</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Multi-track</span><span>Warm</span><span>100% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_1_inspiring.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s1"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">2. rich20_2_gentle.wav</div>
+                <div class="ringtone-desc">Gentle - Soft minor key, warm chords</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Soft</span><span>Warm</span><span>69% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_2_gentle.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s2"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">3. rich20_3_upbeat.wav</div>
+                <div class="ringtone-desc">Upbeat - Bouncy rhythm, bright timbre</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Rhythmic</span><span>Energetic</span><span>88% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_3_upbeat.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s3"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">4. rich20_4_dramatic.wav</div>
+                <div class="ringtone-desc">Dramatic - Strong dynamic contrast, rich emotions</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Dynamic</span><span>Rich</span><span>100% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_4_dramatic.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s4"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">5. rich20_5_nostalgic.wav</div>
+                <div class="ringtone-desc">Nostalgic - Slow tempo, deep melody</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Slow</span><span>Deep</span><span>68% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_5_nostalgic.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s5"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">6. rich20_6_playful.wav</div>
+                <div class="ringtone-desc">Playful - Bouncy notes, light rhythm</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Bouncy</span><span>Light</span><span>65% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_6_playful.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s6"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">7. rich20_7_epic.wav</div>
+                <div class="ringtone-desc">Epic - Grand chords, progressive layers</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Grand</span><span>Layered</span><span>100% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_7_epic.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s7"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">8. rich20_8_dreamy.wav</div>
+                <div class="ringtone-desc">Dreamy - Soft timbre, ethereal melody</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Ethereal</span><span>Soft</span><span>50% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_8_dreamy.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s8"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">9. rich20_9_rhythmic.wav</div>
+                <div class="ringtone-desc">Rhythmic - Clear beat, dynamic melody</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Beat</span><span>Dynamic</span><span>75% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_9_rhythmic.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s9"></div>
+            </div>
+            
+            <div class="ringtone-item">
+                <div class="ringtone-name">10. rich20_10_emotional.wav</div>
+                <div class="ringtone-desc">Emotional - Dynamic melody, deeply touching</div>
+                <div class="ringtone-info">
+                    <span>20s</span><span>Emotional</span><span>Touching</span><span>99% Vol</span>
+                </div>
+                <div class="btn-group">
+                    <button onclick="playRingtone('rich20_10_emotional.wav', this)">Play</button>
+                    <button onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="status" id="s10"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="note">
+        <strong>Note:</strong><br>
+        1. These ringtones have been copied to: <code>E:\项目\SoccerAlarmPro\SoccerAlarmAPK\app\src\main\res\raw\</code><br>
+        2. Each ringtone has a complete structure: Intro (0-4s) → Verse (4-10s) → Chorus (10-16s) → Outro (16-20s)<br>
+        3. Multi-layered: Bass + Chords + Melody playing simultaneously<br>
+        4. Multiple waveforms: sine, triangle, sawtooth, square waves mixed<br>
+        5. ADSR envelope: natural sound with attack/decay/sustain/release<br>
+        6. Tell me which ones you like, and I'll integrate them into the APP!
+    </div>
+    
+    <script>
+        let currentAudio = null;
+        
+        function playRingtone(filename, button) {
+            stopAudio();
+            const audioPath = filename;
+            currentAudio = new Audio(audioPath);
+            const statusDiv = button.parentElement.parentElement.querySelector('.status');
+            statusDiv.textContent = 'Playing...';
+            currentAudio.play().then(() => {
+                console.log('Playing:', filename);
+            }).catch(error => {
+                statusDiv.textContent = 'Error: ' + error.message;
+                console.error('Playback error:', error);
+            });
+            currentAudio.onended = function() {
+                statusDiv.textContent = 'Completed!';
+                setTimeout(() => { statusDiv.textContent = ''; }, 2000);
+            };
+        }
+        
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+                document.querySelectorAll('.status').forEach(el => {
+                    el.textContent = 'Stopped';
+                    setTimeout(() => { el.textContent = ''; }, 1500);
+                });
+            }
+        }
+        
+        window.addEventListener('beforeunload', stopAudio);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a1628">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="足球闹钟Pro">
+  <title>足球闹钟Pro - 顶级联赛</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a1628;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .app-container {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0a1628 0%, #1a2744 50%, #0f1f3a 100%);
+      padding-bottom: 85px;
+      position: relative;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a2744 0%, #0f3460 100%);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #00d4aa;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,212,170,0.1) 0%, transparent 50%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+    .header h1 { font-size: 22px; margin-bottom: 5px; position: relative; }
+    .header h1 span { color: #00d4aa; }
+    .header p { color: #7f8c9a; font-size: 12px; position: relative; }
+    .search-bar {
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 25px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-input::placeholder { color: #7f8c9a; }
+    .quick-bar {
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .quick-team {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      font-size: 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    .quick-team:hover, .quick-team.active {
+      background: rgba(0,212,170,0.2);
+      border-color: #00d4aa;
+    }
+    .quick-team img { width: 20px; height: 20px; }
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      background: rgba(10,22,40,0.98);
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .nav-item {
+      flex: 1;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      color: #7f8c9a;
+      font-size: 10px;
+      transition: all 0.3s;
+    }
+    .nav-item.active { color: #00d4aa; }
+    .nav-item svg { width: 22px; height: 22px; margin-bottom: 4px; }
+    .page { display: none; padding: 16px; }
+    .page.active { display: block; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 16px 0 12px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .league-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 0;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .league-tabs::-webkit-scrollbar { display: none; }
+    .league-tab {
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      font-size: 11px;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .league-tab.active {
+      background: linear-gradient(135deg, #00d4aa 0%, #00a080 100%);
+      border-color: transparent;
+      color: #0a1628;
+      font-weight: 600;
+    }
+    .match-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .match-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0,212,170,0.3);
+    }
+    .match-league {
+      font-size: 11px;
+      color: #7f8c9a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .match-teams {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .team {
+      text-align: center;
+      flex: 1;
+    }
+    .team-logo {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    .team-logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .team-name { font-size: 12px; color: #ccc; }
+    .vs { 
+      color: #00d4aa; 
+      font-weight: bold; 
+      font-size: 14px;
+      padding: 0 12px;
+    }
+    .match-time {
+      text-align: center;
+      color: #7f8c9a;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .live-badge {
+      display: inline-block;
+      background: #e74c3c;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .score-live {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .score-live .score {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .score-live .time {
+      font-size: 12px;
+      color: #e74c3c;
+    }
+    .alarm-btn {
+      width: 100%;
+      padding: 12px;
+      background: rgba(0,212,170,0.1);
+      border: 1px solid #00d4aa;
+      border-radius: 10px;
+      color: #00d4aa;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    .alarm-btn:hover, .alarm-btn.active {
+      background: #00d4aa;
+      color: #0a1628;
+    }
+    .alarm-btn.active {
+      background: #27ae60;
+      border-color: #27ae60;
+      color: white;
+    }
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .standings-table th {
+      text-align: left;
+      padding: 10px 6px;
+      color: #7f8c9a;
+      font-size: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .standings-table td {
+      padding: 12px 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .standings-table tr.champions td { background: rgba(52,152,219,0.1); }
+    .standings-table tr.europa td { background: rgba(155,89,182,0.1); }
+    .standings-table tr.relegation td { background: rgba(231,76,60,0.1); }
+    .pos { width: 20px; color: #7f8c9a; }
+    .team-cell { display: flex; align-items: center; gap: 8px; }
+    .mini-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-logo img { width: 18px; height: 18px; object-fit: contain; }
+    .top-scorer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .rank { 
+      width: 32px; 
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .rank-1 { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #0a1628; }
+    .rank-2 { background: linear-gradient(135deg, #bdc3c7, #95a5a6); color: #0a1628; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #0a1628; }
+    .rank-default { background: rgba(255,255,255,0.1); }
+    .player-info { flex: 1; }
+    .player-name { font-weight: 600; font-size: 14px; }
+    .player-team { font-size: 11px; color: #7f8c9a; }
+    .goals { font-size: 20px; font-weight: bold; color: #00d4aa; }
+    .btn-primary {
+      background: linear-gradient(135deg, #00d4aa 0%, #00a080 100%);
+      color: #0a1628;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .team-item {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .team-item:hover { background: rgba(255,255,255,0.1); }
+    .team-item.selected {
+      border-color: #00d4aa;
+      background: rgba(0,212,170,0.1);
+    }
+    .team-item .team-logo {
+      width: 45px; height: 45px;
+      margin: 0 auto 8px;
+    }
+    .team-item .team-name {
+      font-size: 10px;
+      color: #ccc;
+    }
+    .favorite-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .favorite-card img { width: 40px; height: 40px; }
+    .favorite-info { flex: 1; }
+    .favorite-info h4 { font-size: 14px; }
+    .favorite-info p { font-size: 11px; color: #7f8c9a; }
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #7f8c9a;
+    }
+    .empty-state svg { width: 64px; height: 64px; margin-bottom: 16px; opacity: 0.5; }
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #27ae60;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      z-index: 1000;
+      animation: fadeInOut 2s ease;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+      20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      overflow-y: auto;
+    }
+    .modal-content {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100%;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-header h2 { font-size: 18px; }
+    .close-btn { font-size: 28px; cursor: pointer; opacity: 0.7; }
+    .refresh-btn {
+      background: rgba(0,212,170,0.2);
+      border: 1px solid #00d4aa;
+      color: #00d4aa;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .notification-badge {
+      background: #e74c3c;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 10px;
+      margin-left: 8px;
+    }
+    .all-leagues-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .league-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .league-card:hover, .league-card.active {
+      background: rgba(0,212,170,0.1);
+      border-color: #00d4aa;
+    }
+    .league-card .flag { font-size: 32px; margin-bottom: 8px; }
+    .league-card .name { font-size: 14px; font-weight: 600; }
+    .league-card .country { font-size: 11px; color: #7f8c9a; margin-top: 4px; }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1>⚽ <span>足球闹钟</span>Pro</h1>
+      <p>支持 <span id="league-count">20</span> 大顶级联赛</p>
+    </div>
+
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+      <input type="text" class="search-input" placeholder="🔍 搜索球队或联赛..." id="searchInput" oninput="searchData()">
+    </div>
+
+    <!-- 快速访问栏 -->
+    <div class="quick-bar" id="quickBar"></div>
+
+    <!-- 赛程页 -->
+    <div class="page active" id="page-schedule">
+      <div class="section-header">
+        <div class="section-title">📅 比赛赛程</div>
+        <button class="refresh-btn" onclick="refreshData('schedule')">🔄 刷新</button>
+      </div>
+      <div class="league-tabs" id="schedule-tabs"></div>
+      <div id="schedule-list"></div>
+    </div>
+
+    <!-- 直播页 -->
+    <div class="page" id="page-live">
+      <div class="section-header">
+        <div class="section-title">🔴 正在直播</div>
+        <button class="refresh-btn" onclick="refreshData('live')">🔄 刷新</button>
+      </div>
+      <div id="live-list"></div>
+    </div>
+
+    <!-- 积分榜页 -->
+    <div class="page" id="page-standings">
+      <div class="section-header">
+        <div class="section-title">🏆 积分榜</div>
+        <button class="refresh-btn" onclick="refreshData('standings')">🔄 刷新</button>
+      </div>
+      <div class="league-tabs" id="standings-tabs"></div>
+      <div id="standings-content"></div>
+    </div>
+
+    <!-- 射手榜页 -->
+    <div class="page" id="page-scorers">
+      <div class="section-header">
+        <div class="section-title">⚽ 射手榜</div>
+        <button class="refresh-btn" onclick="refreshData('scorers')">🔄 刷新</button>
+      </div>
+      <div class="league-tabs" id="scorers-tabs"></div>
+      <div id="scorers-content"></div>
+    </div>
+
+    <!-- 收藏页 -->
+    <div class="page" id="page-favorites">
+      <div class="section-title">⭐ 我的收藏 <span class="notification-badge" id="notifCount">0</span></div>
+      <div id="favorites-list"></div>
+      <button class="btn-primary" onclick="showLeagueSelector()">🌐 选择联赛 & 球队</button>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav class="nav">
+      <div class="nav-item active" onclick="switchTab('schedule')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+        <div>赛程</div>
+      </div>
+      <div class="nav-item" onclick="switchTab('live')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="#e74c3c"/></svg>
+        <div>直播</div>
+      </div>
+      <div class="nav-item" onclick="switchTab('standings')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/></svg>
+        <div>积分</div>
+      </div>
+      <div class="nav-item" onclick="switchTab('scorers')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <div>射手</div>
+      </div>
+      <div class="nav-item" onclick="switchTab('favorites')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <div>收藏</div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- 联赛选择弹窗 -->
+  <div id="leagueModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🌐 选择联赛</h2>
+        <span class="close-btn" onclick="closeLeagueSelector()">&times;</span>
+      </div>
+      <div class="all-leagues-grid" id="allLeaguesGrid"></div>
+      <div class="section-title" style="margin-top:24px;">⭐ 选择球队</div>
+      <div class="league-tabs" id="selector-tabs"></div>
+      <div class="team-grid" id="team-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    // 联赛数据 - 20大顶级联赛
+    const leagues = [
+      // 5大联赛 (有真实队徽API)
+      { id: 'PL', name: '英超', country: '英格兰', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', color: '#3d195b', hasRealCrest: true },
+      { id: 'PD', name: '西甲', country: '西班牙', flag: '🇪🇸', color: '#ee8707', hasRealCrest: true },
+      { id: 'SA', name: '意甲', country: '意大利', flag: '🇮🇹', color: '#024494', hasRealCrest: true },
+      { id: 'BL1', name: '德甲', country: '德国', flag: '🇩🇪', color: '#d20515', hasRealCrest: true },
+      { id: 'FL1', name: '法甲', country: '法国', flag: '🇫🇷', color: '#dae025', hasRealCrest: true },
+      // 亚洲联赛
+      { id: 'CSL', name: '中超', country: '中国', flag: '🇨🇳', color: '#df0024', hasRealCrest: false },
+      { id: 'J1', name: 'J联赛', country: '日本', flag: '🇯🇵', color: '#12a6d4', hasRealCrest: false },
+      { id: 'K1', name: 'K联赛', country: '韩国', flag: '🇰🇷', color: '#ed1c27', hasRealCrest: false },
+      // 其他联赛
+      { id: 'DED', name: '荷甲', country: '荷兰', flag: '🇳🇱', color: '#fe5000', hasRealCrest: true },
+      { id: 'PPL', name: '葡超', country: '葡萄牙', flag: '🇵🇹', color: '#006847', hasRealCrest: true },
+      { id: 'BEL1', name: '比甲', country: '比利时', flag: '🇧🇪', color: '#ff0000', hasRealCrest: false },
+      { id: 'SC1', name: '苏超', country: '苏格兰', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', color: '#1c3587', hasRealCrest: false },
+      { id: 'ELC', name: '英冠', country: '英格兰', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', color: '#6c3d91', hasRealCrest: false },
+      { id: 'LIG2', name: '法乙', country: '法国', flag: '🇫🇷', color: '#003189', hasRealCrest: false },
+      { id: 'SB', name: 'J2联赛', country: '日本', flag: '🇯🇵', color: '#0079c1', hasRealCrest: false },
+      { id: 'K2', name: 'K2联赛', country: '韩国', flag: '🇰🇷', color: '#0047a0', hasRealCrest: false },
+      { id: 'CL', name: '欧冠', country: '欧洲', flag: '🏆', color: '#1a365d', hasRealCrest: false },
+      { id: 'EL', name: '欧联', country: '欧洲', flag: '🏅', color: '#f59e0b', hasRealCrest: false },
+      { id: 'EC', name: '欧洲杯', country: '欧洲', flag: '⚽', color: '#0066cc', hasRealCrest: false },
+      { id: 'WC', name: '世界杯', country: '世界', flag: '🌍', color: '#c53030', hasRealCrest: false }
+    ];
+
+    // 球队数据
+    const teams = {
+      PL: [
+        { id: 65, name: '曼城', abbr: 'MCI', color: '#6cabdd' },
+        { id: 66, name: '阿斯顿维拉', abbr: 'AVL', color: '#670e36' },
+        { id: 64, name: '利物浦', abbr: 'LIV', color: '#c8102e' },
+        { id: 67, name: '纽卡斯尔', abbr: 'NEW', color: '#241f20' },
+        { id: 63, name: '切尔西', abbr: 'CHE', color: '#034694' },
+        { id: 62, name: '阿森纳', abbr: 'ARS', color: '#db0007' },
+        { id: 73, name: '托特纳姆热刺', abbr: 'TOT', color: '#132257' },
+        { id: 57, name: '曼联', abbr: 'MUN', color: '#da291c' },
+        { id: 76, name: '西汉姆联', abbr: 'WHU', color: '#7a263a' },
+        { id: 74, name: '水晶宫', abbr: 'CRY', color: '#1b458f' },
+        { id: 71, name: '伯恩茅斯', abbr: 'BOU', color: '#da291c' },
+        { id: 58, name: '布赖顿', abbr: 'BHA', color: '#0057b8' }
+      ],
+      PD: [
+        { id: 86, name: '皇马', abbr: 'RMA', color: '#febe10' },
+        { id: 131, name: '巴萨', abbr: 'BAR', color: '#a50044' },
+        { id: 78, name: '马德里竞技', abbr: 'ATM', color: '#cb3524' },
+        { id: 92, name: '塞维利亚', abbr: 'SEV', color: '#d60028' },
+        { id: 94, name: '毕尔巴鄂', abbr: 'ATH', color: '#ee2523' },
+        { id: 88, name: '皇家社会', abbr: 'RSO', color: '#143c8b' },
+        { id: 83, name: '比利亚雷亚尔', abbr: 'VIL', color: '#ffe114' },
+        { id: 80, name: '贝蒂斯', abbr: 'BET', color: '#00954c' },
+        { id: 90, name: '瓦伦西亚', abbr: 'VAL', color: '#ee3524' },
+        { id: 77, name: '奥萨苏纳', abbr: 'OSA', color: '#0a346f' }
+      ],
+      SA: [
+        { id: 109, name: '国际米兰', abbr: 'INT', color: '#0068a8' },
+        { id: 103, name: 'AC米兰', abbr: 'MIL', color: '#f20000' },
+        { id: 496, name: '那不勒斯', abbr: 'NAP', color: '#12a6d4' },
+        { id: 108, name: '尤文图斯', abbr: 'JUV', color: '#000000' },
+        { id: 100, name: '罗马', abbr: 'ROM', color: '#8e1f2f' },
+        { id: 117, name: '亚特兰大', abbr: 'ATA', color: '#1a56a6' },
+        { id: 99, name: '拉齐奥', abbr: 'LAZ', color: '#87d8f7' },
+        { id: 110, name: '佛罗伦萨', abbr: 'FIO', color: '#482f92' },
+        { id: 98, name: '博洛尼亚', abbr: 'BOL', color: '#1a2f48' },
+        { id: 107, name: '都灵', abbr: 'TOR', color: '#8b0000' }
+      ],
+      BL1: [
+        { id: 5, name: '拜仁慕尼黑', abbr: 'FCB', color: '#dc052d' },
+        { id: 2, name: '多特蒙德', abbr: 'BVB', color: '#fde100' },
+        { id: 1635, name: 'RB莱比锡', abbr: 'RBL', color: '#dd0544' },
+        { id: 6, name: '勒沃库森', abbr: 'B04', color: '#ee0000' },
+        { id: 12, name: '法兰克福', abbr: 'SGE', color: '#e1000a' },
+        { id: 7, name: '弗赖堡', abbr: 'SCF', color: '#d40424' },
+        { id: 9, name: '沃尔夫斯堡', abbr: 'WOB', color: '#fde100' },
+        { id: 11, name: '门兴', abbr: 'BMG', color: '#0a346f' },
+        { id: 16, name: '霍芬海姆', abbr: 'TSG', color: '#2178d4' },
+        { id: 3, name: '柏林联合', abbr: 'FCU', color: '#e2001a' }
+      ],
+      FL1: [
+        { id: 524, name: '巴黎圣日耳曼', abbr: 'PSG', color: '#004170' },
+        { id: 516, name: '马赛', abbr: 'OM', color: '#ffffff' },
+        { id: 521, name: '摩纳哥', abbr: 'ASM', color: '#e2001a' },
+        { id: 511, name: '里昂', abbr: 'OL', color: '#214fa2' },
+        { id: 523, name: '朗斯', abbr: 'FCL', color: '#d4a106' },
+        { id: 518, name: '里尔', abbr: 'LOSC', color: '#d70035' },
+        { id: 522, name: '雷恩', abbr: 'SRFC', color: '#da291c' },
+        { id: 513, name: '尼斯', abbr: 'OGC', color: '#d40000' },
+        { id: 520, name: '图卢兹', abbr: 'TFC', color: '#6c3d91' },
+        { id: 512, name: '斯特拉斯堡', abbr: 'RCSA', color: '#e3000b' }
+      ],
+      // 中超联赛
+      CSL: [
+        { id: 'sha', name: '上海海港', abbr: 'SHG', color: '#004493', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#004493"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">海</text></svg>') },
+        { id: 'bei', name: '北京国安', abbr: 'BJD', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">国</text></svg>') },
+        { id: 'gud', name: '广州队', abbr: 'GZC', color: '#ff6b00', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ff6b00"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">广</text></svg>') },
+        { id: 'sha', name: '上海绿地', abbr: 'SHG', color: '#e31e24', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#e31e24"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">绿</text></svg>') },
+        { id: 'wan', name: '武汉三镇', abbr: 'WHC', color: '#0066cc', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0066cc"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">三</text></svg>') },
+        { id: 'tia', name: '天津津门虎', abbr: 'TJ', color: '#ff6b00', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ff6b00"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">津</text></svg>') },
+        { id: 'cha', name: '长春亚泰', abbr: 'CC', color: '#0066cc', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0066cc"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">长</text></svg>') },
+        { id: 'hen', name: '河南队', abbr: 'HN', color: '#e31e24', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#e31e24"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">河</text></svg>') },
+        { id: 'sde', name: '山东泰山', abbr: 'SD', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">泰</text></svg>') },
+        { id: 'cos', name: '成都蓉城', abbr: 'CD', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">蓉</text></svg>') },
+        { id: 'dali', name: '大理进程', abbr: 'DL', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">大</text></svg>') },
+        { id: 'qing', name: '青岛西海岸', abbr: 'QD', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">青</text></svg>') }
+      ],
+      // J联赛
+      J1: [
+        { id: 'yfm', name: '横滨水手', abbr: 'YFM', color: '#0069b4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0069b4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">横</text></svg>') },
+        { id: 'kaw', name: '川崎前锋', abbr: 'KAW', color: '#1a5599', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#1a5599"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">川</text></svg>') },
+        { id: 'cel', name: '神户胜利', abbr: 'VSK', color: '#d7001a', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#d7001a"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">神</text></svg>') },
+        { id: 'ura', name: '浦和新泻', abbr: 'URA', color: '#0070bc', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0070bc"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">浦</text></svg>') },
+        { id: 'san', name: '鹿岛鹿角', abbr: 'SAN', color: '#ff6600', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ff6600"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">鹿</text></svg>') },
+        { id: 'fag', name: '广岛三箭', abbr: 'SAN', color: '#d7001a', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#d7001a"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">广</text></svg>') },
+        { id: 'tle', name: '町田泽维', abbr: 'MAC', color: '#0069b4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0069b4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">町</text></svg>') },
+        { id: 'tok', name: 'FC东京', abbr: 'FCT', color: '#ed1c27', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ed1c27"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">東</text></svg>') }
+      ],
+      // K联赛
+      K1: [
+        { id: 'uln', name: '蔚山现代', abbr: 'ULS', color: '#0055a4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0055a4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">蔚</text></svg>') },
+        { id: 'sel', name: '首尔FC', abbr: 'SEO', color: '#c60c30', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#c60c30"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">首</text></svg>') },
+        { id: 'jeo', name: '全北现代', abbr: 'JBK', color: '#0055a4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0055a4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">全</text></svg>') },
+        { id: 'uls', name: '浦项制铁', abbr: 'PCT', color: '#0055a4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0055a4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">浦</text></svg>') },
+        { id: 'suw', name: '水原三星', abbr: 'SW', color: '#ed1c27', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ed1c27"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">水</text></svg>') },
+        { id: 'gim', name: '金泉尚武', abbr: 'GIM', color: '#0055a4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0055a4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">金</text></svg>') },
+        { id: 'dae', name: '大邱FC', abbr: 'DAE', color: '#805ce8', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#805ce8"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">大</text></svg>') },
+        { id: 'gwa', name: '光州FC', abbr: 'GWA', color: '#0055a4', logo: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#0055a4"/><text x="50" y="60" text-anchor="middle" font-size="24" fill="white" font-weight="bold">光</text></svg>') }
+      ],
+      // 其他联赛使用默认队徽
+      DED: [
+        { id: 670, name: '埃因霍温', abbr: 'PSV', color: '#ed2024' },
+        { id: 672, name: '阿贾克斯', abbr: 'AJA', color: '#e32027' },
+        { id: 673, name: '费耶诺德', abbr: 'FEY', color: '#ee1c24' }
+      ],
+      PPL: [
+        { id: 503, name: '波尔图', abbr: 'FCP', color: '#004885' },
+        { id: 540, name: '本菲卡', abbr: 'SLB', color: '#df0101' },
+        { id: 496, name: '葡萄牙体育', abbr: 'SCP', color: '#ee2523' }
+      ]
+    };
+
+    // 状态
+    let currentLeague = 'PL';
+    let favorites = [];
+    let notifications = [];
+
+    // 获取队徽URL
+    function getCrestUrl(team, leagueId) {
+      if (team.logo) return team.logo;
+      if (team.id && teams[leagueId]?.find(t => t.id === team.id)?.hasRealCrest !== false) {
+        return `https://crests.football-data.org/${team.id}.svg`;
+      }
+      // 生成SVG队徽
+      return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${team.color || '#666'}"/><text x="50" y="60" text-anchor="middle" font-size="32" fill="white" font-weight="bold">${team.abbr?.charAt(0) || '?'}</text></svg>`)}`;
+    }
+
+    // 加载状态
+    function loadState() {
+      const saved = localStorage.getItem('soccerAlarmV2State');
+      if (saved) {
+        const state = JSON.parse(saved);
+        favorites = state.favorites || [];
+        notifications = state.notifications || [];
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('soccerAlarmV2State', JSON.stringify({ favorites, notifications }));
+    }
+
+    // 生成模拟赛程
+    function generateSchedule(leagueId) {
+      const leagueTeams = teams[leagueId] || teams.PL;
+      const league = leagues.find(l => l.id === leagueId);
+      const matches = [];
+      const now = new Date();
+      
+      for (let i = 0; i < 5; i++) {
+        const date = new Date(now);
+        date.setDate(date.getDate() + i + 1);
+        const home = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        let away = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        while (away.id === home.id) {
+          away = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        }
+        matches.push({
+          id: `${leagueId}-${i}`,
+          home,
+          away,
+          date,
+          time: `${String(Math.floor(Math.random() * 12) + 12).padStart(2, '0')}:${Math.random() > 0.5 ? '00' : '30'}`,
+          league
+        });
+      }
+      return matches;
+    }
+
+    // 生成直播数据
+    function generateLiveMatches() {
+      const liveLeagues = ['PL', 'PD', 'SA', 'BL1', 'FL1'];
+      const matches = [];
+      const league = leagues.find(l => l.id === 'PL');
+      
+      for (let i = 0; i < 4; i++) {
+        const leagueTeams = teams[liveLeagues[i]] || teams.PL;
+        const home = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        let away = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        while (away.id === home.id) {
+          away = leagueTeams[Math.floor(Math.random() * leagueTeams.length)];
+        }
+        matches.push({
+          id: `live-${i}`,
+          home,
+          away,
+          homeGoals: Math.floor(Math.random() * 4),
+          awayGoals: Math.floor(Math.random() * 4),
+          minute: 45 + Math.floor(Math.random() * 46),
+          league: leagues.find(l => l.id === liveLeagues[i])
+        });
+      }
+      return matches;
+    }
+
+    // 生成积分榜
+    function generateStandings(leagueId) {
+      const leagueTeams = teams[leagueId] || teams.PL;
+      return leagueTeams.map((team, idx) => ({
+        ...team,
+        played: 28 + Math.floor(Math.random() * 4),
+        won: 12 + Math.floor(Math.random() * 10),
+        drawn: 3 + Math.floor(Math.random() * 6),
+        lost: 2 + Math.floor(Math.random() * 8),
+        goalsFor: 30 + Math.floor(Math.random() * 30),
+        goalsAgainst: 15 + Math.floor(Math.random() * 25),
+        points: 40 + Math.floor(Math.random() * 25)
+      })).sort((a, b) => b.points - a.points || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst));
+    }
+
+    // 生成射手榜
+    function generateScorers(leagueId) {
+      const names = ['姆巴佩', '哈兰德', '凯恩', '劳塔罗', '莱万', '萨拉赫', '奥斯梅恩', '贝林厄姆'];
+      const leagueTeams = teams[leagueId] || teams.PL;
+      return names.slice(0, Math.min(8, leagueTeams.length)).map((name, idx) => ({
+        rank: idx + 1,
+        name,
+        team: leagueTeams[idx % leagueTeams.length],
+        goals: 18 - idx * 2 + Math.floor(Math.random() * 3),
+        assists: Math.floor(Math.random() * 8)
+      }));
+    }
+
+    // 渲染联赛标签
+    function renderTabs(containerId, leagueList, activeId, callback) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = leagueList.map(l => 
+        `<div class="league-tab ${l.id === activeId ? 'active' : ''}" onclick="${callback}('${l.id}')">${l.flag} ${l.name}</div>`
+      ).join('');
+    }
+
+    // 渲染赛程
+    function renderSchedule(leagueId) {
+      const matches = generateSchedule(leagueId);
+      const league = leagues.find(l => l.id === leagueId);
+      const list = document.getElementById('schedule-list');
+      
+      list.innerHTML = `
+        <div class="match-league" style="margin-bottom:16px;">
+          ${league?.flag || '⚽'} ${league?.name || leagueId} - 即将进行的比赛
+        </div>
+        ${matches.map(match => {
+          const isNotified = notifications.some(n => n.matchId === match.id);
+          const dateStr = match.date.toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric', weekday: 'short' });
+          return `
+            <div class="match-card">
+              <div class="match-league">${league?.flag || '⚽'} ${league?.name || ''}</div>
+              <div class="match-teams">
+                <div class="team">
+                  <div class="team-logo"><img src="${getCrestUrl(match.home, leagueId)}" alt="${match.home.name}" onerror="this.style.display='none'"></div>
+                  <div class="team-name">${match.home.name}</div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team">
+                  <div class="team-logo"><img src="${getCrestUrl(match.away, leagueId)}" alt="${match.away.name}" onerror="this.style.display='none'"></div>
+                  <div class="team-name">${match.away.name}</div>
+                </div>
+              </div>
+              <div class="match-time">📅 ${dateStr} ⏰ ${match.time}</div>
+              <button class="alarm-btn ${isNotified ? 'active' : ''}" onclick="toggleAlarm('${match.id}', '${match.home.name}', '${match.away.name}', '${dateStr} ${match.time}')">
+                ${isNotified ? '🔔 已设置提醒' : '🔕 设置提醒'}
+              </button>
+            </div>
+          `;
+        }).join('')}
+      `;
+    }
+
+    // 渲染直播
+    function renderLive() {
+      const matches = generateLiveMatches();
+      const list = document.getElementById('live-list');
+      
+      list.innerHTML = matches.map(match => `
+        <div class="match-card">
+          <div class="match-league">
+            <span class="live-badge">🔴 LIVE</span>
+            ${match.league?.flag || '⚽'} ${match.league?.name || ''}
+          </div>
+          <div class="match-teams">
+            <div class="team">
+              <div class="team-logo"><img src="${getCrestUrl(match.home, match.league.id)}" alt="${match.home.name}" onerror="this.style.display='none'"></div>
+              <div class="team-name">${match.home.name}</div>
+            </div>
+            <div class="vs" style="flex-direction:column;">
+              <div style="font-size:28px; font-weight:bold;">${match.homeGoals} - ${match.awayGoals}</div>
+              <div style="font-size:12px; color:#e74c3c;">${match.minute}'</div>
+            </div>
+            <div class="team">
+              <div class="team-logo"><img src="${getCrestUrl(match.away, match.league.id)}" alt="${match.away.name}" onerror="this.style.display='none'"></div>
+              <div class="team-name">${match.away.name}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 渲染积分榜
+    function renderStandings(leagueId) {
+      const standings = generateStandings(leagueId);
+      const content = document.getElementById('standings-content');
+      
+      let rowClass = '';
+      content.innerHTML = `
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th class="pos">#</th>
+              <th>球队</th>
+              <th>胜</th>
+              <th>平</th>
+              <th>负</th>
+              <th>积分</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${standings.map((team, idx) => {
+              if (idx === 0) rowClass = 'champions';
+              else if (idx === 2) rowClass = 'europa';
+              else if (idx === standings.length - 2 || idx === standings.length - 1) rowClass = 'relegation';
+              else rowClass = '';
+              
+              return `
+                <tr class="${rowClass}">
+                  <td class="pos">${idx + 1}</td>
+                  <td class="team-cell">
+                    <span class="mini-logo"><img src="${getCrestUrl(team, leagueId)}" onerror="this.style.display='none'"></span>
+                    ${team.name}
+                  </td>
+                  <td>${team.won}</td>
+                  <td>${team.drawn}</td>
+                  <td>${team.lost}</td>
+                  <td><strong>${team.points}</strong></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // 渲染射手榜
+    function renderScorers(leagueId) {
+      const scorers = generateScorers(leagueId);
+      const content = document.getElementById('scorers-content');
+      
+      content.innerHTML = scorers.map(p => {
+        const rankClass = p.rank === 1 ? 'rank-1' : p.rank === 2 ? 'rank-2' : p.rank === 3 ? 'rank-3' : 'rank-default';
+        return `
+          <div class="top-scorer">
+            <div class="rank ${rankClass}">${p.rank}</div>
+            <div class="player-info">
+              <div class="player-name">${p.name}</div>
+              <div class="player-team">${p.team.name}</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="goals">${p.goals}球</div>
+              <div style="font-size:11px; color:#7f8c9a;">${p.assists}助攻</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 渲染收藏
+    function renderFavorites() {
+      const list = document.getElementById('favorites-list');
+      document.getElementById('notifCount').textContent = notifications.length;
+      
+      // 渲染收藏球队
+      let html = '';
+      if (favorites.length > 0) {
+        html += '<div class="section-title" style="margin-top:8px;">⭐ 收藏的球队</div>';
+        favorites.forEach(fav => {
+          html += `
+            <div class="favorite-card">
+              <img src="${getCrestUrl(fav.team, fav.leagueId)}" onerror="this.style.display='none'">
+              <div class="favorite-info">
+                <h4>${fav.team.name}</h4>
+                <p>${fav.leagueName}</p>
+              </div>
+              <button style="background:none;border:none;color:#e74c3c;font-size:20px;cursor:pointer;" onclick="removeFavorite('${fav.team.id}')">&times;</button>
+            </div>
+          `;
+        });
+      }
+      
+      // 渲染提醒
+      html += '<div class="section-title" style="margin-top:16px;">🔔 比赛提醒</div>';
+      if (notifications.length === 0) {
+        html += '<div class="empty-state"><p>暂无提醒</p></div>';
+      } else {
+        notifications.forEach((n, idx) => {
+          html += `
+            <div class="favorite-card">
+              <div class="favorite-info">
+                <h4>${n.home} vs ${n.away}</h4>
+                <p>${n.time}</p>
+              </div>
+              <button style="background:none;border:none;color:#e74c3c;font-size:20px;cursor:pointer;" onclick="deleteNotification(${idx})">&times;</button>
+            </div>
+          `;
+        });
+      }
+      
+      list.innerHTML = html;
+    }
+
+    // 渲染快速访问栏
+    function renderQuickBar() {
+      const bar = document.getElementById('quickBar');
+      if (favorites.length === 0) {
+        bar.innerHTML = '<div style="color:#7f8c9a;font-size:12px;padding:8px;">点击"收藏"页面添加关注的球队</div>';
+        return;
+      }
+      bar.innerHTML = favorites.map(fav => `
+        <div class="quick-team" onclick="switchToLeague('${fav.leagueId}')">
+          <img src="${getCrestUrl(fav.team, fav.leagueId)}" onerror="this.style.display='none'" style="width:20px;height:20px;border-radius:50%;">
+          <span>${fav.team.name}</span>
+        </div>
+      `).join('');
+    }
+
+    // 切换标签页
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      
+      const tabs = ['schedule', 'live', 'standings', 'scorers', 'favorites'];
+      document.querySelector(`.nav-item:nth-child(${tabs.indexOf(tab) + 1})`).classList.add('active');
+      document.getElementById(`page-${tab}`).classList.add('active');
+      
+      if (tab === 'favorites') renderFavorites();
+      if (tab === 'live') renderLive();
+    }
+
+    // 切换联赛
+    function changeLeague(type, leagueId) {
+      currentLeague = leagueId;
+      const mainLeagues = leagues.slice(0, 8); // 8大主要联赛
+      
+      if (type === 'schedule') {
+        renderTabs('schedule-tabs', mainLeagues, leagueId, 'changeLeague');
+        renderSchedule(leagueId);
+      } else if (type === 'standings') {
+        renderTabs('standings-tabs', mainLeagues, leagueId, 'changeLeague');
+        renderStandings(leagueId);
+      } else if (type === 'scorers') {
+        renderTabs('scorers-tabs', mainLeagues, leagueId, 'changeLeague');
+        renderScorers(leagueId);
+      } else if (type === 'selector') {
+        renderTabs('selector-tabs', leagues.slice(0, 10), leagueId, 'selectLeague');
+        renderTeamGrid(leagueId);
+      }
+    }
+
+    function switchToLeague(leagueId) {
+      currentLeague = leagueId;
+      switchTab('schedule');
+      changeLeague('schedule', leagueId);
+    }
+
+    // 闹钟功能
+    function toggleAlarm(matchId, home, away, time) {
+      const idx = notifications.findIndex(n => n.matchId === matchId);
+      if (idx >= 0) {
+        notifications.splice(idx, 1);
+        showToast('已取消提醒');
+      } else {
+        notifications.push({ matchId, home, away, time });
+        showToast('已设置提醒！');
+      }
+      saveState();
+      renderSchedule(currentLeague);
+      renderFavorites();
+    }
+
+    function deleteNotification(idx) {
+      notifications.splice(idx, 1);
+      saveState();
+      renderFavorites();
+      renderSchedule(currentLeague);
+    }
+
+    // 收藏功能
+    function removeFavorite(teamId) {
+      favorites = favorites.filter(f => f.team.id !== teamId);
+      saveState();
+      renderFavorites();
+      renderQuickBar();
+    }
+
+    // 球队选择器
+    function showLeagueSelector() {
+      document.getElementById('leagueModal').style.display = 'block';
+      
+      // 渲染所有联赛
+      const grid = document.getElementById('allLeaguesGrid');
+      grid.innerHTML = leagues.map(l => `
+        <div class="league-card ${l.id === currentLeague ? 'active' : ''}" onclick="selectLeagueCard('${l.id}')">
+          <div class="flag">${l.flag}</div>
+          <div class="name">${l.name}</div>
+          <div class="country">${l.country}</div>
+        </div>
+      `).join('');
+      
+      changeLeague('selector', currentLeague);
+    }
+
+    function closeLeagueSelector() {
+      document.getElementById('leagueModal').style.display = 'none';
+    }
+
+    function selectLeagueCard(leagueId) {
+      currentLeague = leagueId;
+      changeLeague('selector', leagueId);
+      document.querySelectorAll('.league-card').forEach(c => c.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function selectLeague(leagueId) {
+      currentLeague = leagueId;
+      renderTabs('selector-tabs', leagues.slice(0, 10), leagueId, 'selectLeague');
+      renderTeamGrid(leagueId);
+    }
+
+    function renderTeamGrid(leagueId) {
+      const grid = document.getElementById('team-grid');
+      const leagueTeams = teams[leagueId] || [];
+      const league = leagues.find(l => l.id === leagueId);
+      
+      grid.innerHTML = leagueTeams.map(team => {
+        const isFav = favorites.some(f => f.team.id === team.id);
+        return `
+          <div class="team-item ${isFav ? 'selected' : ''}" onclick="toggleFavorite('${leagueId}', '${team.id}')">
+            <div class="team-logo"><img src="${getCrestUrl(team, leagueId)}" alt="${team.name}" onerror="this.style.display='none'"></div>
+            <div class="team-name">${team.name}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFavorite(leagueId, teamId) {
+      const leagueTeams = teams[leagueId] || [];
+      const team = leagueTeams.find(t => t.id == teamId);
+      const league = leagues.find(l => l.id === leagueId);
+      
+      if (!team) return;
+      
+      const idx = favorites.findIndex(f => f.team.id == teamId);
+      if (idx >= 0) {
+        favorites.splice(idx, 1);
+        showToast(`已取消收藏 ${team.name}`);
+      } else {
+        if (favorites.length >= 10) {
+          showToast('最多收藏10支球队');
+          return;
+        }
+        favorites.push({ leagueId, team, leagueName: league?.name });
+        showToast(`已收藏 ${team.name}`);
+      }
+      
+      saveState();
+      renderTeamGrid(leagueId);
+      renderQuickBar();
+      renderFavorites();
+    }
+
+    // 刷新数据
+    function refreshData(type) {
+      showToast('🔄 数据刷新中...');
+      setTimeout(() => {
+        if (type === 'schedule') renderSchedule(currentLeague);
+        else if (type === 'live') renderLive();
+        else if (type === 'standings') renderStandings(currentLeague);
+        else if (type === 'scorers') renderScorers(currentLeague);
+        showToast('✅ 刷新成功');
+      }, 500);
+    }
+
+    // 搜索
+    function searchData() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      if (!query) return;
+      
+      // 搜索球队
+      for (const [leagueId, leagueTeams] of Object.entries(teams)) {
+        const team = leagueTeams.find(t => t.name.toLowerCase().includes(query));
+        if (team) {
+          currentLeague = leagueId;
+          switchTab('schedule');
+          changeLeague('schedule', leagueId);
+          showToast(`已定位到 ${team.name}`);
+          return;
+        }
+      }
+      
+      // 搜索联赛
+      const league = leagues.find(l => l.name.toLowerCase().includes(query) || l.country.toLowerCase().includes(query));
+      if (league) {
+        currentLeague = league.id;
+        switchTab('schedule');
+        changeLeague('schedule', league.id);
+        showToast(`已切换到 ${league.name}`);
+      }
+    }
+
+    // Toast
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    // 初始化
+    loadState();
+    renderTabs('schedule-tabs', leagues.slice(0, 8), 'PL', 'changeLeague');
+    renderTabs('standings-tabs', leagues.slice(0, 8), 'PL', 'changeLeague');
+    renderTabs('scorers-tabs', leagues.slice(0, 8), 'PL', 'changeLeague');
+    renderSchedule('PL');
+    renderLive();
+    renderStandings('PL');
+    renderScorers('PL');
+    renderQuickBar();
+    renderFavorites();
+    
+    document.getElementById('league-count').textContent = leagues.length;
+  </script>
+</body>
+</html>

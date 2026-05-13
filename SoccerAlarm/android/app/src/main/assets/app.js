@@ -22,7 +22,6 @@ function loadState() {
       favTeamNames  = st.favTeamNames  || [];
       notifications = st.notifications || [];
       customAlarms  = st.customAlarms  || [];
-      cachedData    = st.cachedData    || {};
       tsdbTeams     = st.tsdbTeams     || {};
     }
   } catch(e) {}
@@ -46,17 +45,16 @@ function migrateFavTeamNames() {
 function saveState() {
   try {
     localStorage.setItem('soccerAlarmV5State', JSON.stringify({
-      favorites, favTeamNames, notifications, customAlarms, cachedData, tsdbTeams
+      favorites, favTeamNames, notifications, customAlarms, tsdbTeams
     }));
   } catch(e) {}
 }
 function cacheSet(key, data, ttl) {
-  cachedData[key] = {data, ts: Date.now(), ttl: ttl || 120000}; // 默认2分钟
-  saveState();
+  cachedData[key] = {data, ts: Date.now(), ttl: ttl || 172800000};
 }
 function cacheGet(key) {
   const c = cachedData[key];
-  if (c && (Date.now() - c.ts) < (c.ttl||120000)) return c.data; // 默认2分钟
+  if (c && (Date.now() - c.ts) < (c.ttl||172800000)) return c.data; // 默认2分钟
   return null;
 }
 
@@ -126,7 +124,7 @@ async function fetchCslStandings(forceRefresh) {
   if (!raw || !raw.ranking || !Array.isArray(raw.ranking)) {
     console.log('[CSL-Standings] nativeGet empty, trying httpGet...');
     try {
-      raw = await httpGet(DATA_SERVER + '/api/csl/standings', 'csl_standings_v2', 600000);
+      raw = await httpGet(DATA_SERVER + '/api/csl/standings', 'csl_standings_v2', 172800000);
       if (raw && raw.ranking) console.log('[CSL-Standings] httpGet OK: ' + raw.ranking.length + ' teams');
     } catch(e) { console.log('[CSL-Standings] httpGet failed:', e.message); }
   }
@@ -144,7 +142,7 @@ async function fetchCslStandings(forceRefresh) {
       badge: CSL_TEAM_BADGES[t.team] || t.team_logo || ''
     };
   }).filter(function(t) { return t.name; });
-  cacheSet('csl_standings_v3', standings, 30 * 60 * 1000); // 30分钟
+  cacheSet('csl_standings_v3', standings, 48 * 60 * 60 * 1000); // 48小时
   return standings;
 }
 
@@ -201,7 +199,7 @@ async function fetchCslData(forceRefresh) {
       }
       matches.push({
         id: ('cl_'+md.date+'_'+m.team1+'_'+m.team2).replace(/\s/g,'_'),
-        date: md.date, time: m.time_start,
+        date: md.date, time: m.time_start, timestamp: new Date(md.date + 'T' + (m.time_start || '15:00')).getTime(),
         team1: m.team1, team2: m.team2,
         homeCn: m.team1, awayCn: m.team2,
         homeBadge: CSL_TEAM_BADGES[m.team1] || '', awayBadge: CSL_TEAM_BADGES[m.team2] || '',
@@ -216,7 +214,7 @@ async function fetchCslData(forceRefresh) {
     });
   });
   console.log('[CSL] Parsed ' + matches.length + ' matches');
-  cacheSet('csl_schedule_v3', matches, 30 * 60 * 1000); // 30分钟
+  cacheSet('csl_schedule_v3', matches, 48 * 60 * 60 * 1000); // 48小时
   return matches;
 }
 
@@ -428,7 +426,7 @@ async function fetchCLFromOpenfootball() {
   for (const season of seasons) {
     try {
       const url = `${FOOTBALL_CDN}/${season}/uefa.cl.json`;
-      const data = await httpGet(url, `league_CL_${season}`, 30 * 60 * 1000);
+      const data = await httpGet(url, `league_CL_${season}`, 48 * 60 * 60 * 1000);
       if (data && data.matches && data.matches.length > 0) {
         const matches = [];
         data.matches.forEach(m => {
@@ -514,7 +512,7 @@ function getCLStaticMatches() {
 // 缓存所有联赛数据
 let allLeagueData = null;
 let leagueDataCacheTime = 0;
-const LEAGUE_CACHE_TTL = 30 * 60 * 1000; // 30分钟缓存（缩短以提高更新及时性）
+const LEAGUE_CACHE_TTL = 48 * 60 * 60 * 1000; // 48小时缓存
 
 // 加载所有联赛数据（一次加载，全部缓存）
 async function loadAllLeagueData() {
@@ -539,6 +537,24 @@ async function fetchNextMatches(leagueId) {
   const lg = FOOTBALL_LEAGUES[leagueId];
   if (!lg) return [];
 
+  // 缓存检查：同一session内秒开（匹配 httpGet 写入的 league_X_SEASON 格式）
+  const now = Date.now();
+  const season = lg.season || FOOTBALL_SEASON;
+  // 先查 httpGet 写入的 key（league_PL_2025 格式）
+  let cacheKey = 'league_' + leagueId + '_' + (season || '');
+  let cachedDataEntry = cachedData[cacheKey];
+  // 再查直接写入的 key（league_CL 格式，用于 CL/cup/CSL）
+  if (!cachedDataEntry || !cachedDataEntry.data || !cachedDataEntry.data.matches) {
+    cacheKey = 'league_' + leagueId;
+    cachedDataEntry = cachedData[cacheKey];
+  }
+  if (cachedDataEntry && cachedDataEntry.data && cachedDataEntry.data.matches) {
+    const entryTTL = cachedDataEntry.ttl || 172800000;
+    if (now - cachedDataEntry.ts < entryTTL) {
+      return cachedDataEntry.data.matches;
+    }
+  }
+
   // 世界杯：使用 fixturedownload.com API（2026世界杯完整数据，国内可访问）
   if (lg.wcApi) {
     return fetchWCMatches();
@@ -549,7 +565,7 @@ async function fetchNextMatches(leagueId) {
     const matches = await fetchCLMatches();
     // 写入缓存，使 renderMyMatches/renderTodayMatches 能搜索到欧冠比赛
     if (matches && matches.length > 0) {
-      cachedData['league_CL'] = { data: { matches: matches }, ts: Date.now() };
+      cachedData['league_CL'] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
     }
     return matches;
   }
@@ -559,7 +575,7 @@ async function fetchNextMatches(leagueId) {
     const matches = fetchCupMatches(leagueId);
     // 写入缓存，使 renderMyMatches/renderTodayMatches 能搜索到杯赛比赛
     if (matches && matches.length > 0) {
-      cachedData['league_' + leagueId] = { data: { matches: matches }, ts: Date.now() };
+      cachedData['league_' + leagueId] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
     }
     return matches;
   }
@@ -576,7 +592,7 @@ async function fetchNextMatches(leagueId) {
   try {
     const season = lg.season || FOOTBALL_SEASON;
     const url = `${FOOTBALL_CDN}/${season}/${lg.file}`;
-    const data = await httpGet(url, `league_${leagueId}_${season}`, 30 * 60 * 1000);
+    const data = await httpGet(url, `league_${leagueId}_${season}`, 48 * 60 * 60 * 1000);
     if (!data || !data.matches) return [];
 
     const matches = [];
@@ -628,7 +644,7 @@ async function fetchNextMatches(leagueId) {
         });
       }
     } catch(e) { /* server enrich failed, use CDN data as-is */ }
-
+    cachedData['league_' + leagueId + '_' + season] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
     return matches;
   } catch (e) {
     console.error('fetchNextMatches error:', e);
@@ -772,9 +788,18 @@ async function fetchLeagueTeams(leagueId) {
       return teams;
     }
 
+    // 中超：服务端数据源，直接返回本地球队（队徽 base64 已嵌入）
+    if (lg.serverOnly) {
+      console.log('[fetchLeagueTeams] CSL server-only, using locals');
+      return (LOCAL_TEAMS[leagueId] || []).map(t => ({
+        idTeam: String(t.id),
+        strTeam: t.name || t.nameEn,
+        strTeamBadge: t.badge || ''
+      }));
+    }
     const season = lg.season || FOOTBALL_SEASON;
     const url = `${FOOTBALL_CDN}/${season}/${lg.file}`;
-    const data = await httpGet(url, `league_teams_${leagueId}`, 60 * 60 * 1000);
+    const data = await httpGet(url, `league_teams_${leagueId}`, 48 * 60 * 60 * 1000);
 
     if (!data || !data.matches) return [];
 
@@ -1049,7 +1074,11 @@ async function loadSchedule(leagueId, targetDate) {
   leagueId = leagueId || currentLeagues.schedule;
   currentLeagues.schedule = leagueId;
   renderLeagueTabs('scheduleTabs', leagueId, 'loadSchedule');
-  showLoading('scheduleContent', '获取最新赛程...');
+  // 缓存命中时跳过loading动画，直接渲染
+  const lgPre = FOOTBALL_LEAGUES[leagueId];
+  const schedCacheKey = lgPre ? ('league_' + leagueId + '_' + (lgPre.season || FOOTBALL_SEASON)) : '';
+  const schedCached = schedCacheKey && cachedData[schedCacheKey] && cachedData[schedCacheKey].data && cachedData[schedCacheKey].data.matches;
+  if (!schedCached) showLoading('scheduleContent', '获取最新赛程...');
 
   const lg = FOOTBALL_LEAGUES[leagueId];
   if (!lg) return;
@@ -1162,7 +1191,7 @@ async function loadResults(leagueId) {
   leagueId = leagueId || currentLeagues.results;
   currentLeagues.results = leagueId;
   renderLeagueTabs('resultsTabs', leagueId, 'loadResults');
-  showLoading('resultsContent', '获取最近战绩...');
+  var lgPreR = FOOTBALL_LEAGUES[leagueId]; var keyR = lgPreR ? ('league_' + leagueId + '_' + (lgPreR.season || FOOTBALL_SEASON)) : ''; if (!keyR || !cachedData[keyR] || !cachedData[keyR].data || !cachedData[keyR].data.matches) showLoading('resultsContent', '获取最近战绩...');
 
   const lg = FOOTBALL_LEAGUES[leagueId];
   if (!lg) return;
@@ -1258,7 +1287,9 @@ async function loadStandings(leagueId) {
   leagueId = leagueId || currentLeagues.standings;
   currentLeagues.standings = leagueId;
   renderLeagueTabs('standingsTabs', leagueId, 'loadStandings');
-  showLoading('standingsContent', '获取积分榜...');
+  var lgPreS = FOOTBALL_LEAGUES[leagueId];
+  var keyS = lgPreS ? ('league_' + leagueId + '_' + (lgPreS.season || FOOTBALL_SEASON)) : '';
+  if (!keyS || !cachedData[keyS] || !cachedData[keyS].data || !cachedData[keyS].data.matches) var lgPreS = FOOTBALL_LEAGUES[leagueId]; var keyS = lgPreS ? ('league_' + leagueId + '_' + (lgPreS.season || FOOTBALL_SEASON)) : ''; if (!keyS || !cachedData[keyS] || !cachedData[keyS].data || !cachedData[keyS].data.matches) showLoading('standingsContent', '获取积分榜...');
 
   const lg = FOOTBALL_LEAGUES[leagueId];
   if (!lg) return;
@@ -2566,16 +2597,14 @@ function renderTodayMatches() {
       const leagueId = keyParts[0];
       const lg = FOOTBALL_LEAGUES[leagueId];
 
-      // 时区处理：欧冠和杯赛数据已在数据源处完成北京时间转换，直接使用；
-      // 五大联赛数据仍为欧洲当地时间，需要转换
+      // 时区处理：如果 match 已有 timestamp（fetchNextMatches 已用 localToBJ 转为北京时间），直接用；
+      // 否则用 localToBJ 做转换
       let bjDate, bjTime, bjTimestamp;
-      if (m.timestamp && (leagueId === 'CL' || leagueId === 'WC' || (lg && lg.cupData) || (lg && lg.serverOnly))) {
-        // 欧冠/世界杯/杯赛：数据已转为北京时间，直接用
+      if (m.timestamp) {
         bjDate = m.date;
         bjTime = m.time;
         bjTimestamp = m.timestamp;
       } else {
-        // 五大联赛：将欧洲当地时间转换为北京时间
         const bj = localToBJ(m.date, m.time || '15:00', leagueId);
         bjDate = bj.date;
         bjTime = bj.time;
@@ -3282,20 +3311,70 @@ if (document.readyState === 'loading') {
 
 // ==================== 检查更新 ====================
 var UPDATE_SERVER = "http://8.154.26.92:3000";
-var APP_VERSION_CODE = 29;
+var APP_VERSION_CODE = 37;
+var APP_VERSION_NAME = '2.37';
 
 
 function loadMorePage() {
   // 渲染刷新按钮
   var moreContent = document.getElementById('moreContent');
   if (moreContent) {
-    moreContent.innerHTML = '<div class="info-banner" style="text-align:center;padding:24px">'
-      + '<div style="font-size:32px;margin-bottom:10px">🔄</div>'      + '<b style="font-size:14px">刷新全部数据</b><br>'      + '<span style="font-size:11px;color:var(--txt-muted)">拉取所有联赛最新赛程、积分榜和比分</span><br>'      + '<button id="refreshAllBtn" onclick="refreshAllData()" style="margin-top:12px;padding:9px 22px;background:var(--accent);border:none;border-radius:8px;color:var(--txt);font-size:13px;font-weight:600;cursor:pointer">⚡ 立即刷新</button>'      + '<div id="allRefreshStatus" style="margin-top:8px;font-size:10px;color:var(--txt-muted)"></div>'      + '</div>';
+    moreContent.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:12px 16px;margin-top:4px;cursor:default">'
+      + '<div><b style="font-size:14px">刷新全部数据</b><br><span style="font-size:11px;color:var(--txt-muted)">拉取所有联赛最新赛程、积分榜和比分</span><div id="allRefreshStatus" style="margin-top:4px;font-size:10px;color:var(--txt-muted)"></div></div>'
+      + '<button id="refreshAllBtn" onclick="refreshAllData()" style="flex-shrink:0;padding:8px 16px;background:var(--accent);border:none;border-radius:8px;color:var(--txt);font-size:13px;font-weight:600;cursor:pointer">⚡ 刷新</button>'
+      + '</div>';
     updateAllCacheStatus();
+
+                // ========== 打赏支持 ==========
+    moreContent.insertAdjacentHTML('beforeend', ''
+      + '<div class="donate-toggle" onclick="toggleDonate()" style="margin-top:14px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(239,68,68,0.08));border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:14px 16px;cursor:pointer">'
+      + '<span style="font-size:26px;flex-shrink:0">❤️</span>'
+      + '<div style="flex:1;text-align:left;min-width:0">'
+      + '<div style="font-size:15px;font-weight:700;color:#f59e0b">支持开发者</div>'
+      + '<div style="font-size:12px;color:#94a3b8;margin-top:2px">感谢支持小闹，为热爱冲锋！ ⚡</div>'
+      + '</div>'
+      + '<span id="donateArrow" style="font-size:12px;color:#94a3b8;transition:transform 0.3s">▼</span>'
+      + '</div>'
+      + '<div id="donatePanel" style="max-height:0;overflow:hidden;transition:max-height 0.4s ease;background:#1e293b;border-radius:0 0 14px 14px;border:1px solid rgba(245,158,11,0.25);border-top:none">'
+      + '<div style="padding:16px 14px">'
+      + '<img id="donateSupportImg" alt="感谢支持" style="width:100%;border-radius:12px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.25);display:none">'
+      + '<div style="text-align:center;font-size:14px;font-weight:700;color:#fbbf24;margin-bottom:16px;line-height:1.6">感谢支持小闹<br>为了胜利！为了冠军！<br>大家一起冲啊！！！</div>'
+      + '<div style="display:flex;gap:10px;margin-bottom:14px">'
++ '<div style="flex:1;text-align:center;background:rgba(255,255,255,0.03);border-radius:12px;padding:12px 8px;border:1px solid #334155;cursor:pointer" onclick="showQrFullscreen(\'wx\')">'
++ '<img id="donateWechatImg" alt="微信赞赏码" style="width:100%;max-width:140px;border-radius:8px;aspect-ratio:1;object-fit:contain;pointer-events:none"><div style="font-size:12px;color:#94a3b8;margin-top:6px">微信赞赏码</div></div>'
++ '<div style="flex:1;text-align:center;background:rgba(255,255,255,0.03);border-radius:12px;padding:12px 8px;border:1px solid #334155;cursor:pointer" onclick="showQrFullscreen(\'al\')">'
++ '<img id="donateAlipayImg" alt="支付宝收款码" style="width:100%;max-width:140px;border-radius:8px;aspect-ratio:1;object-fit:contain;pointer-events:none"><div style="font-size:12px;color:#94a3b8;margin-top:6px">支付宝扫码</div></div>'
+
+
+      + '</div>'
+      + '<div style="display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(59,130,246,0.08);border-radius:10px;padding:10px 12px;border:1px solid rgba(59,130,246,0.2)">'
+      + '<span style="font-size:18px;flex-shrink:0">💙</span>'
+      + '<span style="font-size:13px;color:#60a5fa;font-weight:500;word-break:break-all">477570216@qq.com</span>'
+      + '<button onclick="event.stopPropagation();copyDonateAlipay()" style="background:#3b82f6;border:none;color:#fff;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">复制支付宝账号</button>'
+      + '</div>'
+      + '</div>'
+      + '</div>');
+    // 延迟设置图片src
+    setTimeout(function() {
+      try {
+        var wi = document.getElementById('donateWechatImg');
+        var ai = document.getElementById('donateAlipayImg');
+        var si = document.getElementById('donateSupportImg');
+        if (si && typeof DONATE_IMAGES !== 'undefined') { si.src = DONATE_IMAGES.support; si.style.display = ''; }
+        if (wi && typeof DONATE_IMAGES !== 'undefined') { wi.src = DONATE_IMAGES.wechat; wi.parentElement.style.cursor = 'pointer'; }
+        if (ai && typeof DONATE_IMAGES !== 'undefined') { ai.src = DONATE_IMAGES.alipay; ai.parentElement.style.cursor = 'pointer'; }
+        // 给收款码区域增加长按保存提示
+        [wi, ai].forEach(function(el) {
+          if (!el) return;
+          el.title = '点击放大 | 长按保存';
+          el.style.pointerEvents = 'none'; // 点击事件由父级card处理
+        });
+      } catch(e) {}
+    }, 100);
   }
   // Update version display
   const vt = document.getElementById('appVersionText');
-  if (vt) vt.textContent = '\u7248\u672C v2.29';
+  if (vt) vt.textContent = '\u7248\u672C v2.35';
 }
 
 // ==================== CSL 手动刷新 ====================
@@ -3350,55 +3429,316 @@ function updateAllCacheStatus() {
 }
 
 function checkForUpdate() {
-  var btn = document.querySelector('.header-right button');
-  if (btn) { btn.textContent = "检查中..."; btn.style.opacity = "0.6"; }
+  console.log('[CHECK] checkForUpdate called');
+  var el = document.getElementById('checkUpdateBtn');
+  if (!el) { console.log('[CHECK] button not found'); return; }
+  console.log('[CHECK] button found, starting...');
+  el.style.opacity = '0.6';
+  var desc = el.querySelectorAll('div')[1] && el.querySelectorAll('div')[1].querySelectorAll('div')[1];
+  if (desc) desc.textContent = '检查中...';
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", UPDATE_SERVER + "/api/version", true);
-  xhr.timeout = 8000;
-  
-  xhr.onload = function() {
-    if (btn) { btn.textContent = "更新"; btn.style.opacity = "1"; }
-    try {
-      var ver = JSON.parse(xhr.responseText);
-      if (ver.versionCode > APP_VERSION_CODE) {
-        showUpdateDialog(ver);
-      } else {
-        alert("✅ 已是最新版本 v2.29\n\n当前已是最新，无需更新。");
-      }
-    } catch(e) {
-      alert("⚠ 数据解析失败\n请检查网络后重试");
+  if (!window.AndroidInterface || !AndroidInterface.nativeFetch) {
+    flashMessage('网络不可用，请连接网络后重试');
+    el.style.opacity = '1';
+    if (desc) desc.textContent = '检查并下载最新版本';
+    return;
+  }
+
+  try {
+    var data = JSON.parse(AndroidInterface.nativeFetch(UPDATE_SERVER + '/api/version'));
+    el.style.opacity = '1';
+    if (desc) desc.textContent = '检查并下载最新版本';
+    if (data.versionCode > APP_VERSION_CODE) {
+      showUpdateDialog(data);
+    } else {
+      showAlreadyLatest();
     }
-  };
+  } catch(e) {
+    el.style.opacity = '1';
+    if (desc) desc.textContent = '检查并下载最新版本';
+    showAlreadyLatest();
+  }
+}
+function showAlreadyLatest() {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99998;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:24px 20px;max-width:320px;width:85%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)">'
+    + '<div style="font-size:48px;margin-bottom:12px">✅</div>'
+    + '<div style="font-size:16px;font-weight:600;margin-bottom:6px;color:#333">已是最新版本</div>'
+    + '<div style="font-size:13px;color:#888;margin-bottom:8px">当前版本 v' + APP_VERSION_NAME + ' </div>'
+    + '<div style="font-size:13px;color:#888;margin-bottom:16px">无需更新，感谢使用！</div>'
+    + '<button id="alreadyLatestGoSite" style="width:100%;padding:12px;background:#f0f0f0;border:1px solid #ddd;border-radius:10px;font-size:14px;margin-bottom:8px;cursor:pointer">🌐 访问官网下载</button>'
+    + '<button id="alreadyLatestClose" style="width:100%;padding:12px;background:#22c55e;border:none;border-radius:10px;color:#fff;font-size:15px;cursor:pointer">确定</button>'
+    + '</div>';
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) { overlay.remove(); }
+  });
+  document.body.appendChild(overlay);
 
-  xhr.onerror = function() {
-    if (btn) { btn.textContent = "更新"; btn.style.opacity = "1"; }
-    alert("⚠ 无法连接更新服务器\n\n请检查网络连接\n或手动访问:\n" + UPDATE_SERVER + "/api/download");
-  };
-
-  xhr.ontimeout = function() {
-    if (btn) { btn.textContent = "更新"; btn.style.opacity = "1"; }
-    alert("⏱ 连接超时\n\n服务器响应较慢，请稍后重试");
-  };
-
-  xhr.send();
+  document.getElementById('alreadyLatestClose').addEventListener('click', function() {
+    overlay.remove();
+  });
+  document.getElementById('alreadyLatestGoSite').addEventListener('click', function() {
+    overlay.remove();
+    AndroidInterface.openBrowser(UPDATE_SERVER + '/');
+  });
 }
 
 function showUpdateDialog(ver) {
   var msg = "🎉 发现新版本 v" + ver.versionName + "\n\n";
   msg += "更新内容:\n" + ver.changelog + "\n\n";
-  msg += "当前版本: v2.29\n";
+  msg += "当前版本: v" + APP_VERSION_NAME + "\n";
   msg += "最新版本: v" + ver.versionName + "\n\n";
   msg += "是否立即下载更新？";
   
   if (confirm(msg)) {
-    var a = document.createElement("a");
-    a.href = ver.downloadUrl;
-    a.download = "足球闹钟APP.apk";
-    a.target = "_blank";
+    if (window.AndroidInterface && AndroidInterface.openBrowser) {
+      AndroidInterface.openBrowser(ver.downloadUrl);
+    } else {
+      // Fallback: try window.open (may not work in WebView)
+      window.open(ver.downloadUrl, '_blank');
+    }
+    alert("⏬ 正在浏览器中下载\n\n下载完成后点击安装即可");
+  }
+}
+
+// ==================== 打赏支持 ====================
+function toggleDonate() {
+  var panel = document.getElementById('donatePanel');
+  var arrow = document.getElementById('donateArrow');
+  if (!panel) return;
+  var isOpen = panel.style.maxHeight !== '0px' && panel.style.maxHeight !== '';
+  if (isOpen) {
+    panel.style.maxHeight = '0';
+    panel.style.borderTop = 'none';
+    if (arrow) { arrow.style.transform = ''; arrow.textContent = '▼'; }
+  } else {
+    panel.style.maxHeight = '800px';
+    panel.style.borderTop = '1px solid rgba(245,158,11,0.25)';
+    if (arrow) { arrow.style.transform = 'rotate(180deg)'; arrow.textContent = '▲'; }
+  }
+}
+
+// 全屏二维码（带保存和跳转）
+function showQrFullscreen(type) {
+  var imgSrc = '';
+  var label = '';
+  var payScheme = '';
+  if (type === 'wx') {
+    imgSrc = typeof DONATE_IMAGES !== 'undefined' ? DONATE_IMAGES.wechat : '';
+    label = '微信赞赏码';
+    payScheme = 'weixin://';
+  } else {
+    imgSrc = typeof DONATE_IMAGES !== 'undefined' ? DONATE_IMAGES.alipay : '';
+    label = '支付宝收款码';
+    payScheme = 'alipays://platformapi/startapp?appId=10000007';
+  }
+  if (!imgSrc) return;
+  
+  // 全屏遮罩
+  var ov = document.createElement('div');
+  ov.id = 'qrOverlay';
+  ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.94);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px';
+  
+  // 所有内容放一个容器，阻止事件冒泡到遮罩
+  var container = document.createElement('div');
+  container.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+  // 阻止容器内点击冒泡到遮罩
+  container.addEventListener('click', function(e) { e.stopPropagation(); });
+  
+  // 关闭按钮
+  var closeBtn = document.createElement('div');
+  closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;cursor:pointer;z-index:10000';
+  closeBtn.textContent = '✕';
+  closeBtn.addEventListener('click', function() {
+    if (ov.parentNode) ov.parentNode.removeChild(ov);
+  });
+  ov.appendChild(closeBtn);
+  
+  // 标题
+  var title = document.createElement('div');
+  title.style.cssText = 'color:#f59e0b;font-size:16px;font-weight:700;margin-bottom:6px';
+  title.textContent = label;
+  container.appendChild(title);
+  
+  // 提示
+  var hint = document.createElement('div');
+  hint.style.cssText = 'color:#64748b;font-size:12px;margin-bottom:16px';
+  hint.textContent = '截图或用另一台手机扫码支付';
+  container.appendChild(hint);
+  
+  // 大图
+  var img = document.createElement('img');
+  img.src = imgSrc;
+  img.style.cssText = 'width:78%;max-width:300px;border-radius:16px;box-shadow:0 8px 32px rgba(255,255,255,0.12);background:#fff;padding:12px';
+  container.appendChild(img);
+  
+  // 按钮区
+  var btns = document.createElement('div');
+  btns.style.cssText = 'display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center';
+  
+  // 保存按钮
+  var saveBtn = document.createElement('button');
+  saveBtn.textContent = '💾 保存到相册';
+  saveBtn.style.cssText = 'padding:10px 20px;background:#22c55e;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:600;cursor:pointer';
+  saveBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    saveImageToGallery(imgSrc);
+  });
+  btns.appendChild(saveBtn);
+  
+  // 支付APP按钮
+  var payBtn = document.createElement('button');
+  payBtn.textContent = type === 'wx' ? '📱 打开微信' : '📱 打开支付宝';
+  payBtn.style.cssText = 'padding:10px 20px;background:#3b82f6;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:600;cursor:pointer';
+  payBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var pkg = type === 'wx' ? 'com.tencent.mm' : 'com.eg.android.AlipayGphone';
+    // 原生 openExternalApp 有 URL scheme 兜底
+    if (window.AndroidInterface && typeof AndroidInterface.openExternalApp === 'function') {
+      AndroidInterface.openExternalApp(pkg, payScheme);
+      return;
+    }
+    // 兜底：URL scheme 方式
+    try {
+      window.location.href = payScheme;
+    } catch(ex) {}
+  });
+  btns.appendChild(payBtn);
+  container.appendChild(btns);
+  
+  // 使用提示
+  if (type === 'wx') {
+    var tip = document.createElement('div');
+    tip.style.cssText = 'color:#f59e0b;font-size:12px;margin-top:14px;text-align:center;line-height:1.6;padding:0 16px';
+    tip.textContent = '\ud83d\udca1 \u4fdd\u5b58\u5230\u76f8\u518c\u540e\uff0c\u5728\u5fae\u4fe1\u300c\u626b\u4e00\u626b\u300d\u9875\u9009\u62e9\u76f8\u518c\u91cc\u7684\u56fe\u7247\u5373\u53ef\u8bc6\u522b\u4e8c\u7ef4\u7801';
+    container.appendChild(tip);
+  }
+  
+  // 关闭提示
+  var close = document.createElement('div');
+  close.style.cssText = 'color:#475569;font-size:12px;margin-top:20px';
+  close.textContent = '点击 ✕ 关闭';
+  container.appendChild(close);
+  
+  ov.appendChild(container);
+  
+  // 点击背景关闭
+  ov.addEventListener('click', function(e) {
+    if (ov.parentNode) ov.parentNode.removeChild(ov);
+  });
+  
+  document.body.appendChild(ov);
+}
+
+// 保存图片到本地（通过创建下载链接或通知原生）
+function saveImageToGallery(dataUrl) {
+  if (!dataUrl) {
+    if (window.AndroidInterface && typeof AndroidInterface.showToast === 'function') {
+      AndroidInterface.showToast('错误：图片数据为空');
+    }
+    return;
+  }
+  try {
+    // 优先使用原生桥接（写入相册）
+    if (window.AndroidInterface && typeof AndroidInterface.saveImageToGallery === 'function') {
+      var result = AndroidInterface.saveImageToGallery(dataUrl);
+      try {
+        var r = JSON.parse(result);
+        if (r.success) {
+          flashMessage('✅ 已保存到相册');
+        } else {
+          flashMessage('⚠️ ' + (r.message || '保存失败'));
+        }
+      } catch(pe) {
+        // JSON解析失败，可能是直接返回成功
+        flashMessage('✅ 已保存到相册');
+      }
+      return;
+    }
+    // 尝试AndroidAlarm别名
+    if (window.AndroidAlarm && typeof AndroidAlarm.saveImageToGallery === 'function') {
+      var result2 = AndroidAlarm.saveImageToGallery(dataUrl);
+      try {
+        var r2 = JSON.parse(result2);
+        if (r2.success) { flashMessage('✅ 已保存到相册'); return; }
+      } catch(pe2) {
+        flashMessage('✅ 已保存到相册'); return;
+      }
+    }
+    // 兜底：浏览器下载
+    var arr = dataUrl.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1];
+    var bstr = atob(arr[1]);
+    var n = bstr.length;
+    var u8arr = new Uint8Array(n);
+    while (n--) { u8arr[n] = bstr.charCodeAt(n); }
+    var blob = new Blob([u8arr], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'qrcode_' + Date.now() + '.jpg';
+    a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    alert("⏬ 正在浏览器中下载\n\n下载完成后点击安装即可");
+    URL.revokeObjectURL(url);
+    showToast('✅ 已保存到下载目录');
+  } catch(e) {
+    showToast('⚠️ 保存失败，请截图保存');
+  }
+}
+
+
+function flashMessage(msg) {
+  var el = document.getElementById('flashMsg');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'flashMsg';
+    el.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:10px 24px;border-radius:12px;font-size:14px;font-weight:600;z-index:99999;pointer-events:none;transition:opacity 0.3s';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(el._timeout);
+  el._timeout = setTimeout(function() { el.style.opacity = '0'; }, 2000);
+}
+
+function copyDonateAlipay() {
+  var text = '477570216@qq.com';
+  // 优先使用原生剪贴板（绕过WebView权限限制）
+  if (window.AndroidInterface && typeof AndroidInterface.copyToClipboard === 'function') {
+    AndroidInterface.copyToClipboard(text);
+    return;
+  }
+  // 兜底：textarea hack
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-999px';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('\u2705 \u652f\u4ed8\u5b9d\u8d26\u53f7\u5df2\u590d\u5236');
+  } catch(e) {
+    showToast('\u26a0\ufe0f \u590d\u5236\u5931\u8d25');
+  }
+}
+function copyDonateAlipay() {
+  var text = '477570216@qq.com';
+  // 优先使用原生剪贴板（绕过WebView权限限制）
+  if (window.AndroidInterface && typeof AndroidInterface.copyToClipboard === 'function') {
+    AndroidInterface.copyToClipboard(text);
+    return;
+  }
+  // 兜底：textarea hack
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-999px';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('\u2705 \u652f\u4ed8\u5b9d\u8d26\u53f7\u5df2\u590d\u5236');
+  } catch(e) {
+    showToast('\u26a0\ufe0f \u590d\u5236\u5931\u8d25');
   }
 }

@@ -1,0 +1,1012 @@
+{
+  "name": "FA Cup",
+  "name_cn": "足总杯",
+  "league_id": "FAC",
+  "country": "eng",
+  "season": "2025-26",
+  "source": "https://data.7m.com.cn/matches_data/55/gb/index.shtml",
+  "matches": [
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "03:30",
+      "team1": "Milton Keynes Dons",
+      "team2": "Oxford United",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "米尔顿凯恩斯",
+      "team2_cn": "牛津联",
+      "_source": "7m.com.cn ID:55 R:10 M:0"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "03:30",
+      "team1": "Port Vale",
+      "team2": "Fleetwood Town",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "维尔港",
+      "team2_cn": "弗利特伍德",
+      "_source": "7m.com.cn ID:55 R:10 M:1"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "03:30",
+      "team1": "Preston North End",
+      "team2": "Wigan Athletic",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "普雷斯顿",
+      "team2_cn": "维冈竞技",
+      "_source": "7m.com.cn ID:55 R:10 M:2"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "03:30",
+      "team1": "Wrexham AFC",
+      "team2": "Nottingham Forest",
+      "score": {
+        "ft": [
+          3,
+          3
+        ]
+      },
+      "team1_cn": "雷克斯汉姆",
+      "team2_cn": "诺丁汉森林",
+      "_source": "7m.com.cn ID:55 R:10 M:3"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "20:15",
+      "team1": "Cheltenham Town",
+      "team2": "Leicester City",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "切尔滕汉姆",
+      "team2_cn": "莱斯特城",
+      "_source": "7m.com.cn ID:55 R:10 M:4"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "20:15",
+      "team1": "Everton",
+      "team2": "Sunderland",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "埃弗顿",
+      "team2_cn": "桑德兰",
+      "_source": "7m.com.cn ID:55 R:10 M:5"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "20:15",
+      "team1": "Macclesfield Town",
+      "team2": "Crystal Palace",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "麦克尔斯菲尔德",
+      "team2_cn": "水晶宫",
+      "_source": "7m.com.cn ID:55 R:10 M:6"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "20:15",
+      "team1": "Wolverhampton Wanderers",
+      "team2": "Shrewsbury Town",
+      "score": {
+        "ft": [
+          6,
+          1
+        ]
+      },
+      "team1_cn": "狼队",
+      "team2_cn": "什鲁斯伯里",
+      "_source": "7m.com.cn ID:55 R:10 M:7"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Boreham Wood",
+      "team2": "Burton Albion",
+      "score": {
+        "ft": [
+          0,
+          5
+        ]
+      },
+      "team1_cn": "博雷汉姆",
+      "team2_cn": "保顿艾尔宾",
+      "_source": "7m.com.cn ID:55 R:10 M:8"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Burnley",
+      "team2": "Millwall",
+      "score": {
+        "ft": [
+          5,
+          1
+        ]
+      },
+      "team1_cn": "伯恩利",
+      "team2_cn": "米尔沃尔",
+      "_source": "7m.com.cn ID:55 R:10 M:9"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Doncaster Rovers",
+      "team2": "Southampton",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "唐卡斯特",
+      "team2_cn": "南安普顿",
+      "_source": "7m.com.cn ID:55 R:10 M:10"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Fulham",
+      "team2": "Middlesbrough",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "富勒姆",
+      "team2_cn": "米德尔斯堡",
+      "_source": "7m.com.cn ID:55 R:10 M:11"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Ipswich Town",
+      "team2": "Blackpool FC",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "伊普斯维奇",
+      "team2_cn": "布莱克浦",
+      "_source": "7m.com.cn ID:55 R:10 M:12"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Manchester City",
+      "team2": "Exeter City",
+      "score": {
+        "ft": [
+          10,
+          1
+        ]
+      },
+      "team1_cn": "曼彻斯特城",
+      "team2_cn": "埃克塞特城",
+      "_source": "7m.com.cn ID:55 R:10 M:13"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Newcastle United",
+      "team2": "AFC Bournemouth",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "纽卡斯尔联",
+      "team2_cn": "伯恩茅斯",
+      "_source": "7m.com.cn ID:55 R:10 M:14"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Sheffield Wednesday",
+      "team2": "Brentford",
+      "score": {
+        "ft": [
+          0,
+          2
+        ]
+      },
+      "team1_cn": "谢菲尔德星期三",
+      "team2_cn": "布伦特福德",
+      "_source": "7m.com.cn ID:55 R:10 M:15"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-10",
+      "time": "23:00",
+      "team1": "Stoke City",
+      "team2": "Coventry City",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "斯托克城",
+      "team2_cn": "考文垂",
+      "_source": "7m.com.cn ID:55 R:10 M:16"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "01:45",
+      "team1": "Bristol City",
+      "team2": "Watford",
+      "score": {
+        "ft": [
+          5,
+          1
+        ]
+      },
+      "team1_cn": "布里斯托城",
+      "team2_cn": "沃特福德",
+      "_source": "7m.com.cn ID:55 R:10 M:17"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "01:45",
+      "team1": "Cambridge United",
+      "team2": "Birmingham City",
+      "score": {
+        "ft": [
+          2,
+          3
+        ]
+      },
+      "team1_cn": "剑桥联",
+      "team2_cn": "伯明翰",
+      "_source": "7m.com.cn ID:55 R:10 M:18"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "01:45",
+      "team1": "Grimsby Town",
+      "team2": "Weston-super-Mare",
+      "score": {
+        "ft": [
+          3,
+          2
+        ]
+      },
+      "team1_cn": "格林斯比",
+      "team2_cn": "威斯通",
+      "_source": "7m.com.cn ID:55 R:10 M:19"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "01:45",
+      "team1": "Tottenham Hotspur",
+      "team2": "Aston Villa",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "托特纳姆热刺",
+      "team2_cn": "阿斯顿维拉",
+      "_source": "7m.com.cn ID:55 R:10 M:20"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "04:00",
+      "team1": "Charlton Athletic",
+      "team2": "Chelsea",
+      "score": {
+        "ft": [
+          1,
+          5
+        ]
+      },
+      "team1_cn": "查尔顿",
+      "team2_cn": "切尔西",
+      "_source": "7m.com.cn ID:55 R:10 M:21"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "20:00",
+      "team1": "Derby County",
+      "team2": "Leeds United",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "德比郡",
+      "team2_cn": "利兹联",
+      "_source": "7m.com.cn ID:55 R:10 M:22"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:00",
+      "team1": "Portsmouth FC",
+      "team2": "Arsenal",
+      "score": {
+        "ft": [
+          1,
+          4
+        ]
+      },
+      "team1_cn": "朴茨茅斯",
+      "team2_cn": "阿森纳",
+      "_source": "7m.com.cn ID:55 R:10 M:23"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:30",
+      "team1": "Hull City",
+      "team2": "Blackburn Rovers",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "赫尔城",
+      "team2_cn": "布莱克本",
+      "_source": "7m.com.cn ID:55 R:10 M:24"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:30",
+      "team1": "Norwich City",
+      "team2": "Walsall FC",
+      "score": {
+        "ft": [
+          5,
+          1
+        ]
+      },
+      "team1_cn": "诺维奇",
+      "team2_cn": "沃尔索尔",
+      "_source": "7m.com.cn ID:55 R:10 M:25"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:30",
+      "team1": "Sheffield United",
+      "team2": "Mansfield Town",
+      "score": {
+        "ft": [
+          3,
+          4
+        ]
+      },
+      "team1_cn": "谢菲尔德联",
+      "team2_cn": "曼斯菲特",
+      "_source": "7m.com.cn ID:55 R:10 M:26"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:30",
+      "team1": "Swansea City",
+      "team2": "West Bromwich Albion",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "斯旺西",
+      "team2_cn": "西布罗姆维奇",
+      "_source": "7m.com.cn ID:55 R:10 M:27"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-11",
+      "time": "22:30",
+      "team1": "West Ham United",
+      "team2": "Queens Park Rangers",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "西汉姆联",
+      "team2_cn": "女王公园巡游者",
+      "_source": "7m.com.cn ID:55 R:10 M:28"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-12",
+      "time": "00:30",
+      "team1": "Manchester United",
+      "team2": "Brighton & Hove Albion",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "曼彻斯特联",
+      "team2_cn": "布莱顿",
+      "_source": "7m.com.cn ID:55 R:10 M:29"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-13",
+      "time": "03:45",
+      "team1": "Liverpool",
+      "team2": "Barnsley",
+      "score": {
+        "ft": [
+          4,
+          1
+        ]
+      },
+      "team1_cn": "利物浦",
+      "team2_cn": "巴恩斯利",
+      "_source": "7m.com.cn ID:55 R:10 M:30"
+    },
+    {
+      "round": "3rd Round",
+      "date": "2026-01-21",
+      "time": "03:45",
+      "team1": "Salford City",
+      "team2": "Swindon Town",
+      "score": {
+        "ft": [
+          3,
+          2
+        ]
+      },
+      "team1_cn": "索尔福德市",
+      "team2_cn": "斯文登",
+      "_source": "7m.com.cn ID:55 R:10 M:31"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "03:45",
+      "team1": "Hull City",
+      "team2": "Chelsea",
+      "score": {
+        "ft": [
+          0,
+          4
+        ]
+      },
+      "team1_cn": "赫尔城",
+      "team2_cn": "切尔西",
+      "_source": "7m.com.cn ID:55 R:11 M:0"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "03:45",
+      "team1": "Wrexham AFC",
+      "team2": "Ipswich Town",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "雷克斯汉姆",
+      "team2_cn": "伊普斯维奇",
+      "_source": "7m.com.cn ID:55 R:11 M:1"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "20:15",
+      "team1": "Burton Albion",
+      "team2": "West Ham United",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "保顿艾尔宾",
+      "team2_cn": "西汉姆联",
+      "_source": "7m.com.cn ID:55 R:11 M:2"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "23:00",
+      "team1": "Burnley",
+      "team2": "Mansfield Town",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "伯恩利",
+      "team2_cn": "曼斯菲特",
+      "_source": "7m.com.cn ID:55 R:11 M:3"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "23:00",
+      "team1": "Norwich City",
+      "team2": "West Bromwich Albion",
+      "score": {
+        "ft": [
+          3,
+          1
+        ]
+      },
+      "team1_cn": "诺维奇",
+      "team2_cn": "西布罗姆维奇",
+      "_source": "7m.com.cn ID:55 R:11 M:4"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "23:00",
+      "team1": "Southampton",
+      "team2": "Leicester City",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "南安普顿",
+      "team2_cn": "莱斯特城",
+      "_source": "7m.com.cn ID:55 R:11 M:5"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-14",
+      "time": "23:00",
+      "team1": "Manchester City",
+      "team2": "Salford City",
+      "score": {
+        "ft": [
+          2,
+          0
+        ]
+      },
+      "team1_cn": "曼彻斯特城",
+      "team2_cn": "索尔福德市",
+      "_source": "7m.com.cn ID:55 R:11 M:6"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "01:45",
+      "team1": "Aston Villa",
+      "team2": "Newcastle United",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "阿斯顿维拉",
+      "team2_cn": "纽卡斯尔联",
+      "_source": "7m.com.cn ID:55 R:11 M:7"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "04:00",
+      "team1": "Liverpool",
+      "team2": "Brighton & Hove Albion",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "利物浦",
+      "team2_cn": "布莱顿",
+      "_source": "7m.com.cn ID:55 R:11 M:8"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "20:00",
+      "team1": "Birmingham City",
+      "team2": "Leeds United",
+      "score": {
+        "ft": [
+          1,
+          1
+        ]
+      },
+      "team1_cn": "伯明翰",
+      "team2_cn": "利兹联",
+      "_source": "7m.com.cn ID:55 R:11 M:9"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "21:30",
+      "team1": "Grimsby Town",
+      "team2": "Wolverhampton Wanderers",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "格林斯比",
+      "team2_cn": "狼队",
+      "_source": "7m.com.cn ID:55 R:11 M:10"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "22:00",
+      "team1": "Oxford United",
+      "team2": "Sunderland",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "牛津联",
+      "team2_cn": "桑德兰",
+      "_source": "7m.com.cn ID:55 R:11 M:11"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-15",
+      "time": "22:00",
+      "team1": "Stoke City",
+      "team2": "Fulham",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "斯托克城",
+      "team2_cn": "富勒姆",
+      "_source": "7m.com.cn ID:55 R:11 M:12"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-16",
+      "time": "00:30",
+      "team1": "Arsenal",
+      "team2": "Wigan Athletic",
+      "score": {
+        "ft": [
+          4,
+          0
+        ]
+      },
+      "team1_cn": "阿森纳",
+      "team2_cn": "维冈竞技",
+      "_source": "7m.com.cn ID:55 R:11 M:13"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-02-17",
+      "time": "03:30",
+      "team1": "Macclesfield Town",
+      "team2": "Brentford",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "麦克尔斯菲尔德",
+      "team2_cn": "布伦特福德",
+      "_source": "7m.com.cn ID:55 R:11 M:14"
+    },
+    {
+      "round": "4th Round",
+      "date": "2026-03-04",
+      "time": "03:45",
+      "team1": "Port Vale",
+      "team2": "Bristol City",
+      "score": {
+        "ft": [
+          0,
+          0
+        ]
+      },
+      "team1_cn": "维尔港",
+      "team2_cn": "布里斯托城",
+      "_source": "7m.com.cn ID:55 R:11 M:15"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-07",
+      "time": "04:00",
+      "team1": "Wolverhampton Wanderers",
+      "team2": "Liverpool",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "狼队",
+      "team2_cn": "利物浦",
+      "_source": "7m.com.cn ID:55 R:12 M:0"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-07",
+      "time": "20:15",
+      "team1": "Mansfield Town",
+      "team2": "Arsenal",
+      "score": {
+        "ft": [
+          1,
+          2
+        ]
+      },
+      "team1_cn": "曼斯菲特",
+      "team2_cn": "阿森纳",
+      "_source": "7m.com.cn ID:55 R:12 M:1"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-08",
+      "time": "01:45",
+      "team1": "Wrexham AFC",
+      "team2": "Chelsea",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "雷克斯汉姆",
+      "team2_cn": "切尔西",
+      "_source": "7m.com.cn ID:55 R:12 M:2"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-08",
+      "time": "04:00",
+      "team1": "Newcastle United",
+      "team2": "Manchester City",
+      "score": {
+        "ft": [
+          1,
+          3
+        ]
+      },
+      "team1_cn": "纽卡斯尔联",
+      "team2_cn": "曼彻斯特城",
+      "_source": "7m.com.cn ID:55 R:12 M:3"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-08",
+      "time": "20:00",
+      "team1": "Fulham",
+      "team2": "Southampton",
+      "score": {
+        "ft": [
+          0,
+          1
+        ]
+      },
+      "team1_cn": "富勒姆",
+      "team2_cn": "南安普顿",
+      "_source": "7m.com.cn ID:55 R:12 M:4"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-08",
+      "time": "21:30",
+      "team1": "Port Vale",
+      "team2": "Sunderland",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "维尔港",
+      "team2_cn": "桑德兰",
+      "_source": "7m.com.cn ID:55 R:12 M:5"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-09",
+      "time": "00:30",
+      "team1": "Leeds United",
+      "team2": "Norwich City",
+      "score": {
+        "ft": [
+          3,
+          0
+        ]
+      },
+      "team1_cn": "利兹联",
+      "team2_cn": "诺维奇",
+      "_source": "7m.com.cn ID:55 R:12 M:6"
+    },
+    {
+      "round": "5th Round",
+      "date": "2026-03-10",
+      "time": "03:30",
+      "team1": "West Ham United",
+      "team2": "Brentford",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "西汉姆联",
+      "team2_cn": "布伦特福德",
+      "_source": "7m.com.cn ID:55 R:12 M:7"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-04-04",
+      "time": "19:45",
+      "team1": "Manchester City",
+      "team2": "Liverpool",
+      "score": {
+        "ft": [
+          4,
+          0
+        ]
+      },
+      "team1_cn": "曼彻斯特城",
+      "team2_cn": "利物浦",
+      "_source": "7m.com.cn ID:55 R:13 M:0"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-04-05",
+      "time": "00:15",
+      "team1": "Chelsea",
+      "team2": "Port Vale",
+      "score": {
+        "ft": [
+          7,
+          0
+        ]
+      },
+      "team1_cn": "切尔西",
+      "team2_cn": "维尔港",
+      "_source": "7m.com.cn ID:55 R:13 M:1"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-04-05",
+      "time": "03:00",
+      "team1": "Southampton",
+      "team2": "Arsenal",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "南安普顿",
+      "team2_cn": "阿森纳",
+      "_source": "7m.com.cn ID:55 R:13 M:2"
+    },
+    {
+      "round": "Quarter-finals",
+      "date": "2026-04-05",
+      "time": "23:30",
+      "team1": "West Ham United",
+      "team2": "Leeds United",
+      "score": {
+        "ft": [
+          2,
+          2
+        ]
+      },
+      "team1_cn": "西汉姆联",
+      "team2_cn": "利兹联",
+      "_source": "7m.com.cn ID:55 R:13 M:3"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-26",
+      "time": "00:15",
+      "team1": "Manchester City",
+      "team2": "Southampton",
+      "score": {
+        "ft": [
+          2,
+          1
+        ]
+      },
+      "team1_cn": "曼彻斯特城",
+      "team2_cn": "南安普顿",
+      "_source": "7m.com.cn ID:55 R:14 M:0"
+    },
+    {
+      "round": "Semi-finals",
+      "date": "2026-04-26",
+      "time": "22:00",
+      "team1": "Chelsea",
+      "team2": "Leeds United",
+      "score": {
+        "ft": [
+          1,
+          0
+        ]
+      },
+      "team1_cn": "切尔西",
+      "team2_cn": "利兹联",
+      "_source": "7m.com.cn ID:55 R:14 M:1"
+    },
+    {
+      "round": "Final",
+      "date": "2026-05-16",
+      "time": "22:00",
+      "team1": "Chelsea",
+      "team2": "Manchester City",
+      "team1_cn": "切尔西",
+      "team2_cn": "曼彻斯特城",
+      "_source": "7m.com.cn ID:55 R:15 M:0"
+    }
+  ]
+}

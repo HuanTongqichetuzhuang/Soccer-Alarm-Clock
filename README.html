@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>足球闹钟Pro - 下载说明</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #1a2744 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 28px; margin-bottom: 10px; text-align: center; }
+    h1 span { color: #00d4aa; }
+    .subtitle { text-align: center; color: #7f8c9a; margin-bottom: 40px; }
+    
+    .section {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .download-btn {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      background: linear-gradient(135deg, #00d4aa 0%, #00a080 100%);
+      color: #0a1628;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      transition: transform 0.2s;
+    }
+    .download-btn:hover { transform: scale(1.02); }
+    
+    .steps {
+      counter-reset: step;
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 32px;
+      height: 32px;
+      background: #00d4aa;
+      color: #0a1628;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .step-content h3 { font-size: 16px; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: #7f8c9a; }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .feature {
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .feature-icon { font-size: 32px; margin-bottom: 8px; }
+    .feature-name { font-size: 14px; font-weight: 600; }
+    
+    .warning {
+      background: rgba(231,76,60,0.1);
+      border: 1px solid rgba(231,76,60,0.3);
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    .warning h3 { color: #e74c3c; margin-bottom: 8px; }
+    .warning p { font-size: 14px; color: #ccc; }
+    
+    .file-list {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    .file-list li { margin-bottom: 8px; color: #00d4aa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚽ 足球闹钟<span>Pro</span></h1>
+    <p class="subtitle">支持20大顶级联赛的足球比赛闹钟提醒APP</p>
+    
+    <!-- 下载按钮 -->
+    <div class="section">
+      <h2>📥 下载安装</h2>
+      <a href="SoccerAlarmPro_Full.zip" class="download-btn" download>
+        ⬇️ 点击下载完整版 APP
+      </a>
+      <p style="text-align:center;color:#7f8c9a;font-size:12px;">
+        文件大小：约 2MB | 包含所有功能
+      </p>
+    </div>
+    
+    <!-- 功能列表 -->
+    <div class="section">
+      <h2>✨ 功能特色</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">🏆</div>
+          <div class="feature-name">20大联赛</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔔</div>
+          <div class="feature-name">闹钟提醒</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚽</div>
+          <div class="feature-name">实时比分</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🏅</div>
+          <div class="feature-name">积分榜</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⭐</div>
+          <div class="feature-name">球队收藏</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-name">全局搜索</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 安装步骤 -->
+    <div class="section">
+      <h2>📱 安装步骤</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h3>解压文件</h3>
+            <p>将下载的压缩包解压到手机存储</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>打开APP</h3>
+            <p>用浏览器打开 SoccerAlarmAllLeagues.html</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>授权通知</h3>
+            <p>允许接收通知权限</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>添加到主屏</h3>
+            <p>iOS: 分享 → 添加到主屏幕<br>Android: 菜单 → 安装应用</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 支持联赛 -->
+    <div class="section">
+      <h2>🌐 支持联赛</h2>
+      <p style="color:#7f8c9a;margin-bottom:16px;">覆盖全球主要足球联赛</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:rgba(0,212,170,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🏴󠁧󠁢󠁥󠁮󠁧󠁿 英超</span>
+        <span style="background:rgba(0,212,170,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇪🇸 西甲</span>
+        <span style="background:rgba(0,212,170,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇮🇹 意甲</span>
+        <span style="background:rgba(0,212,170,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇩🇪 德甲</span>
+        <span style="background:rgba(0,212,170,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇫🇷 法甲</span>
+        <span style="background:rgba(238,135,7,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇨🇳 中超</span>
+        <span style="background:rgba(238,135,7,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇯🇵 J联赛</span>
+        <span style="background:rgba(238,135,7,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇰🇷 K联赛</span>
+        <span style="background:rgba(255,80,0,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇳🇱 荷甲</span>
+        <span style="background:rgba(255,80,0,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🇵🇹 葡超</span>
+        <span style="background:rgba(100,100,200,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🏆 欧冠</span>
+        <span style="background:rgba(100,100,200,0.2);padding:8px 16px;border-radius:20px;font-size:13px;">🏅 欧联</span>
+      </div>
+    </div>
+    
+    <!-- 包含文件 -->
+    <div class="section">
+      <h2>📁 压缩包内容</h2>
+      <ul class="file-list">
+        <li>SoccerAlarmAllLeagues.html - 主APP</li>
+        <li>AlarmPermissionTest.html - 权限测试</li>
+        <li>sw.js - 通知服务</li>
+        <li>manifest.json - APP配置</li>
+        <li>README.html - 使用说明</li>
+      </ul>
+    </div>
+    
+    <!-- 注意事项 -->
+    <div class="warning">
+      <h3>⚠️ 注意事项</h3>
+      <p>
+        1. iOS Safari 用户必须从主屏幕打开才能收到通知<br>
+        2. Android Chrome 用户建议安装到主屏幕<br>
+        3. 部分浏览器可能不支持通知功能<br>
+        4. 首次使用请先在权限测试页面验证通知功能
+      </p>
+    </div>
+    
+    <p style="text-align:center;color:#7f8c9a;font-size:12px;margin-top:40px;">
+      足球闹钟Pro v2.4 | 2026-04-13
+    </p>
+  </div>
+</body>
+</html>

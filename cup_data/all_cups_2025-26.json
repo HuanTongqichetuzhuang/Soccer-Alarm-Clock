@@ -1,0 +1,3090 @@
+{
+  "FAC": {
+    "name": "FA Cup",
+    "name_cn": "足总杯",
+    "country": "eng",
+    "season": "2025-26",
+    "source": "https://data.7m.com.cn/matches_data/55/gb/index.shtml",
+    "matchCount": 63,
+    "matches": [
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "03:30",
+        "team1": "Milton Keynes Dons",
+        "team2": "Oxford United",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "米尔顿凯恩斯",
+        "team2_cn": "牛津联",
+        "_source": "7m.com.cn ID:55 R:10 M:0"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "03:30",
+        "team1": "Port Vale",
+        "team2": "Fleetwood Town",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "维尔港",
+        "team2_cn": "弗利特伍德",
+        "_source": "7m.com.cn ID:55 R:10 M:1"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "03:30",
+        "team1": "Preston North End",
+        "team2": "Wigan Athletic",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "普雷斯顿",
+        "team2_cn": "维冈竞技",
+        "_source": "7m.com.cn ID:55 R:10 M:2"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "03:30",
+        "team1": "Wrexham AFC",
+        "team2": "Nottingham Forest",
+        "score": {
+          "ft": [
+            3,
+            3
+          ]
+        },
+        "team1_cn": "雷克斯汉姆",
+        "team2_cn": "诺丁汉森林",
+        "_source": "7m.com.cn ID:55 R:10 M:3"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "20:15",
+        "team1": "Cheltenham Town",
+        "team2": "Leicester City",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "切尔滕汉姆",
+        "team2_cn": "莱斯特城",
+        "_source": "7m.com.cn ID:55 R:10 M:4"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "20:15",
+        "team1": "Everton",
+        "team2": "Sunderland",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "埃弗顿",
+        "team2_cn": "桑德兰",
+        "_source": "7m.com.cn ID:55 R:10 M:5"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "20:15",
+        "team1": "Macclesfield Town",
+        "team2": "Crystal Palace",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "麦克尔斯菲尔德",
+        "team2_cn": "水晶宫",
+        "_source": "7m.com.cn ID:55 R:10 M:6"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "20:15",
+        "team1": "Wolverhampton Wanderers",
+        "team2": "Shrewsbury Town",
+        "score": {
+          "ft": [
+            6,
+            1
+          ]
+        },
+        "team1_cn": "狼队",
+        "team2_cn": "什鲁斯伯里",
+        "_source": "7m.com.cn ID:55 R:10 M:7"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Boreham Wood",
+        "team2": "Burton Albion",
+        "score": {
+          "ft": [
+            0,
+            5
+          ]
+        },
+        "team1_cn": "博雷汉姆",
+        "team2_cn": "保顿艾尔宾",
+        "_source": "7m.com.cn ID:55 R:10 M:8"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Burnley",
+        "team2": "Millwall",
+        "score": {
+          "ft": [
+            5,
+            1
+          ]
+        },
+        "team1_cn": "伯恩利",
+        "team2_cn": "米尔沃尔",
+        "_source": "7m.com.cn ID:55 R:10 M:9"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Doncaster Rovers",
+        "team2": "Southampton",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "唐卡斯特",
+        "team2_cn": "南安普顿",
+        "_source": "7m.com.cn ID:55 R:10 M:10"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Fulham",
+        "team2": "Middlesbrough",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "富勒姆",
+        "team2_cn": "米德尔斯堡",
+        "_source": "7m.com.cn ID:55 R:10 M:11"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Ipswich Town",
+        "team2": "Blackpool FC",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "伊普斯维奇",
+        "team2_cn": "布莱克浦",
+        "_source": "7m.com.cn ID:55 R:10 M:12"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Manchester City",
+        "team2": "Exeter City",
+        "score": {
+          "ft": [
+            10,
+            1
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "埃克塞特城",
+        "_source": "7m.com.cn ID:55 R:10 M:13"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Newcastle United",
+        "team2": "AFC Bournemouth",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "伯恩茅斯",
+        "_source": "7m.com.cn ID:55 R:10 M:14"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Sheffield Wednesday",
+        "team2": "Brentford",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "谢菲尔德星期三",
+        "team2_cn": "布伦特福德",
+        "_source": "7m.com.cn ID:55 R:10 M:15"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-10",
+        "time": "23:00",
+        "team1": "Stoke City",
+        "team2": "Coventry City",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "斯托克城",
+        "team2_cn": "考文垂",
+        "_source": "7m.com.cn ID:55 R:10 M:16"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "01:45",
+        "team1": "Bristol City",
+        "team2": "Watford",
+        "score": {
+          "ft": [
+            5,
+            1
+          ]
+        },
+        "team1_cn": "布里斯托城",
+        "team2_cn": "沃特福德",
+        "_source": "7m.com.cn ID:55 R:10 M:17"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "01:45",
+        "team1": "Cambridge United",
+        "team2": "Birmingham City",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "剑桥联",
+        "team2_cn": "伯明翰",
+        "_source": "7m.com.cn ID:55 R:10 M:18"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "01:45",
+        "team1": "Grimsby Town",
+        "team2": "Weston-super-Mare",
+        "score": {
+          "ft": [
+            3,
+            2
+          ]
+        },
+        "team1_cn": "格林斯比",
+        "team2_cn": "威斯通",
+        "_source": "7m.com.cn ID:55 R:10 M:19"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "01:45",
+        "team1": "Tottenham Hotspur",
+        "team2": "Aston Villa",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "托特纳姆热刺",
+        "team2_cn": "阿斯顿维拉",
+        "_source": "7m.com.cn ID:55 R:10 M:20"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "04:00",
+        "team1": "Charlton Athletic",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            1,
+            5
+          ]
+        },
+        "team1_cn": "查尔顿",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:55 R:10 M:21"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "20:00",
+        "team1": "Derby County",
+        "team2": "Leeds United",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "德比郡",
+        "team2_cn": "利兹联",
+        "_source": "7m.com.cn ID:55 R:10 M:22"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:00",
+        "team1": "Portsmouth FC",
+        "team2": "Arsenal",
+        "score": {
+          "ft": [
+            1,
+            4
+          ]
+        },
+        "team1_cn": "朴茨茅斯",
+        "team2_cn": "阿森纳",
+        "_source": "7m.com.cn ID:55 R:10 M:23"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:30",
+        "team1": "Hull City",
+        "team2": "Blackburn Rovers",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "赫尔城",
+        "team2_cn": "布莱克本",
+        "_source": "7m.com.cn ID:55 R:10 M:24"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:30",
+        "team1": "Norwich City",
+        "team2": "Walsall FC",
+        "score": {
+          "ft": [
+            5,
+            1
+          ]
+        },
+        "team1_cn": "诺维奇",
+        "team2_cn": "沃尔索尔",
+        "_source": "7m.com.cn ID:55 R:10 M:25"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:30",
+        "team1": "Sheffield United",
+        "team2": "Mansfield Town",
+        "score": {
+          "ft": [
+            3,
+            4
+          ]
+        },
+        "team1_cn": "谢菲尔德联",
+        "team2_cn": "曼斯菲特",
+        "_source": "7m.com.cn ID:55 R:10 M:26"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:30",
+        "team1": "Swansea City",
+        "team2": "West Bromwich Albion",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "斯旺西",
+        "team2_cn": "西布罗姆维奇",
+        "_source": "7m.com.cn ID:55 R:10 M:27"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-11",
+        "time": "22:30",
+        "team1": "West Ham United",
+        "team2": "Queens Park Rangers",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "西汉姆联",
+        "team2_cn": "女王公园巡游者",
+        "_source": "7m.com.cn ID:55 R:10 M:28"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-12",
+        "time": "00:30",
+        "team1": "Manchester United",
+        "team2": "Brighton & Hove Albion",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "曼彻斯特联",
+        "team2_cn": "布莱顿",
+        "_source": "7m.com.cn ID:55 R:10 M:29"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-13",
+        "time": "03:45",
+        "team1": "Liverpool",
+        "team2": "Barnsley",
+        "score": {
+          "ft": [
+            4,
+            1
+          ]
+        },
+        "team1_cn": "利物浦",
+        "team2_cn": "巴恩斯利",
+        "_source": "7m.com.cn ID:55 R:10 M:30"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-21",
+        "time": "03:45",
+        "team1": "Salford City",
+        "team2": "Swindon Town",
+        "score": {
+          "ft": [
+            3,
+            2
+          ]
+        },
+        "team1_cn": "索尔福德市",
+        "team2_cn": "斯文登",
+        "_source": "7m.com.cn ID:55 R:10 M:31"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "03:45",
+        "team1": "Hull City",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            0,
+            4
+          ]
+        },
+        "team1_cn": "赫尔城",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:55 R:11 M:0"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "03:45",
+        "team1": "Wrexham AFC",
+        "team2": "Ipswich Town",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "雷克斯汉姆",
+        "team2_cn": "伊普斯维奇",
+        "_source": "7m.com.cn ID:55 R:11 M:1"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "20:15",
+        "team1": "Burton Albion",
+        "team2": "West Ham United",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "保顿艾尔宾",
+        "team2_cn": "西汉姆联",
+        "_source": "7m.com.cn ID:55 R:11 M:2"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "23:00",
+        "team1": "Burnley",
+        "team2": "Mansfield Town",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "伯恩利",
+        "team2_cn": "曼斯菲特",
+        "_source": "7m.com.cn ID:55 R:11 M:3"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "23:00",
+        "team1": "Norwich City",
+        "team2": "West Bromwich Albion",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "诺维奇",
+        "team2_cn": "西布罗姆维奇",
+        "_source": "7m.com.cn ID:55 R:11 M:4"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "23:00",
+        "team1": "Southampton",
+        "team2": "Leicester City",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "南安普顿",
+        "team2_cn": "莱斯特城",
+        "_source": "7m.com.cn ID:55 R:11 M:5"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-14",
+        "time": "23:00",
+        "team1": "Manchester City",
+        "team2": "Salford City",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "索尔福德市",
+        "_source": "7m.com.cn ID:55 R:11 M:6"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "01:45",
+        "team1": "Aston Villa",
+        "team2": "Newcastle United",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "阿斯顿维拉",
+        "team2_cn": "纽卡斯尔联",
+        "_source": "7m.com.cn ID:55 R:11 M:7"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "04:00",
+        "team1": "Liverpool",
+        "team2": "Brighton & Hove Albion",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "利物浦",
+        "team2_cn": "布莱顿",
+        "_source": "7m.com.cn ID:55 R:11 M:8"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "20:00",
+        "team1": "Birmingham City",
+        "team2": "Leeds United",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "伯明翰",
+        "team2_cn": "利兹联",
+        "_source": "7m.com.cn ID:55 R:11 M:9"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "21:30",
+        "team1": "Grimsby Town",
+        "team2": "Wolverhampton Wanderers",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "格林斯比",
+        "team2_cn": "狼队",
+        "_source": "7m.com.cn ID:55 R:11 M:10"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "22:00",
+        "team1": "Oxford United",
+        "team2": "Sunderland",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "牛津联",
+        "team2_cn": "桑德兰",
+        "_source": "7m.com.cn ID:55 R:11 M:11"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-15",
+        "time": "22:00",
+        "team1": "Stoke City",
+        "team2": "Fulham",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "斯托克城",
+        "team2_cn": "富勒姆",
+        "_source": "7m.com.cn ID:55 R:11 M:12"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-16",
+        "time": "00:30",
+        "team1": "Arsenal",
+        "team2": "Wigan Athletic",
+        "score": {
+          "ft": [
+            4,
+            0
+          ]
+        },
+        "team1_cn": "阿森纳",
+        "team2_cn": "维冈竞技",
+        "_source": "7m.com.cn ID:55 R:11 M:13"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-02-17",
+        "time": "03:30",
+        "team1": "Macclesfield Town",
+        "team2": "Brentford",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "麦克尔斯菲尔德",
+        "team2_cn": "布伦特福德",
+        "_source": "7m.com.cn ID:55 R:11 M:14"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-03-04",
+        "time": "03:45",
+        "team1": "Port Vale",
+        "team2": "Bristol City",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "维尔港",
+        "team2_cn": "布里斯托城",
+        "_source": "7m.com.cn ID:55 R:11 M:15"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-07",
+        "time": "04:00",
+        "team1": "Wolverhampton Wanderers",
+        "team2": "Liverpool",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "狼队",
+        "team2_cn": "利物浦",
+        "_source": "7m.com.cn ID:55 R:12 M:0"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-07",
+        "time": "20:15",
+        "team1": "Mansfield Town",
+        "team2": "Arsenal",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "曼斯菲特",
+        "team2_cn": "阿森纳",
+        "_source": "7m.com.cn ID:55 R:12 M:1"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-08",
+        "time": "01:45",
+        "team1": "Wrexham AFC",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "雷克斯汉姆",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:55 R:12 M:2"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-08",
+        "time": "04:00",
+        "team1": "Newcastle United",
+        "team2": "Manchester City",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:55 R:12 M:3"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-08",
+        "time": "20:00",
+        "team1": "Fulham",
+        "team2": "Southampton",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "富勒姆",
+        "team2_cn": "南安普顿",
+        "_source": "7m.com.cn ID:55 R:12 M:4"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-08",
+        "time": "21:30",
+        "team1": "Port Vale",
+        "team2": "Sunderland",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "维尔港",
+        "team2_cn": "桑德兰",
+        "_source": "7m.com.cn ID:55 R:12 M:5"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-09",
+        "time": "00:30",
+        "team1": "Leeds United",
+        "team2": "Norwich City",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "利兹联",
+        "team2_cn": "诺维奇",
+        "_source": "7m.com.cn ID:55 R:12 M:6"
+      },
+      {
+        "round": "5th Round",
+        "date": "2026-03-10",
+        "time": "03:30",
+        "team1": "West Ham United",
+        "team2": "Brentford",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "西汉姆联",
+        "team2_cn": "布伦特福德",
+        "_source": "7m.com.cn ID:55 R:12 M:7"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-04-04",
+        "time": "19:45",
+        "team1": "Manchester City",
+        "team2": "Liverpool",
+        "score": {
+          "ft": [
+            4,
+            0
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "利物浦",
+        "_source": "7m.com.cn ID:55 R:13 M:0"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-04-05",
+        "time": "00:15",
+        "team1": "Chelsea",
+        "team2": "Port Vale",
+        "score": {
+          "ft": [
+            7,
+            0
+          ]
+        },
+        "team1_cn": "切尔西",
+        "team2_cn": "维尔港",
+        "_source": "7m.com.cn ID:55 R:13 M:1"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-04-05",
+        "time": "03:00",
+        "team1": "Southampton",
+        "team2": "Arsenal",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "南安普顿",
+        "team2_cn": "阿森纳",
+        "_source": "7m.com.cn ID:55 R:13 M:2"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-04-05",
+        "time": "23:30",
+        "team1": "West Ham United",
+        "team2": "Leeds United",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "西汉姆联",
+        "team2_cn": "利兹联",
+        "_source": "7m.com.cn ID:55 R:13 M:3"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-26",
+        "time": "00:15",
+        "team1": "Manchester City",
+        "team2": "Southampton",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "南安普顿",
+        "_source": "7m.com.cn ID:55 R:14 M:0"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-26",
+        "time": "22:00",
+        "team1": "Chelsea",
+        "team2": "Leeds United",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "切尔西",
+        "team2_cn": "利兹联",
+        "_source": "7m.com.cn ID:55 R:14 M:1"
+      },
+      {
+        "round": "Final",
+        "date": "2026-05-16",
+        "time": "22:00",
+        "team1": "Chelsea",
+        "team2": "Manchester City",
+        "team1_cn": "切尔西",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:55 R:15 M:0"
+      }
+    ]
+  },
+  "LC": {
+    "name": "Carabao Cup",
+    "name_cn": "联赛杯",
+    "country": "eng",
+    "season": "2025-26",
+    "source": "https://data.7m.com.cn/matches_data/53/gb/index.shtml",
+    "matchCount": 33,
+    "matches": [
+      {
+        "round": "3rd Round",
+        "date": "2025-09-17",
+        "time": "02:45",
+        "team1": "Sheffield Wednesday",
+        "team2": "Grimsby Town",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "谢菲尔德星期三",
+        "team2_cn": "格林斯比",
+        "_source": "7m.com.cn ID:53 R:3 M:0"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-17",
+        "time": "03:00",
+        "team1": "Brentford",
+        "team2": "Aston Villa",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "布伦特福德",
+        "team2_cn": "阿斯顿维拉",
+        "_source": "7m.com.cn ID:53 R:3 M:1"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-17",
+        "time": "03:00",
+        "team1": "Crystal Palace",
+        "team2": "Millwall",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "水晶宫",
+        "team2_cn": "米尔沃尔",
+        "_source": "7m.com.cn ID:53 R:3 M:2"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-18",
+        "time": "03:00",
+        "team1": "Swansea City",
+        "team2": "Nottingham Forest",
+        "score": {
+          "ft": [
+            3,
+            2
+          ]
+        },
+        "team1_cn": "斯旺西",
+        "team2_cn": "诺丁汉森林",
+        "_source": "7m.com.cn ID:53 R:3 M:3"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Barnsley",
+        "team2": "Brighton & Hove Albion",
+        "score": {
+          "ft": [
+            0,
+            6
+          ]
+        },
+        "team1_cn": "巴恩斯利",
+        "team2_cn": "布莱顿",
+        "_source": "7m.com.cn ID:53 R:3 M:4"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Burnley",
+        "team2": "Cardiff City",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "伯恩利",
+        "team2_cn": "卡迪夫城",
+        "_source": "7m.com.cn ID:53 R:3 M:5"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Fulham",
+        "team2": "Cambridge United",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "富勒姆",
+        "team2_cn": "剑桥联",
+        "_source": "7m.com.cn ID:53 R:3 M:6"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Lincoln City",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "林肯城",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:53 R:3 M:7"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Wigan Athletic",
+        "team2": "Wycombe Wanderers",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "维冈竞技",
+        "team2_cn": "威科姆流浪者",
+        "_source": "7m.com.cn ID:53 R:3 M:8"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Wolverhampton Wanderers",
+        "team2": "Everton",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "狼队",
+        "team2_cn": "埃弗顿",
+        "_source": "7m.com.cn ID:53 R:3 M:9"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "02:45",
+        "team1": "Wrexham AFC",
+        "team2": "Reading",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "雷克斯汉姆",
+        "team2_cn": "雷丁",
+        "_source": "7m.com.cn ID:53 R:3 M:10"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-24",
+        "time": "03:00",
+        "team1": "Liverpool",
+        "team2": "Southampton",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "利物浦",
+        "team2_cn": "南安普顿",
+        "_source": "7m.com.cn ID:53 R:3 M:11"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-25",
+        "time": "02:45",
+        "team1": "Huddersfield Town",
+        "team2": "Manchester City",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "哈德斯菲尔德",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:53 R:3 M:12"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-25",
+        "time": "02:45",
+        "team1": "Newcastle United",
+        "team2": "Bradford City",
+        "score": {
+          "ft": [
+            4,
+            1
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "布拉德福德",
+        "_source": "7m.com.cn ID:53 R:3 M:13"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-25",
+        "time": "02:45",
+        "team1": "Tottenham Hotspur",
+        "team2": "Doncaster Rovers",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "托特纳姆热刺",
+        "team2_cn": "唐卡斯特",
+        "_source": "7m.com.cn ID:53 R:3 M:14"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-09-25",
+        "time": "03:00",
+        "team1": "Port Vale",
+        "team2": "Arsenal",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "维尔港",
+        "team2_cn": "阿森纳",
+        "_source": "7m.com.cn ID:53 R:3 M:15"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "Grimsby Town",
+        "team2": "Brentford",
+        "score": {
+          "ft": [
+            0,
+            5
+          ]
+        },
+        "team1_cn": "格林斯比",
+        "team2_cn": "布伦特福德",
+        "_source": "7m.com.cn ID:53 R:4 M:0"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "Wycombe Wanderers",
+        "team2": "Fulham",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "威科姆流浪者",
+        "team2_cn": "富勒姆",
+        "_source": "7m.com.cn ID:53 R:4 M:1"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-29",
+        "time": "04:00",
+        "team1": "Wrexham AFC",
+        "team2": "Cardiff City",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "雷克斯汉姆",
+        "team2_cn": "卡迪夫城",
+        "_source": "7m.com.cn ID:53 R:4 M:2"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "Arsenal",
+        "team2": "Brighton & Hove Albion",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "阿森纳",
+        "team2_cn": "布莱顿",
+        "_source": "7m.com.cn ID:53 R:4 M:3"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "Liverpool",
+        "team2": "Crystal Palace",
+        "score": {
+          "ft": [
+            0,
+            3
+          ]
+        },
+        "team1_cn": "利物浦",
+        "team2_cn": "水晶宫",
+        "_source": "7m.com.cn ID:53 R:4 M:4"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "Swansea City",
+        "team2": "Manchester City",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "斯旺西",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:53 R:4 M:5"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "Wolverhampton Wanderers",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            3,
+            4
+          ]
+        },
+        "team1_cn": "狼队",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:53 R:4 M:6"
+      },
+      {
+        "round": "4th Round",
+        "date": "2025-10-30",
+        "time": "04:00",
+        "team1": "Newcastle United",
+        "team2": "Tottenham Hotspur",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "托特纳姆热刺",
+        "_source": "7m.com.cn ID:53 R:4 M:7"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2025-12-17",
+        "time": "04:00",
+        "team1": "Cardiff City",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "卡迪夫城",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:53 R:5 M:0"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2025-12-18",
+        "time": "03:30",
+        "team1": "Manchester City",
+        "team2": "Brentford",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "布伦特福德",
+        "_source": "7m.com.cn ID:53 R:5 M:1"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2025-12-18",
+        "time": "04:15",
+        "team1": "Newcastle United",
+        "team2": "Fulham",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "富勒姆",
+        "_source": "7m.com.cn ID:53 R:5 M:2"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2025-12-24",
+        "time": "04:00",
+        "team1": "Arsenal",
+        "team2": "Crystal Palace",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "阿森纳",
+        "team2_cn": "水晶宫",
+        "_source": "7m.com.cn ID:53 R:5 M:3"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-01-14",
+        "time": "04:00",
+        "team1": "Newcastle United",
+        "team2": "Manchester City",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "纽卡斯尔联",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:53 R:6 M:0"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-01-15",
+        "time": "04:00",
+        "team1": "Chelsea",
+        "team2": "Arsenal",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "切尔西",
+        "team2_cn": "阿森纳",
+        "_source": "7m.com.cn ID:53 R:6 M:1"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-02-04",
+        "time": "04:00",
+        "team1": "Arsenal",
+        "team2": "Chelsea",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "阿森纳",
+        "team2_cn": "切尔西",
+        "_source": "7m.com.cn ID:53 R:6 M:2"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-02-05",
+        "time": "04:00",
+        "team1": "Manchester City",
+        "team2": "Newcastle United",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "曼彻斯特城",
+        "team2_cn": "纽卡斯尔联",
+        "_source": "7m.com.cn ID:53 R:6 M:3"
+      },
+      {
+        "round": "Final",
+        "date": "2026-03-23",
+        "time": "00:30",
+        "team1": "Arsenal",
+        "team2": "Manchester City",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "阿森纳",
+        "team2_cn": "曼彻斯特城",
+        "_source": "7m.com.cn ID:53 R:7 M:0"
+      }
+    ]
+  },
+  "DFB": {
+    "name": "DFB-Pokal",
+    "name_cn": "德国杯",
+    "country": "de",
+    "season": "2025-26",
+    "source": "https://data.7m.com.cn/matches_data/52/gb/index.shtml",
+    "matchCount": 31,
+    "matches": [
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "01:30",
+        "team1": "Eintracht Frankfurt",
+        "team2": "Borussia Dortmund",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "法兰克福",
+        "team2_cn": "多特蒙德",
+        "_source": "7m.com.cn ID:52 R:1 M:0"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "01:30",
+        "team1": "1. FC Heidenheim",
+        "team2": "Hamburger SV",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "海登海姆",
+        "team2_cn": "汉堡",
+        "_source": "7m.com.cn ID:52 R:1 M:1"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "01:30",
+        "team1": "Hertha BSC",
+        "team2": "SV Elversberg",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "柏林赫塔",
+        "team2_cn": "埃尔沃斯堡",
+        "_source": "7m.com.cn ID:52 R:1 M:2"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "01:30",
+        "team1": "VfL Wolfsburg",
+        "team2": "Holstein Kiel",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "沃尔夫斯堡",
+        "team2_cn": "基尔",
+        "_source": "7m.com.cn ID:52 R:1 M:3"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "FC Augsburg",
+        "team2": "VfL Bochum",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "奥格斯堡",
+        "team2_cn": "波鸿",
+        "_source": "7m.com.cn ID:52 R:1 M:4"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "Borussia M'gladbach",
+        "team2": "Karlsruher SC",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "门兴格拉德巴赫",
+        "team2_cn": "卡尔斯鲁厄",
+        "_source": "7m.com.cn ID:52 R:1 M:5"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "Energie Cottbus",
+        "team2": "RB Leipzig",
+        "score": {
+          "ft": [
+            1,
+            4
+          ]
+        },
+        "team1_cn": "科特布斯",
+        "team2_cn": "莱比锡红牛",
+        "_source": "7m.com.cn ID:52 R:1 M:6"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-29",
+        "time": "03:45",
+        "team1": "FC St. Pauli",
+        "team2": "TSG Hoffenheim",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "圣保利",
+        "team2_cn": "霍芬海姆",
+        "_source": "7m.com.cn ID:52 R:1 M:7"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "01:00",
+        "team1": "Greuther Furth",
+        "team2": "1. FC Kaiserslautern",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "菲尔特",
+        "team2_cn": "凯泽斯劳滕",
+        "_source": "7m.com.cn ID:52 R:1 M:8"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "01:00",
+        "team1": "FC 08 Homburg",
+        "team2": "1. FC Magdeburg",
+        "score": {
+          "ft": [
+            0,
+            3
+          ]
+        },
+        "team1_cn": "勒蒂森",
+        "team2_cn": "马格德堡",
+        "_source": "7m.com.cn ID:52 R:1 M:9"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "01:00",
+        "team1": "1. FSV Mainz 05",
+        "team2": "VfB Stuttgart",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "美因茨",
+        "team2_cn": "斯图加特",
+        "_source": "7m.com.cn ID:52 R:1 M:10"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "01:00",
+        "team1": "SC Paderborn 07",
+        "team2": "Bayer Leverkusen",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "帕德博恩",
+        "team2_cn": "勒沃库森",
+        "_source": "7m.com.cn ID:52 R:1 M:11"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "SV Darmstadt 98",
+        "team2": "FC Schalke 04",
+        "score": {
+          "ft": [
+            4,
+            0
+          ]
+        },
+        "team1_cn": "达姆斯塔特",
+        "team2_cn": "沙尔克04",
+        "_source": "7m.com.cn ID:52 R:1 M:12"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "Fortuna Dusseldorf",
+        "team2": "SC Freiburg",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "杜塞尔多夫",
+        "team2_cn": "弗赖堡",
+        "_source": "7m.com.cn ID:52 R:1 M:13"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "1. FC Koln",
+        "team2": "FC Bayern Munich",
+        "score": {
+          "ft": [
+            1,
+            4
+          ]
+        },
+        "team1_cn": "科隆",
+        "team2_cn": "拜仁慕尼黑",
+        "_source": "7m.com.cn ID:52 R:1 M:14"
+      },
+      {
+        "round": "2nd Round",
+        "date": "2025-10-30",
+        "time": "03:45",
+        "team1": "FC Union Berlin",
+        "team2": "Arminia Bielefeld",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "柏林联合",
+        "team2_cn": "比勒菲尔德",
+        "_source": "7m.com.cn ID:52 R:1 M:15"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-03",
+        "time": "01:00",
+        "team1": "Borussia M'gladbach",
+        "team2": "FC St. Pauli",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "门兴格拉德巴赫",
+        "team2_cn": "圣保利",
+        "_source": "7m.com.cn ID:52 R:2 M:0"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-03",
+        "time": "01:00",
+        "team1": "Hertha BSC",
+        "team2": "1. FC Kaiserslautern",
+        "score": {
+          "ft": [
+            6,
+            1
+          ]
+        },
+        "team1_cn": "柏林赫塔",
+        "team2_cn": "凯泽斯劳滕",
+        "_source": "7m.com.cn ID:52 R:2 M:1"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-03",
+        "time": "04:00",
+        "team1": "Borussia Dortmund",
+        "team2": "Bayer Leverkusen",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "多特蒙德",
+        "team2_cn": "勒沃库森",
+        "_source": "7m.com.cn ID:52 R:2 M:2"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-03",
+        "time": "04:00",
+        "team1": "RB Leipzig",
+        "team2": "1. FC Magdeburg",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "莱比锡红牛",
+        "team2_cn": "马格德堡",
+        "_source": "7m.com.cn ID:52 R:2 M:3"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-04",
+        "time": "01:00",
+        "team1": "VfL Bochum",
+        "team2": "VfB Stuttgart",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "波鸿",
+        "team2_cn": "斯图加特",
+        "_source": "7m.com.cn ID:52 R:2 M:4"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-04",
+        "time": "01:00",
+        "team1": "SC Freiburg",
+        "team2": "SV Darmstadt 98",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "弗赖堡",
+        "team2_cn": "达姆斯塔特",
+        "_source": "7m.com.cn ID:52 R:2 M:5"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-04",
+        "time": "03:45",
+        "team1": "Hamburger SV",
+        "team2": "Holstein Kiel",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "汉堡",
+        "team2_cn": "基尔",
+        "_source": "7m.com.cn ID:52 R:2 M:6"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-04",
+        "time": "03:45",
+        "team1": "FC Union Berlin",
+        "team2": "FC Bayern Munich",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "柏林联合",
+        "team2_cn": "拜仁慕尼黑",
+        "_source": "7m.com.cn ID:52 R:2 M:7"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-04",
+        "time": "03:45",
+        "team1": "Bayer Leverkusen",
+        "team2": "FC St. Pauli",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "勒沃库森",
+        "team2_cn": "圣保利",
+        "_source": "7m.com.cn ID:52 R:3 M:0"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-05",
+        "time": "03:45",
+        "team1": "Holstein Kiel",
+        "team2": "VfB Stuttgart",
+        "score": {
+          "ft": [
+            0,
+            3
+          ]
+        },
+        "team1_cn": "基尔",
+        "team2_cn": "斯图加特",
+        "_source": "7m.com.cn ID:52 R:3 M:1"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-11",
+        "time": "03:45",
+        "team1": "Hertha BSC",
+        "team2": "SC Freiburg",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "柏林赫塔",
+        "team2_cn": "弗赖堡",
+        "_source": "7m.com.cn ID:52 R:3 M:2"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-12",
+        "time": "03:45",
+        "team1": "FC Bayern Munich",
+        "team2": "RB Leipzig",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "拜仁慕尼黑",
+        "team2_cn": "莱比锡红牛",
+        "_source": "7m.com.cn ID:52 R:3 M:3"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-23",
+        "time": "02:45",
+        "team1": "Bayer Leverkusen",
+        "team2": "FC Bayern Munich",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "勒沃库森",
+        "team2_cn": "拜仁慕尼黑",
+        "_source": "7m.com.cn ID:52 R:4 M:0"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-24",
+        "time": "02:45",
+        "team1": "VfB Stuttgart",
+        "team2": "SC Freiburg",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "斯图加特",
+        "team2_cn": "弗赖堡",
+        "_source": "7m.com.cn ID:52 R:4 M:1"
+      },
+      {
+        "round": "Final",
+        "date": "2026-05-24",
+        "time": "02:00",
+        "team1": "FC Bayern Munich",
+        "team2": "VfB Stuttgart",
+        "team1_cn": "拜仁慕尼黑",
+        "team2_cn": "斯图加特",
+        "_source": "7m.com.cn ID:52 R:5 M:0"
+      }
+    ]
+  },
+  "CDR": {
+    "name": "Copa del Rey",
+    "name_cn": "国王杯",
+    "country": "es",
+    "season": "2025-26",
+    "source": "https://data.7m.com.cn/matches_data/54/gb/index.shtml",
+    "matchCount": 33,
+    "matches": [
+      {
+        "round": "3rd Round",
+        "date": "2025-12-17",
+        "time": "02:00",
+        "team1": "Deportivo La Coruna",
+        "team2": "RCD Mallorca",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "拉科鲁尼亚",
+        "team2_cn": "马洛卡",
+        "_source": "7m.com.cn ID:54 R:3 M:0"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-17",
+        "time": "02:00",
+        "team1": "SD Eibar",
+        "team2": "Elche CF",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "埃瓦尔",
+        "team2_cn": "埃尔切",
+        "_source": "7m.com.cn ID:54 R:3 M:1"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-17",
+        "time": "04:00",
+        "team1": "CD Eldense",
+        "team2": "Real Sociedad",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "埃登斯",
+        "team2_cn": "皇家社会",
+        "_source": "7m.com.cn ID:54 R:3 M:2"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-17",
+        "time": "04:00",
+        "team1": "Sporting Gijon",
+        "team2": "Valencia CF",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "希洪竞技",
+        "team2_cn": "巴伦西亚",
+        "_source": "7m.com.cn ID:54 R:3 M:3"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-17",
+        "time": "04:30",
+        "team1": "CD瓜达拉哈拉",
+        "team2": "FC Barcelona",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "CD瓜达拉哈拉",
+        "team2_cn": "巴塞罗那",
+        "_source": "7m.com.cn ID:54 R:3 M:4"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "01:00",
+        "team1": "Cultural Leonesa",
+        "team2": "Levante UD",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "莱昂文化体育",
+        "team2_cn": "莱万特",
+        "_source": "7m.com.cn ID:54 R:3 M:5"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "02:00",
+        "team1": "Albacete Balompie",
+        "team2": "Celta Vigo",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "阿尔瓦塞特",
+        "team2_cn": "塞尔塔",
+        "_source": "7m.com.cn ID:54 R:3 M:6"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "02:00",
+        "team1": "SD Huesca",
+        "team2": "CA Osasuna",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "韦斯卡",
+        "team2_cn": "奥萨苏纳",
+        "_source": "7m.com.cn ID:54 R:3 M:7"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "02:00",
+        "team1": "Racing Santander",
+        "team2": "Villarreal CF",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "桑坦德竞技",
+        "team2_cn": "比利亚雷亚尔",
+        "_source": "7m.com.cn ID:54 R:3 M:8"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "02:00",
+        "team1": "Baleares CF",
+        "team2": "Atletico Madrid",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "巴利阿里",
+        "team2_cn": "马德里竞技",
+        "_source": "7m.com.cn ID:54 R:3 M:9"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "04:00",
+        "team1": "Deportivo Alaves",
+        "team2": "Sevilla FC",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "阿拉维斯",
+        "team2_cn": "塞维利亚",
+        "_source": "7m.com.cn ID:54 R:3 M:10"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-18",
+        "time": "04:00",
+        "team1": "CD Teruel",
+        "team2": "Real Madrid",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "达拉维拉瑞纳",
+        "team2_cn": "皇家马德里",
+        "_source": "7m.com.cn ID:54 R:3 M:11"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-19",
+        "time": "02:00",
+        "team1": "Burgos CF",
+        "team2": "Getafe CF",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "布尔戈斯",
+        "team2_cn": "赫塔费",
+        "_source": "7m.com.cn ID:54 R:3 M:12"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-19",
+        "time": "02:00",
+        "team1": "CD Ourense",
+        "team2": "Athletic Bilbao",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "欧伦塞",
+        "team2_cn": "毕尔巴鄂竞技",
+        "_source": "7m.com.cn ID:54 R:3 M:13"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2025-12-19",
+        "time": "04:00",
+        "team1": "Real Murcia",
+        "team2": "Real Betis",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "穆尔西亚",
+        "team2_cn": "皇家贝蒂斯",
+        "_source": "7m.com.cn ID:54 R:3 M:14"
+      },
+      {
+        "round": "3rd Round",
+        "date": "2026-01-07",
+        "time": "02:00",
+        "team1": "Granada CF",
+        "team2": "Rayo Vallecano",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "格拉纳达",
+        "team2_cn": "巴列卡诺",
+        "_source": "7m.com.cn ID:54 R:3 M:15"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-14",
+        "time": "04:00",
+        "team1": "Cultural Leonesa",
+        "team2": "Athletic Bilbao",
+        "score": {
+          "ft": [
+            3,
+            3
+          ]
+        },
+        "team1_cn": "莱昂文化体育",
+        "team2_cn": "毕尔巴鄂竞技",
+        "_source": "7m.com.cn ID:54 R:4 M:0"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-14",
+        "time": "04:00",
+        "team1": "Deportivo La Coruna",
+        "team2": "Atletico Madrid",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "拉科鲁尼亚",
+        "team2_cn": "马德里竞技",
+        "_source": "7m.com.cn ID:54 R:4 M:1"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-14",
+        "time": "04:00",
+        "team1": "Real Sociedad",
+        "team2": "CA Osasuna",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "皇家社会",
+        "team2_cn": "奥萨苏纳",
+        "_source": "7m.com.cn ID:54 R:4 M:2"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-15",
+        "time": "04:00",
+        "team1": "Deportivo Alaves",
+        "team2": "Rayo Vallecano",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "阿拉维斯",
+        "team2_cn": "巴列卡诺",
+        "_source": "7m.com.cn ID:54 R:4 M:3"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-15",
+        "time": "04:00",
+        "team1": "Albacete Balompie",
+        "team2": "Real Madrid",
+        "score": {
+          "ft": [
+            3,
+            2
+          ]
+        },
+        "team1_cn": "阿尔瓦塞特",
+        "team2_cn": "皇家马德里",
+        "_source": "7m.com.cn ID:54 R:4 M:4"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-15",
+        "time": "04:00",
+        "team1": "Real Betis",
+        "team2": "Elche CF",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "皇家贝蒂斯",
+        "team2_cn": "埃尔切",
+        "_source": "7m.com.cn ID:54 R:4 M:5"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-16",
+        "time": "04:00",
+        "team1": "Burgos CF",
+        "team2": "Valencia CF",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "布尔戈斯",
+        "team2_cn": "巴伦西亚",
+        "_source": "7m.com.cn ID:54 R:4 M:6"
+      },
+      {
+        "round": "4th Round",
+        "date": "2026-01-16",
+        "time": "04:15",
+        "team1": "Racing Santander",
+        "team2": "FC Barcelona",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "桑坦德竞技",
+        "team2_cn": "巴塞罗那",
+        "_source": "7m.com.cn ID:54 R:4 M:7"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-04",
+        "time": "04:00",
+        "team1": "Albacete Balompie",
+        "team2": "FC Barcelona",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "阿尔瓦塞特",
+        "team2_cn": "巴塞罗那",
+        "_source": "7m.com.cn ID:54 R:5 M:0"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-05",
+        "time": "04:00",
+        "team1": "Deportivo Alaves",
+        "team2": "Real Sociedad",
+        "score": {
+          "ft": [
+            2,
+            3
+          ]
+        },
+        "team1_cn": "阿拉维斯",
+        "team2_cn": "皇家社会",
+        "_source": "7m.com.cn ID:54 R:5 M:1"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-05",
+        "time": "04:00",
+        "team1": "Valencia CF",
+        "team2": "Athletic Bilbao",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "巴伦西亚",
+        "team2_cn": "毕尔巴鄂竞技",
+        "_source": "7m.com.cn ID:54 R:5 M:2"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-02-06",
+        "time": "04:00",
+        "team1": "Real Betis",
+        "team2": "Atletico Madrid",
+        "score": {
+          "ft": [
+            0,
+            5
+          ]
+        },
+        "team1_cn": "皇家贝蒂斯",
+        "team2_cn": "马德里竞技",
+        "_source": "7m.com.cn ID:54 R:5 M:3"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-02-12",
+        "time": "04:00",
+        "team1": "Athletic Bilbao",
+        "team2": "Real Sociedad",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "毕尔巴鄂竞技",
+        "team2_cn": "皇家社会",
+        "_source": "7m.com.cn ID:54 R:6 M:0"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-02-13",
+        "time": "04:00",
+        "team1": "Atletico Madrid",
+        "team2": "FC Barcelona",
+        "score": {
+          "ft": [
+            4,
+            0
+          ]
+        },
+        "team1_cn": "马德里竞技",
+        "team2_cn": "巴塞罗那",
+        "_source": "7m.com.cn ID:54 R:6 M:1"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-03-04",
+        "time": "04:00",
+        "team1": "FC Barcelona",
+        "team2": "Atletico Madrid",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "巴塞罗那",
+        "team2_cn": "马德里竞技",
+        "_source": "7m.com.cn ID:54 R:6 M:2"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-03-05",
+        "time": "04:00",
+        "team1": "Real Sociedad",
+        "team2": "Athletic Bilbao",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "皇家社会",
+        "team2_cn": "毕尔巴鄂竞技",
+        "_source": "7m.com.cn ID:54 R:6 M:3"
+      },
+      {
+        "round": "Final",
+        "date": "2026-04-19",
+        "time": "03:00",
+        "team1": "Atletico Madrid",
+        "team2": "Real Sociedad",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "马德里竞技",
+        "team2_cn": "皇家社会",
+        "_source": "7m.com.cn ID:54 R:7 M:0"
+      }
+    ]
+  },
+  "CDF": {
+    "name": "Coupe de France",
+    "name_cn": "法国杯",
+    "country": "fr",
+    "season": "2025-26",
+    "source": "https://data.7m.com.cn/matches_data/101/gb/index.shtml",
+    "matchCount": 31,
+    "matches": [
+      {
+        "round": "Round of 32",
+        "date": "2026-01-10",
+        "time": "22:30",
+        "team1": "Angers SCO",
+        "team2": "Toulouse FC",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "昂热",
+        "team2_cn": "图卢兹",
+        "_source": "7m.com.cn ID:101 R:3 M:0"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-10",
+        "time": "22:30",
+        "team1": "SC Bastia",
+        "team2": "ESTAC Troyes",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "巴斯蒂亚",
+        "team2_cn": "特鲁瓦",
+        "_source": "7m.com.cn ID:101 R:3 M:1"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-10",
+        "time": "22:30",
+        "team1": "蒙特勒伊FC",
+        "team2": "Amiens SC",
+        "score": {
+          "ft": [
+            2,
+            4
+          ]
+        },
+        "team1_cn": "蒙特勒伊FC",
+        "team2_cn": "亚眠",
+        "_source": "7m.com.cn ID:101 R:3 M:2"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-10",
+        "time": "22:30",
+        "team1": "US Orleans",
+        "team2": "AS Monaco",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "奥兰斯",
+        "team2_cn": "摩纳哥",
+        "_source": "7m.com.cn ID:101 R:3 M:3"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-11",
+        "time": "01:00",
+        "team1": "阿夫朗甚",
+        "team2": "Racing Strasbourg",
+        "score": {
+          "ft": [
+            0,
+            6
+          ]
+        },
+        "team1_cn": "阿夫朗甚",
+        "team2_cn": "斯特拉斯堡",
+        "_source": "7m.com.cn ID:101 R:3 M:4"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-11",
+        "time": "01:00",
+        "team1": "哈特里昂",
+        "team2": "FC Lorient",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "哈特里昂",
+        "team2_cn": "洛里昂",
+        "_source": "7m.com.cn ID:101 R:3 M:5"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-11",
+        "time": "01:00",
+        "team1": "FC Istres",
+        "team2": "Stade Lavallois",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "伊斯特",
+        "team2_cn": "拉瓦勒",
+        "_source": "7m.com.cn ID:101 R:3 M:6"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-11",
+        "time": "01:00",
+        "team1": "Le Puy Foot 43",
+        "team2": "Stade de Reims",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "勒皮",
+        "team2_cn": "兰斯",
+        "_source": "7m.com.cn ID:101 R:3 M:7"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-11",
+        "time": "21:00",
+        "team1": "FC Sochaux-Montbeliard",
+        "team2": "Racing Club Lens",
+        "score": {
+          "ft": [
+            0,
+            3
+          ]
+        },
+        "team1_cn": "索肖",
+        "team2_cn": "朗斯",
+        "_source": "7m.com.cn ID:101 R:3 M:8"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-12",
+        "time": "01:00",
+        "team1": "尚蒂利",
+        "team2": "Stade Rennais",
+        "score": {
+          "ft": [
+            1,
+            3
+          ]
+        },
+        "team1_cn": "尚蒂利",
+        "team2_cn": "雷恩",
+        "_source": "7m.com.cn ID:101 R:3 M:9"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-12",
+        "time": "01:00",
+        "team1": "Le Mans FC",
+        "team2": "AS Nancy-Lorraine",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "勒芒",
+        "team2_cn": "南锡",
+        "_source": "7m.com.cn ID:101 R:3 M:10"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-12",
+        "time": "01:00",
+        "team1": "FC Metz",
+        "team2": "Montpellier HSC",
+        "score": {
+          "ft": [
+            0,
+            4
+          ]
+        },
+        "team1_cn": "梅斯",
+        "team2_cn": "蒙彼利埃",
+        "_source": "7m.com.cn ID:101 R:3 M:11"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-12",
+        "time": "01:00",
+        "team1": "FC Nantes",
+        "team2": "OGC Nice",
+        "score": {
+          "ft": [
+            1,
+            1
+          ]
+        },
+        "team1_cn": "南特",
+        "team2_cn": "尼斯",
+        "_source": "7m.com.cn ID:101 R:3 M:12"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-12",
+        "time": "04:00",
+        "team1": "Lille OSC",
+        "team2": "Olympique Lyon",
+        "score": {
+          "ft": [
+            1,
+            2
+          ]
+        },
+        "team1_cn": "里尔",
+        "team2_cn": "里昂",
+        "_source": "7m.com.cn ID:101 R:3 M:13"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-13",
+        "time": "04:10",
+        "team1": "Paris Saint-Germain",
+        "team2": "Paris FC",
+        "score": {
+          "ft": [
+            0,
+            1
+          ]
+        },
+        "team1_cn": "巴黎圣日耳曼",
+        "team2_cn": "巴黎FC",
+        "_source": "7m.com.cn ID:101 R:3 M:14"
+      },
+      {
+        "round": "Round of 32",
+        "date": "2026-01-14",
+        "time": "04:00",
+        "team1": "贝叶",
+        "team2": "Olympique Marseille",
+        "score": {
+          "ft": [
+            0,
+            9
+          ]
+        },
+        "team1_cn": "贝叶",
+        "team2_cn": "马赛",
+        "_source": "7m.com.cn ID:101 R:3 M:15"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-04",
+        "time": "03:30",
+        "team1": "Stade de Reims",
+        "team2": "Le Mans FC",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "兰斯",
+        "team2_cn": "勒芒",
+        "_source": "7m.com.cn ID:101 R:4 M:0"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-04",
+        "time": "04:10",
+        "team1": "Olympique Marseille",
+        "team2": "Stade Rennais",
+        "score": {
+          "ft": [
+            3,
+            0
+          ]
+        },
+        "team1_cn": "马赛",
+        "team2_cn": "雷恩",
+        "_source": "7m.com.cn ID:101 R:4 M:1"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-05",
+        "time": "03:30",
+        "team1": "FC Lorient",
+        "team2": "Paris FC",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "洛里昂",
+        "team2_cn": "巴黎FC",
+        "_source": "7m.com.cn ID:101 R:4 M:2"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-05",
+        "time": "03:30",
+        "team1": "Olympique Lyon",
+        "team2": "Stade Lavallois",
+        "score": {
+          "ft": [
+            2,
+            0
+          ]
+        },
+        "team1_cn": "里昂",
+        "team2_cn": "拉瓦勒",
+        "_source": "7m.com.cn ID:101 R:4 M:3"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-05",
+        "time": "03:30",
+        "team1": "OGC Nice",
+        "team2": "Montpellier HSC",
+        "score": {
+          "ft": [
+            3,
+            2
+          ]
+        },
+        "team1_cn": "尼斯",
+        "team2_cn": "蒙彼利埃",
+        "_source": "7m.com.cn ID:101 R:4 M:4"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-05",
+        "time": "03:30",
+        "team1": "Toulouse FC",
+        "team2": "Amiens SC",
+        "score": {
+          "ft": [
+            1,
+            0
+          ]
+        },
+        "team1_cn": "图卢兹",
+        "team2_cn": "亚眠",
+        "_source": "7m.com.cn ID:101 R:4 M:5"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-05",
+        "time": "04:00",
+        "team1": "ESTAC Troyes",
+        "team2": "Racing Club Lens",
+        "score": {
+          "ft": [
+            2,
+            4
+          ]
+        },
+        "team1_cn": "特鲁瓦",
+        "team2_cn": "朗斯",
+        "_source": "7m.com.cn ID:101 R:4 M:6"
+      },
+      {
+        "round": "Round of 16",
+        "date": "2026-02-06",
+        "time": "04:00",
+        "team1": "Racing Strasbourg",
+        "team2": "AS Monaco",
+        "score": {
+          "ft": [
+            3,
+            1
+          ]
+        },
+        "team1_cn": "斯特拉斯堡",
+        "team2_cn": "摩纳哥",
+        "_source": "7m.com.cn ID:101 R:4 M:7"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-03-04",
+        "time": "04:00",
+        "team1": "Racing Strasbourg",
+        "team2": "Stade de Reims",
+        "score": {
+          "ft": [
+            2,
+            1
+          ]
+        },
+        "team1_cn": "斯特拉斯堡",
+        "team2_cn": "兰斯",
+        "_source": "7m.com.cn ID:101 R:5 M:0"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-03-05",
+        "time": "03:30",
+        "team1": "FC Lorient",
+        "team2": "OGC Nice",
+        "score": {
+          "ft": [
+            0,
+            0
+          ]
+        },
+        "team1_cn": "洛里昂",
+        "team2_cn": "尼斯",
+        "_source": "7m.com.cn ID:101 R:5 M:1"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-03-05",
+        "time": "04:00",
+        "team1": "Olympique Marseille",
+        "team2": "Toulouse FC",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "马赛",
+        "team2_cn": "图卢兹",
+        "_source": "7m.com.cn ID:101 R:5 M:2"
+      },
+      {
+        "round": "Quarter-finals",
+        "date": "2026-03-06",
+        "time": "04:10",
+        "team1": "Olympique Lyon",
+        "team2": "Racing Club Lens",
+        "score": {
+          "ft": [
+            2,
+            2
+          ]
+        },
+        "team1_cn": "里昂",
+        "team2_cn": "朗斯",
+        "_source": "7m.com.cn ID:101 R:5 M:3"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-22",
+        "time": "03:10",
+        "team1": "Racing Club Lens",
+        "team2": "Toulouse FC",
+        "score": {
+          "ft": [
+            4,
+            1
+          ]
+        },
+        "team1_cn": "朗斯",
+        "team2_cn": "图卢兹",
+        "_source": "7m.com.cn ID:101 R:6 M:0"
+      },
+      {
+        "round": "Semi-finals",
+        "date": "2026-04-23",
+        "time": "03:00",
+        "team1": "Racing Strasbourg",
+        "team2": "OGC Nice",
+        "score": {
+          "ft": [
+            0,
+            2
+          ]
+        },
+        "team1_cn": "斯特拉斯堡",
+        "team2_cn": "尼斯",
+        "_source": "7m.com.cn ID:101 R:6 M:1"
+      },
+      {
+        "round": "Final",
+        "date": "2026-05-23",
+        "time": "03:00",
+        "team1": "Racing Club Lens",
+        "team2": "OGC Nice",
+        "team1_cn": "朗斯",
+        "team2_cn": "尼斯",
+        "_source": "7m.com.cn ID:101 R:7 M:0"
+      }
+    ]
+  }
+}

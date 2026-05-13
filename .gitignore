@@ -36,3 +36,5 @@ server/node_modules/
 
 # Python
 __pycache__/
+
+dongqiudi_analysis/
