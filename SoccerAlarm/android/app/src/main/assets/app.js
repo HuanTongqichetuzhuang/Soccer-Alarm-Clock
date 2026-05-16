@@ -556,14 +556,35 @@ async function fetchNextMatches(leagueId) {
   }
 
   // 世界杯：使用 fixturedownload.com API（2026世界杯完整数据，国内可访问）
-  // World Cup 2026 matches — fixturedownload.com API or local data
+// 获取世界杯赛程（静态数据，时间已是北京时间）
 function fetchWCMatches() {
-  // World Cup 2026 draw not yet released — will populate when available
-  // Tournament: June 11 – July 19, 2026 | 48 teams, 104 matches, 16 cities
-  return [];
+  var now = new Date();
+  return WORLD_CUP_2026_MATCHES.map(function(m, i) {
+    var matchDate = new Date(m.date + 'T' + m.time + ':00+08:00');
+    var isLive = now >= matchDate && now < new Date(matchDate.getTime() + 120 * 60 * 1000);
+    var isFinished = now >= new Date(matchDate.getTime() + 120 * 60 * 1000);
+    return {
+      id: 'wc2026_' + i,
+      date: m.date,
+      time: m.time,
+      team1: m.team1,
+      team2: m.team2,
+      homeCn: getTeamCn(m.team1),
+      awayCn: getTeamCn(m.team2),
+      homeBadge: getTeamBadge(m.team1),
+      awayBadge: getTeamBadge(m.team2),
+      homeScore: null,
+      awayScore: null,
+      isLive: isLive,
+      isFinished: isFinished,
+      round: m.group + '组 第' + m.matchday + '轮',
+      timestamp: matchDate.getTime(),
+      leagueId: 'WC26'
+    };
+  });
 }
 
-if (lg.wcApi) {
+  if (lg.wcApi) {
     return fetchWCMatches();
   }
 
