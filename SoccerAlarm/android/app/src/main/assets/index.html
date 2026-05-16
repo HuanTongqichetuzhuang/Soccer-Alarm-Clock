@@ -33,6 +33,15 @@
   <!-- Pages -->
   <!-- 1. 赛程 -->
   <div class="page active" id="page-schedule">
+  <div class="ad-container ad-top" id="ad-schedule-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <div class="league-tabs" id="scheduleTabs"></div>
     <!-- 日期选择器 -->
     <div style="padding:8px 16px;display:flex;align-items:center;gap:8px;">
@@ -40,23 +49,80 @@
       <button onclick="goToToday()" style="padding:8px 14px;background:var(--abg);border:1px solid var(--accent);border-radius:10px;color:var(--accent);font-size:12px;cursor:pointer;">今天</button>
     </div>
     <div id="scheduleContent"></div>
+  
+  <div class="ad-container ad-bottom" id="ad-schedule" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
 
   <!-- 2. 结果 -->
   <div class="page" id="page-results">
+  <div class="ad-container ad-top" id="ad-results-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <div class="league-tabs" id="resultsTabs"></div>
     <div id="resultsContent"></div>
+  
+  <div class="ad-container ad-bottom" id="ad-results" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
   <!-- 4. 积分/射手 -->
   <div class="page" id="page-standings">
+  <div class="ad-container ad-top" id="ad-standings-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <div class="league-tabs" id="standingsTabs"></div>
     <div id="standingsContent"></div>
+  
+  <div class="ad-container ad-bottom" id="ad-standings" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
   <!-- 4. 闹钟 -->
   <div class="page" id="page-alarm">
+  <div class="ad-container ad-top" id="ad-alarm-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <div class="section-title">⏰ 自定义闹钟</div>
     <!-- Custom Alarm Creator -->
     <div class="custom-alarm-card">
@@ -128,10 +194,29 @@
     <!-- Match Alarms -->
     <div class="section-title">⭐ 比赛提醒 <span class="badge" id="matchAlarmCount">0</span></div>
     <div id="matchAlarmContent"></div>
+  
+  <div class="ad-container ad-bottom" id="ad-alarm" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
   <!-- 5. 我的 -->
   <div class="page" id="page-my">
+  <div class="ad-container ad-top" id="ad-my-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <!-- 权限引导卡片 -->
     <div id="permissionGuideCard" style="margin-bottom:14px;background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.3);border-radius:16px;padding:14px;">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
@@ -153,11 +238,30 @@
     <div class="team-search"><input type="text" id="teamSearchInput" placeholder="搜索球队..." oninput="filterTeams()"></div>
     <div class="team-grid" id="teamGridContent"></div>
 
+  
+  <div class="ad-container ad-bottom" id="ad-my" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
 
   <!-- 6. 更多 -->
   <div class="page" id="page-more">
+  <div class="ad-container ad-top" id="ad-more-top" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
+  </div>
     <div class="section-title">⚙️ 更多功能</div>
     
     <div style="display:flex;flex-direction:column;gap:12px;padding:0 2px">
@@ -184,7 +288,7 @@
           <span style="font-size:24px">📱</span>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:600;margin-bottom:3px">关于足球闹钟APP</div>
-            <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本 v2.35</div>
+            <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本</div>
           </div>
         </div>
       </div>
@@ -192,7 +296,17 @@
       <!-- 动态内容容器（刷新全部数据 + 打赏支持） -->
       <div id="moreContent"></div>
     </div>
+  
+  <div class="ad-container ad-bottom" id="ad-more" style="display:none">
+    <div class="ad-touch-zone">
+      <div class="ad-progress-border">
+        <img class="ad-image" src="" alt="" draggable="false"/>
+      </div>
+      <div class="ad-hint">长按 4 秒查看详情</div>
+    </div>
+    <button class="ad-close-btn" onclick="dismissAd(this.parentElement,event)">关闭广告</button>
   </div>
+</div>
 
 
   <!-- Nav (6 tabs) -->

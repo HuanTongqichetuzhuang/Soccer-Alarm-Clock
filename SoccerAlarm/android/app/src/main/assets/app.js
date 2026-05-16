@@ -996,7 +996,7 @@ function renderMatchCard(ev, leagueName, leagueId, showAlarm) {
     ? `<button class="match-alarm-btn${hasAlarm?' set':''}" onclick="toggleAlarm('${ha(alarmId)}','${ha(homeDisplay)}','${ha(awayDisplay)}','${ha(formatMatchTime(ev))}','${ha(leagueName)}',${getMatchTimestamp(ev)})">${hasAlarm?checkSvg:bellSvg}<span>${alarmLabel}</span></button>`
     : '';
 
-  const isFav = favTeamNames.includes(ev.team1) || favTeamNames.includes(ev.team2);
+  const isFav = favTeamNames.some(function(fn) { return isTeamMatch(ev.team1, fn, null); }) || favTeamNames.some(function(fn) { return isTeamMatch(ev.team2, fn, null); });
   return `
     <div class="match-card${isLive?' live':''}${isFav?' fav':''}">
       <div class="match-side">
@@ -2383,8 +2383,10 @@ function renderMyMatches() {
     const data = val.data;
     if (!data || !data.matches) continue;
     data.matches.forEach(m => {
-      const isHomeFav = favTeamNames.includes(m.team1);
-      const isAwayFav = favTeamNames.includes(m.team2);
+      const matchedHome = favTeamNames.find(function(fn) { return isTeamMatch(m.team1, fn, null); });
+      const isHomeFav = !!matchedHome;
+      const matchedAway = favTeamNames.find(function(fn) { return isTeamMatch(m.team2, fn, null); });
+      const isAwayFav = !!matchedAway;
       if (isHomeFav || isAwayFav) {
         // 用 date+team1+team2 生成去重key，防止同一场比赛重复显示
         const dedupKey = `${m.date}_${m.team1}_${m.team2}`;
@@ -2416,7 +2418,7 @@ function renderMyMatches() {
         }
 
         // 判断该比赛属于哪个主队
-        const favTeam = isHomeFav ? m.team1 : m.team2;
+        const favTeam = isHomeFav ? (matchedHome || m.team1) : (matchedAway || m.team2);
 
         myMatches.push({
           id: `${leagueId}_${m.date}_${m.team1}_${m.team2}`.replace(/\s/g, '_'),
@@ -2448,8 +2450,10 @@ function renderMyMatches() {
       if (!cupInfo.matches) continue;
       const lg = FOOTBALL_LEAGUES[cupId];
       cupInfo.matches.forEach(m => {
-        const isHomeFav = favTeamNames.includes(m.team1);
-        const isAwayFav = favTeamNames.includes(m.team2);
+        const matchedHome = favTeamNames.find(function(fn) { return isTeamMatch(m.team1, fn, null); });
+      const isHomeFav = !!matchedHome;
+        const matchedAway = favTeamNames.find(function(fn) { return isTeamMatch(m.team2, fn, null); });
+      const isAwayFav = !!matchedAway;
         if (isHomeFav || isAwayFav) {
           const dedupKey = `${m.date}_${m.team1}_${m.team2}`;
           if (seenIds.has(dedupKey)) return;
@@ -2457,7 +2461,7 @@ function renderMyMatches() {
           const matchDate = new Date(m.date + 'T' + m.time + ':00+08:00');
           const hasScore = m.score && m.score.length === 2;
           const isFinished = hasScore && m.score[0] !== null;
-          const favTeam = isHomeFav ? m.team1 : m.team2;
+          const favTeam = isHomeFav ? (matchedHome || m.team1) : (matchedAway || m.team2);
           myMatches.push({
             id: `${cupId}_${m.date}_${m.team1}_${m.team2}`.replace(/\s/g, '_'),
             date: m.date, time: m.time,
@@ -2585,8 +2589,10 @@ function renderTodayMatches() {
     if (!data || !data.matches) continue;
 
     data.matches.forEach(m => {
-      const isHomeFav = favTeamNames.includes(m.team1);
-      const isAwayFav = favTeamNames.includes(m.team2);
+      const matchedHome = favTeamNames.find(function(fn) { return isTeamMatch(m.team1, fn, null); });
+      const isHomeFav = !!matchedHome;
+      const matchedAway = favTeamNames.find(function(fn) { return isTeamMatch(m.team2, fn, null); });
+      const isAwayFav = !!matchedAway;
       if (!isHomeFav && !isAwayFav) return;
 
       // 兼容两种比分格式
@@ -2619,7 +2625,7 @@ function renderTodayMatches() {
       if (seenIds.has(dedupKey)) return;
       seenIds.add(dedupKey);
 
-      const favTeam = isHomeFav ? m.team1 : m.team2;
+      const favTeam = isHomeFav ? (matchedHome || m.team1) : (matchedAway || m.team2);
 
       todayMatches.push({
         id: `${leagueId}_${m.date}_${m.team1}_${m.team2}`.replace(/\s/g, '_'),
@@ -2650,8 +2656,10 @@ function renderTodayMatches() {
       if (!cupInfo.matches) continue;
       const lg = FOOTBALL_LEAGUES[cupId];
       cupInfo.matches.forEach(m => {
-        const isHomeFav = favTeamNames.includes(m.team1);
-        const isAwayFav = favTeamNames.includes(m.team2);
+        const matchedHome = favTeamNames.find(function(fn) { return isTeamMatch(m.team1, fn, null); });
+      const isHomeFav = !!matchedHome;
+        const matchedAway = favTeamNames.find(function(fn) { return isTeamMatch(m.team2, fn, null); });
+      const isAwayFav = !!matchedAway;
         if (!isHomeFav && !isAwayFav) return;
 
         const matchDate = new Date(m.date + 'T' + m.time + ':00+08:00');
@@ -2663,7 +2671,7 @@ function renderTodayMatches() {
         seenIds.add(dedupKey);
 
         const hasScore = m.score && m.score.length === 2;
-        const favTeam = isHomeFav ? m.team1 : m.team2;
+        const favTeam = isHomeFav ? (matchedHome || m.team1) : (matchedAway || m.team2);
 
         todayMatches.push({
           id: `${cupId}_${m.date}_${m.team1}_${m.team2}`.replace(/\s/g, '_'),
@@ -2874,6 +2882,51 @@ async function loadTeamMatches(teamId, teamName, leagueId) {
     return isTeamMatch(m.team1, teamName, teamId) || isTeamMatch(m.team2, teamName, teamId);
   });
   
+  // Merge cup data (CUP_MATCHES_2025_26 not in FOOTBALL_LEAGUES API)
+  try {
+    if (typeof CUP_MATCHES_2025_26 === 'object') {
+      var cupKeys = Object.keys(CUP_MATCHES_2025_26);
+      for (var ci = 0; ci < cupKeys.length; ci++) {
+        var cupLeague = CUP_MATCHES_2025_26[cupKeys[ci]];
+        if (cupLeague && cupLeague.matches && cupLeague.matches.length) {
+          var cupMatches = cupLeague.matches;
+          var cupLg = FOOTBALL_LEAGUES[cupKeys[ci]];
+          for (var cj = 0; cj < cupMatches.length; cj++) {
+            var cm = cupMatches[cj];
+            if (isTeamMatch(cm.team1, teamName, teamId) || isTeamMatch(cm.team2, teamName, teamId)) {
+              // Clone to avoid mutating original
+              var dateStr = (cm.date || '').replace(/\./g, '-');
+              var hasScore = cm.score && cm.score.length === 2 && cm.score[0] !== null;
+              var entry = {
+                id: (cupKeys[ci] + '_' + (cm.date||'') + '_' + cm.team1 + '_' + cm.team2).replace(/\s/g, '_'),
+                date: cm.date || '',
+                time: cm.time || '--:--',
+                team1: cm.team1,
+                team2: cm.team2,
+                homeCn: getTeamCn(cm.team1) || cm.team1,
+                awayCn: getTeamCn(cm.team2) || cm.team2,
+                homeBadge: getTeamBadge(cm.team1) || '',
+                awayBadge: getTeamBadge(cm.team2) || '',
+                homeScore: hasScore ? cm.score[0] : null,
+                awayScore: hasScore ? cm.score[1] : null,
+                isLive: false,
+                isFinished: hasScore,
+                round: cm.round || '',
+                timestamp: new Date(dateStr + 'T' + (cm.time || '00:00:00') + '+08:00').getTime(),
+                leagueName: cupLeague.name || (cupLg ? cupLg.name : cupKeys[ci]),
+                leagueId: cupKeys[ci],
+                isCupMatch: true
+              };
+              teamMatches.push(entry);
+            }
+          }
+        }
+      }
+    }
+  } catch(e) { console.log('cup merge err:', e); }
+
+  
+
   // 按时间排序（升序，最早在前）
   teamMatches.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
   
@@ -3120,6 +3173,235 @@ function doScheduleWeb(home, away, league, matchTs) {
   }
 }
 
+
+// ==================== 广告系统 v3 ====================
+// 6 页面独立上下广告位 + 插屏 + 原生广告
+// 启动时从服务器拉取一次，缓存到 PAGE_ADS，session 内不刷新
+
+var ALL_PAGES = ['schedule','results','standings','alarm','my','more'];
+var DISMISSED = {};  // session 内已关闭的广告 (in-memory only)
+var PAGE_ADS = {};   // 广告缓存
+var PAGE_SWITCH_COUNT = 0;
+var LAST_INTERSTITIAL_TS = 0;
+
+
+// ==================== ANALYTICS PING ====================
+function getDeviceId() {
+  try {
+    var stored = localStorage.getItem('soccerAlarmDeviceId');
+    if (stored) return stored;
+    var id = 'did_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem('soccerAlarmDeviceId', id);
+    return id;
+  } catch(e) {
+    return 'did_unknown';
+  }
+}
+
+function sendPing() {
+  try {
+    if (!window.AndroidInterface || !AndroidInterface.nativeFetch) return;
+    var did = getDeviceId();
+    var url = UPDATE_SERVER + '/api/ping?did=' + encodeURIComponent(did) + '&v=' + APP_VERSION_NAME;
+    AndroidInterface.nativeFetch(url);
+  } catch(e) {}
+}
+
+function fetchAds() {
+  for (var i = 0; i < ALL_PAGES.length; i++) {
+    fetchPageAds(ALL_PAGES[i]);
+  }
+}
+
+function fetchPageAds(page) {
+  if (!window.AndroidInterface || !AndroidInterface.nativeFetch) return;
+  try {
+    var raw = AndroidInterface.nativeFetch(UPDATE_SERVER + '/api/ads?page=' + page);
+    var data = JSON.parse(raw);
+    PAGE_ADS[page] = { banners: [], interstitial: null, native: null };
+    if (data.ads && data.ads.length) {
+      for (var i = 0; i < data.ads.length; i++) {
+        var a = data.ads[i];
+        if (a.type === 'banner') {
+          PAGE_ADS[page].banners.push(a);
+        } else if (a.type === 'interstitial' && !PAGE_ADS[page].interstitial) {
+          PAGE_ADS[page].interstitial = a;
+        } else if (a.type === 'native' && !PAGE_ADS[page].native) {
+          PAGE_ADS[page].native = a;
+        }
+      }
+    }
+    renderBannersForPage(page);
+  } catch(e) {
+    // 暴露错误到 initError
+    var errEl = document.getElementById('initError');
+    if (errEl) errEl.textContent += '\n[Ad] fetchPageAds(' + page + '): ' + e.message;
+  }
+}
+
+function renderBannersForPage(page) {
+  var ads = PAGE_ADS[page];
+  var banners = (ads && ads.banners) ? ads.banners : [];
+  // 所有广告都是页面专属，直接选 top/bottom
+  var topAd = null, bottomAd = null;
+  for (var i = 0; i < banners.length; i++) {
+    var b = banners[i];
+    if (!topAd && b.position === 'top') topAd = b;
+    if (!bottomAd && b.position !== 'top') bottomAd = b;
+    if (topAd && bottomAd) break;
+  }
+  renderOneBanner('ad-' + page + '-top', topAd);
+  renderOneBanner('ad-' + page, bottomAd);
+}
+
+function renderOneBanner(containerId, ad) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  if (ad && ad.imageUrl && !isAdDismissed(ad.imageUrl)) {
+    el.style.display = 'block';
+    var img = el.querySelector('.ad-image');
+    if (img && img.src !== ad.imageUrl) {
+      img.src = ad.imageUrl;
+      img.alt = ad.title || '';
+    }
+    var hint = el.querySelector('.ad-hint');
+    // 设置 long-press 事件
+    var touchZone = el.querySelector('.ad-touch-zone');
+    if (touchZone && ad.linkUrl) {
+      touchZone.onmousedown = null; touchZone.onmouseup = null; touchZone.onmouseleave = null;
+      touchZone.ontouchstart = null; touchZone.ontouchend = null; touchZone.ontouchmove = null;
+      initAdLongPress(touchZone, ad.linkUrl);
+    }
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function dismissAd(el, event) {
+  if (event) event.stopPropagation();
+  if (!el) return;
+  el.style.display = 'none';
+  var img = el.querySelector('.ad-image');
+  if (img && img.src) DISMISSED[img.src] = true;
+  try {
+    var sibling = null;
+    if (el.id && el.id.indexOf('-top') > -1) {
+      sibling = document.getElementById(el.id.replace('-top', ''));
+    } else if (el.id) {
+      sibling = document.getElementById(el.id + '-top');
+    }
+    if (sibling) {
+      sibling.style.display = 'none';
+      var sibImg = sibling.querySelector('.ad-image');
+      if (sibImg && sibImg.src) DISMISSED[sibImg.src] = true;
+    }
+  } catch(e) { console.warn('dismissAd error:', e); }
+}
+
+function dismissNativeAd(el, imageUrl, event) {
+  if (event) event.stopPropagation();
+  if (el) el.style.display = 'none';
+  if (imageUrl) DISMISSED[imageUrl] = true;
+}
+
+function isAdDismissed(imageUrl) {
+  return !!(imageUrl && DISMISSED[imageUrl]);
+}
+
+function initAdLongPress(el, linkUrl) {
+  if (!el || !linkUrl) return;
+  var startX = 0, startY = 0;
+  var timer = null;
+  var progress = 0;
+  var border = el.closest('.ad-container') ? el.closest('.ad-container').querySelector('.ad-progress-border') : null;
+  var hint = el.closest('.ad-container') ? el.closest('.ad-container').querySelector('.ad-hint') : null;
+
+  function updateRing(pct) {
+    if (border) border.style.background = 'conic-gradient(var(--accent) ' + pct + '%, transparent 0%)';
+  }
+  function showHint(show) {
+    if (hint) { hint.style.display = show ? 'block' : 'none'; }
+  }
+  function cancel() {
+    if (timer) { clearInterval(timer); timer = null; }
+    progress = 0;
+    updateRing(0);
+    showHint(false);
+  }
+
+  el.addEventListener('touchstart', function(e) {
+    var t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    progress = 0;
+    updateRing(0);
+    timer = setInterval(function() {
+      progress += 5;
+      updateRing(progress);
+      if (progress >= 15) showHint(true);
+      if (progress >= 100) {
+        cancel();
+        if (linkUrl && window.AndroidInterface && AndroidInterface.openBrowser) {
+          AndroidInterface.openBrowser(linkUrl);
+        }
+      }
+    }, 200);
+  });
+  el.addEventListener('touchmove', function(e) {
+    var t = e.touches[0];
+    if (Math.abs(t.clientX - startX) > 10 || Math.abs(t.clientY - startY) > 10) {
+      cancel();
+    }
+  });
+  el.addEventListener('touchend', cancel);
+  el.addEventListener('touchcancel', cancel);
+}
+
+function maybeShowInterstitial() {
+  var ads = PAGE_ADS[currentPage];
+  var interstitial = (ads && ads.interstitial) ? ads.interstitial : null;
+  // Fallback: check global ads
+  if (!interstitial && PAGE_ADS['schedule'] && PAGE_ADS['schedule'].interstitial && PAGE_ADS['schedule'].interstitial.page !== 'schedule') {
+    interstitial = PAGE_ADS['schedule'].interstitial;
+  }
+  if (!interstitial || !interstitial.imageUrl || isAdDismissed(interstitial.imageUrl)) return;
+  var now = Date.now();
+  if (now - LAST_INTERSTITIAL_TS < 30000) return;
+  PAGE_SWITCH_COUNT++;
+  if (PAGE_SWITCH_COUNT % 4 !== 0) return;
+  LAST_INTERSTITIAL_TS = now;
+
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center';
+  overlay.innerHTML = '<img src="' + interstitial.imageUrl + '" style="max-width:90%;max-height:60%;border-radius:12px;object-fit:contain" onerror="this.parentElement.remove()"/>' +
+    '<button onclick="this.parentElement.remove();DISMISSED[\'' + interstitial.imageUrl + '\']=true" style="margin-top:20px;padding:10px 24px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:16px">关闭广告</button>' +
+    (interstitial.linkUrl ? '<button onclick="if(window.AndroidInterface&&AndroidInterface.openBrowser)AndroidInterface.openBrowser(\'' + interstitial.linkUrl + '\')" style="margin-top:12px;padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:16px">查看详情</button>' : '');
+  document.body.appendChild(overlay);
+}
+
+function injectNativeAds(containerId) {
+  if (!currentPage || !PAGE_ADS[currentPage]) return;
+  var native = PAGE_ADS[currentPage].native;
+  if (!native || !native.imageUrl || isAdDismissed(native.imageUrl)) return;
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  var list = container.querySelector('.match-list');
+  if (!list) list = container;
+  var children = list.children;
+  if (children.length < 3) return;
+  var adCard = document.createElement('div');
+  adCard.className = 'native-ad-card';
+  adCard.style.cssText = 'margin:8px 12px;padding:12px;background:var(--card-bg);border-radius:12px;border:1px dashed var(--accent);text-align:center';
+  adCard.innerHTML = '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px">广告</div>' +
+    '<img src="' + native.imageUrl + '" style="max-width:100%;max-height:120px;border-radius:8px;object-fit:contain" onerror="this.style.display=\'none\'"/>' +
+    '<div style="font-size:12px;color:var(--text);margin:6px 0">' + (native.title || '') + '</div>' +
+    '<button class="ad-close-btn" style="margin-top:6px" data-ad-img="' + (native.imageUrl || '').replace(/'/g, '&#39;') + '" onclick="dismissNativeAd(this.parentElement,this.dataset.adImg,event)">关闭广告</button>';
+  if (children[2]) {
+    children[2].parentNode.insertBefore(adCard, children[2]);
+  } else {
+    list.appendChild(adCard);
+  }
+}
+
 // ==================== NAVIGATION ====================
 function switchPage(name, idx) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -3128,6 +3410,8 @@ function switchPage(name, idx) {
   document.getElementById('nav' + idx).classList.add('active');
   currentPage = name;
 
+  if (PAGE_ADS[name]) { renderBannersForPage(name); }
+  maybeShowInterstitial();
   switch(name) {
     case 'schedule':  loadSchedule(); break;
     case 'results':   loadResults();  break;
@@ -3233,6 +3517,8 @@ let currentScheduleDate = null;
 // ==================== INIT ====================
 function init() {
   try {
+    fetchAds();
+    sendPing();
     loadState();
     if ('Notification' in window && Notification.permission === 'default') {
       try { Notification.requestPermission(); } catch(e) {}
@@ -3299,7 +3585,7 @@ function checkAndAutoGuidePermissions() {
       const names = list.map(k => permNames[k] || k).join('、');
       showToast(`⚠️ 缺少${names}，请前往「我的」页面开启`);
     }
-  } catch(e) {}
+  } catch(e) { console.warn('permission check error:', e); }
 }
 
 // 兼容性启动：确保 DOM 完全就绪后再初始化
@@ -3311,8 +3597,10 @@ if (document.readyState === 'loading') {
 
 // ==================== 检查更新 ====================
 var UPDATE_SERVER = "http://8.154.26.92:3000";
-var APP_VERSION_CODE = 37;
-var APP_VERSION_NAME = '2.37';
+var APP_VERSION_CODE = 46;
+var APP_VERSION_NAME = '2.43';
+
+var ALL_PAGES = ['schedule','results','standings','alarm','my','more'];
 
 
 function loadMorePage() {
@@ -3374,7 +3662,7 @@ function loadMorePage() {
   }
   // Update version display
   const vt = document.getElementById('appVersionText');
-  if (vt) vt.textContent = '\u7248\u672C v2.35';
+  if (vt) vt.textContent = '\u7248\u672C v' + APP_VERSION_NAME;
 }
 
 // ==================== CSL 手动刷新 ====================
