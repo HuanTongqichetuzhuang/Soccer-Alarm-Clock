@@ -556,7 +556,14 @@ async function fetchNextMatches(leagueId) {
   }
 
   // 世界杯：使用 fixturedownload.com API（2026世界杯完整数据，国内可访问）
-  if (lg.wcApi) {
+  // World Cup 2026 matches — fixturedownload.com API or local data
+function fetchWCMatches() {
+  // World Cup 2026 draw not yet released — will populate when available
+  // Tournament: June 11 – July 19, 2026 | 48 teams, 104 matches, 16 cities
+  return [];
+}
+
+if (lg.wcApi) {
     return fetchWCMatches();
   }
 
