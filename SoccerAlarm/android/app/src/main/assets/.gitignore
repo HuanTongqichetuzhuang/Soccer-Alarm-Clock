@@ -1,0 +1,21 @@
+# Build outputs
+*.apk
+build/
+.gradle/
+*.ap_
+*.dex
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.bak
+__pycache__/
+*.pyc
