@@ -517,7 +517,7 @@ class WebAppInterface(private val activity: MainActivity) {
             val connection = java.net.URL(url).openConnection() as java.net.HttpURLConnection
             connection.connectTimeout = 10000
             connection.readTimeout = 10000
-            connection.setRequestProperty("User-Agent", "SoccerAlarmPro/2.35")
+            connection.setRequestProperty("User-Agent", "SoccerAlarm App/2.35")
             val code = connection.responseCode
             if (code in 200..299) {
                 connection.inputStream.bufferedReader().use { it.readText() }

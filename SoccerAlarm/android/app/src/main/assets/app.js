@@ -1656,7 +1656,7 @@ function toggleRepeat(btn) {
 }
 
 function addCustomAlarm() {
-  const label = document.getElementById('customAlarmLabel').value.trim() || '足球闹钟';
+  const label = document.getElementById('customAlarmLabel').value.trim() || '足球闹钟App';
   const time = document.getElementById('customAlarmTime').value;
   if (!time) { showToast('请选择时间'); return; }
 
@@ -1810,7 +1810,7 @@ function sendTestAlarm() {
       const result = window.AndroidAlarm.createEnhancedAlarm(
         'test_alarm',
         '测试闹钟',
-        '足球闹钟APP',
+        '足球闹钟App',
         testTime,
         false
       );
@@ -1842,7 +1842,7 @@ function sendTestAlarm() {
       window.AndroidAlarm.createSystemAlarm(
         'test_alarm',
         '测试闹钟',
-        '足球闹钟APP',
+        '足球闹钟App',
         testTime,
         false
       );
@@ -1897,7 +1897,7 @@ function checkAndRequestExactAlarmPermission() {
 }
 
 function showPermissionGuide() {
-  const msg = '足球闹钟APP 使用系统闹钟应用来提醒您！\n\n'
+  const msg = '足球闹钟App 使用系统闹钟应用来提醒您！\n\n'
     + '请确保系统闹钟应用已启用：\n'
     + '1. 点击「去设置」打开时钟应用\n'
     + '2. 检查闹钟功能是否正常\n'
@@ -1985,7 +1985,7 @@ function checkExactAlarmPermission() {
     const available = window.AndroidAlarm.isSystemAlarmAvailable();
     if (!available) {
       showToast('⚠️ 无法打开系统闹钟，请检查设置');
-      if (confirm('足球闹钟APP 需要调用系统闹钟应用来提醒您！\n\n点击「确定」前往设置。')) {
+      if (confirm('足球闹钟App 需要调用系统闹钟应用来提醒您！\n\n点击「确定」前往设置。')) {
         window.AndroidAlarm.openClockApp();
       }
       return false;
@@ -2100,7 +2100,7 @@ const BRAND_SPECIFIC_GUIDES = {
     icon: '📱',
     items: [
       { icon: '🔋', label: '后台使用限制', desc: '智能管理器→电池→后台使用限制→不限制', action: 'openSamsungBattery' },
-      { icon: '⚡', label: '应用程序电池', desc: '设置→应用程序→足球闹钟APP→电池→允许后台活动', action: 'openSamsungBattery' }
+      { icon: '⚡', label: '应用程序电池', desc: '设置→应用程序→足球闹钟App→电池→允许后台活动', action: 'openSamsungBattery' }
     ],
     color: '#1428a0'
   },
@@ -2108,7 +2108,7 @@ const BRAND_SPECIFIC_GUIDES = {
     name: '一加',
     icon: '📱',
     items: [
-      { icon: '🔋', label: '电池优化', desc: '设置→电池→电池优化→足球闹钟APP→不优化', action: 'openOneplusBattery' }
+      { icon: '🔋', label: '电池优化', desc: '设置→电池→电池优化→足球闹钟App→不优化', action: 'openOneplusBattery' }
     ],
     color: '#f00520'
   },
@@ -2116,7 +2116,7 @@ const BRAND_SPECIFIC_GUIDES = {
     name: '魅族',
     icon: '📱',
     items: [
-      { icon: '🔐', label: '后台管理', desc: '安全中心→后台管理→足球闹钟APP→允许后台运行', action: 'openMeizuBackground' },
+      { icon: '🔐', label: '后台管理', desc: '安全中心→后台管理→足球闹钟App→允许后台运行', action: 'openMeizuBackground' },
       { icon: '🔋', label: '省电模式', desc: '设置→电池→省电模式→添加白名单', action: 'openMeizuBattery' }
     ],
     color: '#00b4ff'
@@ -2125,7 +2125,7 @@ const BRAND_SPECIFIC_GUIDES = {
     name: '其他品牌',
     icon: '📱',
     items: [
-      { icon: '🔋', label: '电池优化', desc: '设置→电池→电池优化→足球闹钟APP→不优化', action: 'requestBatteryWhitelist' }
+      { icon: '🔋', label: '电池优化', desc: '设置→电池→电池优化→足球闹钟App→不优化', action: 'requestBatteryWhitelist' }
     ],
     color: '#666666'
   }
@@ -2136,7 +2136,7 @@ function requestNotificationPermissionFromJS() {
   if (window.AndroidAlarm && window.AndroidAlarm.openNotificationSettings) {
     window.AndroidAlarm.openNotificationSettings();
   } else {
-    showToast("请手动前往系统设置 → 应用 → 足球闹钟APP → 通知 开启");
+    showToast("请手动前往系统设置 → 应用 → 足球闹钟App → 通知 开启");
   }
 }
 
@@ -2146,7 +2146,7 @@ function openOverlaySettings() {
   } else if (window.AndroidAlarm && window.AndroidAlarm.requestBatteryWhitelist) {
     window.AndroidAlarm.requestBatteryWhitelist();
   } else {
-    showToast("请手动前往系统设置 → 应用 → 足球闹钟APP → 显示悬浮窗 开启");
+    showToast("请手动前往系统设置 → 应用 → 足球闹钟App → 显示悬浮窗 开启");
   }
 }function checkAndRenderPermissions() {
   const permList = document.getElementById('permissionList');

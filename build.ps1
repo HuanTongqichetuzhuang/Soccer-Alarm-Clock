@@ -51,35 +51,16 @@ Write-Host "  [OK] APK: $apkDest" -ForegroundColor Green
 # 6. Optional: Deploy to server
 if ($Deploy) {
     Write-Host "`n  Uploading to server..." -ForegroundColor Yellow
-    python -c "
-import paramiko, time, json, os
-v = json.loads(open(r'$PSScriptRoot\\version.json', encoding='utf-8').read())
-t = paramiko.Transport(('8.154.26.92', 22))
-t.connect(username='root', password='Dd26554032')
-sftp = paramiko.SFTPClient.from_transport(t)
-sftp.put(r'$apkDest', '/opt/soccer-server/apk/SoccerAlarmPro_v' + v['versionName'] + '.apk')
-# Update server.js changelog
-c = paramiko.SSHClient()
-c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-c.connect('8.154.26.92', 22, 'root', 'Dd26554032')
-stdin, stdout, stderr = c.exec_command('cat /opt/soccer-server/server.js')
-content = stdout.read().decode('utf-8')
-lines = content.split('\n')
-for i, line in enumerate(lines):
-    if 'versionCode' in line and 'changelog' in line:
-        changelog = v['changelog'].replace(\"'\", \"\\\\'\")
-        lines[i] = f\"      return json(res, {{ versionCode: {v['versionCode']}, versionName: '{v['versionName']}', changelog: '{changelog}', forceUpdate: false, downloadUrl: 'http://8.154.26.92:3000/apk/SoccerAlarmPro_v{v['versionName']}.apk' }});\"
-        break
-import os, tempfile
-tmp = os.path.join(os.environ['TEMP'], 'srv.js')
-with open(tmp, 'w', encoding='utf-8') as f:
-    f.write('\n'.join(lines))
-sftp.put(tmp, '/opt/soccer-server/server.js')
-c.exec_command('pm2 restart soccer-server')
-time.sleep(1)
-print('  [OK] Server deployed')
-c.close()
-"
+    $uploadScript = "$PSScriptRoot\upload_apk.py"
+    if (-not (Test-Path $uploadScript)) {
+        Write-Host "  [FAIL] upload_apk.py not found at $uploadScript" -ForegroundColor Red
+        exit 1
+    }
+    python $uploadScript 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "  [FAIL] Deploy failed!" -ForegroundColor Red
+        exit 1
+    }
     Write-Host "  [OK] Deployed to server" -ForegroundColor Green
 }
 
