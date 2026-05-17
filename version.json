@@ -1,5 +1,5 @@
 ﻿{
-    "versionCode":  37,
-    "versionName":  "2.37",
-    "changelog":  "v2.37: fix CSL badge in MyMatches"
+    "versionCode": 46,
+    "versionName": "2.46",
+    "changelog": "v2.46: 修复2026世界杯赛程数据显示(104场比赛/48队/10组); 应用改名足球闹钟App/SoccerAlarm App; 新增自定义铃声功能"
 }
