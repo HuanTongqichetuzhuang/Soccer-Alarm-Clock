@@ -1,97 +1,66 @@
-﻿# ⚽ 足球闹钟App · SoccerAlarm App
+# ⚽ 足球闹钟 Soccer Alarm Clock
 
-[![Gitee](https://img.shields.io/badge/Gitee-开源-c71d23?logo=gitee)](https://gitee.com/asd4422449/soccer-alarm-pro)
-[![GitHub](https://img.shields.io/badge/GitHub-开源-181717?logo=github)](https://github.com/HuanTongqichetuzhuang/soccer-alarm)
-[![Android](https://img.shields.io/badge/Android-APK-3DDC84?logo=android)](http://8.154.26.92:3000/download)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+> 支持五大联赛、中超、欧冠、世界杯的 Android 实时赛程提醒 APP
 
-> 🚫 无需注册 · 🚫 零广告 · ⚡ 42MB · 📱 Android
+## 🌐 官方网站
 
-**纯净的足球赛程提醒工具 —— 打开即用，只提醒你关心的比赛。**
+**[https://足球闹钟.top](https://xn--5eyx16c61esnb.top/)**
+
+## 📱 下载
+
+最新版本 **v2.46** — [Gitee Release 下载](https://gitee.com/asd4422449/soccer-alarm-pro/releases/download/v2.46/SoccerAlarmPro_v2.46.apk)
+
+扫码下载：
+![QR](https://xn--5eyx16c61esnb.top/qr_v2.46.png)
 
 ---
 
-## 📥 下载
+## 🏆 支持联赛
 
-| 方式 | 链接 |
+| 联赛 | 类型 |
 |------|------|
-| 🚀 高速下载 | **[http://8.154.26.92:3000/download](http://8.154.26.92:3000/download)** |
-| 📦 Gitee Release | [Releases 页面](https://gitee.com/asd4422449/soccer-alarm-pro/releases) |
-| 🌐 官网 | [http://8.154.26.92:3000](http://8.154.26.92:3000) |
+| 英超 Premier League | 联赛 |
+| 西甲 La Liga | 联赛 |
+| 德甲 Bundesliga | 联赛 |
+| 意甲 Serie A | 联赛 |
+| 法甲 Ligue 1 | 联赛 |
+| 中超 CSL | 联赛 |
+| 欧冠 Champions League | 杯赛 |
+| 足总杯 FA Cup | 杯赛 |
+| 联赛杯 EFL Cup | 杯赛 |
+| 德国杯 DFB-Pokal | 杯赛 |
+| 国王杯 Copa del Rey | 杯赛 |
+| 法国杯 Coupe de France | 杯赛 |
+| 🏆 2026 世界杯 | 国际赛 |
 
----
+## ✨ 主要功能
 
-## 🏆 支持的赛事
+- 📅 赛程查看（按联赛/日期筛选）
+- ⭐ 主队收藏，比赛前自动闹钟提醒
+- 📊 积分榜实时更新
+- 🏆 赛果/比分查询
+- 🏟 世界杯分组对阵图
+- 🔔 赛前通知（可选 15min / 30min / 1h / 24h）
 
-| 联赛 | 数据 |
-|------|------|
-| 🏴󠁧󠁢󠁥󠁮󠁧󠁿 英超 (PL) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🇪🇸 西甲 (PD) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🇩🇪 德甲 (BL1) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🇮🇹 意甲 (SA) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🇫🇷 法甲 (FL1) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🇨🇳 中超 (CSL) | 赛程 · 积分 · 射手榜 · 球队详情 |
-| 🏆 欧冠 (CL) | 赛程 · 结果 |
-| 🏆 欧联杯 (ELC) | 赛程 · 结果 |
-| 🏆 足总杯 (FAC) | 赛程 · 结果 |
-| 🏆 国王杯 (CDR) | 赛程 · 结果 |
-| 🌍 2026世界杯 | 104 场比赛 · 48 支球队 · 10 个小组 |
+## 🔧 技术栈
 
----
+- **前端**: Kotlin + WebView (`file:///android_asset/`)
+- **数据源**: football-data.org / 聚合数据 API
+- **服务端**: Node.js (阿里云 ECS, PM2)
+- **CDN**: Gitee Release 分发
+- **离线**: 静态数据兜底，保证无网络可用
 
-## ✨ 功能
+## 📥 安装方法
 
-| 功能 | 说明 |
-|------|------|
-| 🔔 **赛前闹钟** | 比赛开始前准时提醒，自由设置提前量 |
-| ⭐ **主队关注** | 只关注你支持的球队，不看不相关的比赛 |
-| 📊 **实时数据** | 比分、积分榜、射手榜、球队详情 |
-| 🎵 **自定义铃声** | 用自己喜欢的音乐当闹钟 |
-| 🏆 **球队详情** | 点击队标查看完整赛程、历史战绩 |
-| 🌐 **纯中文体验** | 全部球员球队中文名、中文界面 |
-| 📦 **极致轻量** | 42MB APK，不占存储 |
-| 🔒 **隐私优先** | 无需注册、不收集个人信息、零第三方 SDK |
+1. 访问 [https://足球闹钟.top](https://xn--5eyx16c61esnb.top/) 扫码下载
+2. 或前往 [Gitee Releases](https://gitee.com/asd4422449/soccer-alarm-pro/releases) 下载最新 APK
+3. Android 设置 → 允许「安装未知来源应用」
+4. 打开 APK 安装即可
 
----
+## 📦 版本历史
 
-## 🛠 技术栈
-
-- **前端**: 原生 HTML / CSS / JavaScript（WebView 加载）
-- **后端**: Node.js (PM2)，运行于 Alibaba Cloud ECS
-- **数据源**: football-data.org + 自建中超/杯赛数据
-- **构建**: Gradle (Kotlin) → Android WebView APK
-- **分发**: Gitee Release CDN + 服务器直连
-
----
-
-## 📂 项目结构
-
-\\\
-SoccerAlarm/android/app/src/main/assets/
-├── index.html     # HTML 骨架
-├── styles.css     # 全部样式
-├── data.js        # 球队、联赛常量、世界杯数据
-├── app.js         # 全部业务逻辑
-└── cup_data.js    # 杯赛数据
-
-SoccerAlarm/android/app/src/main/java/
-└── MainActivity.kt   # Kotlin WebView Activity
-\\\
-
----
-
-## 🔗 相关项目
-
-- 🤖 [LLMFit 中文版](https://github.com/HuanTongqichetuzhuang/llmfit-zh) — 本地 LLM 硬件适配工具
-
----
-
-## 📄 隐私政策
-
-[查看隐私政策](http://8.154.26.92:3000/privacy)
-
----
-
-## 📜 License
-
-MIT · © 2026 SoccerAlarm App
+| 版本 | 日期 | 更新 |
+|------|------|------|
+| v2.46 | 2026-05 | 2026世界杯赛程+分组，主队比赛修复 |
+| v2.45 | 2026-04 | CSL API 修复，CDN 升级 |
+| v2.44 | 2026-03 | 多联赛 CDN 代理，性能优化 |
