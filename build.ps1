@@ -16,7 +16,7 @@ $gradlePath = "$PSScriptRoot\SoccerAlarm\android\app\build.gradle"
 $gradleContent = Get-Content $gradlePath -Raw -Encoding UTF8
 $gradleContent = $gradleContent -replace 'versionCode \d+', "versionCode $($version.versionCode)"
 $gradleContent = $gradleContent -replace 'versionName "[^"]*"', "versionName `"$($version.versionName)`""
-Set-Content $gradlePath -Value $gradleContent -Encoding UTF8 -NoNewline
+Set-Content $gradlePath -Value $gradleContent -Encoding UTF8NoBOM -NoNewline
 Write-Host "  [OK] build.gradle synced" -ForegroundColor Green
 
 # 3. Sync to app.js
@@ -24,7 +24,7 @@ $appJsPath = "$PSScriptRoot\SoccerAlarm\android\app\src\main\assets\app.js"
 $appJsContent = Get-Content $appJsPath -Raw -Encoding UTF8
 $appJsContent = $appJsContent -replace 'APP_VERSION_CODE = \d+', "APP_VERSION_CODE = $($version.versionCode)"
 $appJsContent = $appJsContent -replace "APP_VERSION_NAME = '[^']*'", "APP_VERSION_NAME = '$($version.versionName)'"
-Set-Content $appJsPath -Value $appJsContent -Encoding UTF8 -NoNewline
+Set-Content $appJsPath -Value $appJsContent -Encoding UTF8NoBOM -NoNewline
 Write-Host "  [OK] app.js synced" -ForegroundColor Green
 
 # 4. Build APK

@@ -11,8 +11,8 @@ android {
         applicationId "com.socceralarm.pro"
         minSdk 24
         targetSdk 35
-        versionCode 37
-        versionName "2.37"
+        versionCode 46
+        versionName "2.46"
     }
 
     buildTypes {

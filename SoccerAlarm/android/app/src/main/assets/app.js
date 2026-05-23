@@ -3626,7 +3626,7 @@ if (document.readyState === 'loading') {
 // ==================== 检查更新 ====================
 var UPDATE_SERVER = "http://8.154.26.92:3000";
 var APP_VERSION_CODE = 46;
-var APP_VERSION_NAME = '2.43';
+var APP_VERSION_NAME = '2.46';
 
 var ALL_PAGES = ['schedule','results','standings','alarm','my','more'];
 
