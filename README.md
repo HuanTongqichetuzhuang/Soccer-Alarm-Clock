@@ -1,37 +1,40 @@
-# SoccerAlarmPro开发版
+# ⚽ 足球闹钟 SoccerAlarmPro
 
-#### 介绍
-足球闹钟开发存档
+> 支持五大联赛、中超、欧冠、世界杯的实时赛程提醒APP
 
-#### 软件架构
-软件架构说明
+## 🌐 官方网站
 
+**[https://足球闹钟.top](https://足球闹钟.top)**
 
-#### 安装教程
+## 📱 最新版本
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+**v2.46** - [下载 APK](https://gitee.com/asd4422449/SoccerAlarmPro2/releases/download/v2.46/SoccerAlarmPro_v2.46.apk)
 
-#### 使用说明
+## 🏆 支持联赛
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- **五大联赛**：英超、西甲、德甲、意甲、法甲
+- **杯赛**：欧冠、足总杯、联赛杯、德国杯、国王杯、法国杯
+- **中超**：CSL 实时数据
+- **世界杯**：2026 世界杯完整赛程 + 分组（聚合 API 实时数据）
 
-#### 参与贡献
+## ✨ 功能
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+- 📅 赛程查看（按联赛/球队）
+- ⭐ 主队收藏，比赛前自动闹钟提醒
+- 📊 积分榜实时更新
+- 🏆 赛果/比分查询
+- 🏟 世界杯分组对阵图
+- 🔔 赛前通知（可选15min/30min/1h/24h）
 
+## 🔧 技术栈
 
-#### 特技
+- Android 原生 (Kotlin + WebView)
+- 数据源：football-data.org / 聚合数据 API
+- 服务端缓存：Node.js (阿里云 ECS)
+- 静态数据兜底保证离线可用
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## 📥 下载安装
+
+1. 访问 [https://足球闹钟.top](https://足球闹钟.top) 扫码下载
+2. 或前往 [Gitee Releases](https://gitee.com/asd4422449/SoccerAlarmPro2/releases) 下载最新 APK
+3. 允许「安装未知来源应用」后安装
