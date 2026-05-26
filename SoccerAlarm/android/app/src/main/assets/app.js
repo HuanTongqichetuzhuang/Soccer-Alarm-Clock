@@ -86,6 +86,15 @@ window.nativeGet = function(url) {
   }
   return null;
 };
+function refreshWcGroups(){
+ if(typeof httpGet!=="function")return;
+ httpGet('https://xn--5eyx16c61esnb.top/api/wc/groups','wc_groups_v2',1800000).then(function(d){
+  if(d&&Object.keys(d).length)WORLD_CUP_2026_GROUPS=d;
+ }).catch(function(){});
+}
+refreshWcGroups();
+setInterval(refreshWcGroups,1800000);
+
 
 async function fetchFromServer(leagueId) {
   var lg = FOOTBALL_LEAGUES[leagueId];
@@ -299,16 +308,16 @@ function parseCLTxt(text, season) {
     if (!line) continue;
 
     // 轮次行：» League, Matchday 1 / » Finals, Semifinals / » Finals, Final
-    if (line.startsWith('»')) {
+    if (line.startsWith('▪')) {
       currentRound = line.substring(1).trim();
       continue;
     }
 
-    // 日期行：Tue Sep/16 2025 或 Wed Sep/17（无年份时用当前年份推断）
+    // 日期行：Tue Sep 16 2025 或 Wed Sep 17（无年份时用当前年份推断）
     // 也可能是 # 开头的注释行
     if (line.startsWith('#')) continue;
 
-    const dateMatch = line.match(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+([A-Z][a-z]{2})\/(\d{1,2})(?:\s+(\d{4}))?$/);
+    const dateMatch = line.match(/^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+([A-Z][a-z]{2})\s+(\d{1,2})(?:\s+(\d{4}))?$/);
     if (dateMatch) {
       const month = MONTH_MAP[dateMatch[1]];
       const day = dateMatch[2].padStart(2, '0');
@@ -329,7 +338,7 @@ function parseCLTxt(text, season) {
     // 比赛行（含时间）：  21.00  Team1 (Country)     v Team2 (Country)  2-1 (1-1)
     // 比赛行（省略时间，同上时段）：         Team1 (Country)     v Team2 (Country)  2-1 (1-1)
     // 先尝试匹配含时间的行
-    const matchWithTime = line.match(/^(\d{1,2}\.\d{2})\s+(.+?)\s+v\s+(.+?)$/);
+    const matchWithTime = line.match(/^(\d{1,2}[:.]\d{2})\s+(.+?)\s+v\s+(.+?)$/);
     // 再尝试匹配省略时间的行（以队名开头，不含时间前缀）
     const matchNoTime = line.match(/^([A-Z\u00C0-\u024F].+?)\s+v\s+(.+?)$/);
 
@@ -585,7 +594,11 @@ function fetchWCMatches() {
 }
 
   if (lg.wcApi) {
-    return fetchWCMatches();
+    const wcMatches = fetchWCMatches();
+    if (wcMatches && wcMatches.length > 0) {
+      cachedData['league_WC'] = { data: { matches: wcMatches }, ts: Date.now(), ttl: 172800000 };
+    }
+    return wcMatches;
   }
 
   // 欧冠：使用 openfootball champions-league 仓库（CC0公共领域，无需API Key）
@@ -764,7 +777,9 @@ async function fetchLeagueTeams(leagueId) {
   if (!lg) return [];
 
   try {
-    // 世界杯：从API数据提取球队
+    // WC: extract from WORLD_CUP_2026_MATCHES
+    if(lg.file==='wc_2026'||leagueId==='WC'){var ts=[],s=new Set();var src=WORLD_CUP_2026_MATCHES&&WORLD_CUP_2026_MATCHES.length?WORLD_CUP_2026_MATCHES:(typeof fetchWCMatches==='function'?fetchWCMatches():[]);src.forEach(function(m){if(m.team1&&!s.has(m.team1)){s.add(m.team1);ts.push({idTeam:m.team1.replace(/\s/g,'_'),strTeam:m.team1,strTeamBadge:getTeamBadge(m.team1)});}if(m.team2&&!s.has(m.team2)){s.add(m.team2);ts.push({idTeam:m.team2.replace(/\s/g,'_'),strTeam:m.team2,strTeamBadge:getTeamBadge(m.team2)});}});return ts;}
+    // 世界杯：从API数据提取球队（旧路径）
     if (lg.wcApi) {
       const matches = await fetchWCMatches();
       const teamSet = new Set();
@@ -1377,6 +1392,7 @@ async function loadStandings(leagueId) {
       return;
     }
     
+    refreshWcGroups();
     // 世界杯：分组信息 + 赛程
     if (leagueId === 'WC') {
       let html = `<div class="info-banner">${leagueLogoHtml('WC',16)} 2026 FIFA 世界杯 · 美国/加拿大/墨西哥 · 48队·12组·104场</div>`;
