@@ -15,8 +15,18 @@ android {
         versionName "2.46"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('socceralarm-release.keystore')
+            storePassword 'SoccerAlarm2026!'
+            keyAlias 'socceralarm'
+            keyPassword 'SoccerAlarm2026!'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

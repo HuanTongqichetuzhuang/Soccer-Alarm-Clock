@@ -195,7 +195,7 @@
     .team-match-item-v2 .match-home-tag{font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(0,212,170,.15);color:var(--accent);display:block;margin-top:2px}
     .team-match-item-v2 .match-away-tag{font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(59,130,246,.15);color:var(--info2);display:block;margin-top:2px}
     .team-match-item-v2 .match-meta-row{font-size:11px;color:var(--txt-muted);margin-top:6px;text-align:center}
-    .team-match-item-v2 .td-alarm-btn{margin-top:6px;display:flex;justify-content:center}
+    .team-match-item-v2 .td-alarm-btn{margin-top:6px}
     .td-alarm-btn{display:inline-flex;align-items:center;justify-content:center;gap:2px;padding:4px 8px;background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.25);border-radius:10px;color:var(--accent);font-size:9px;cursor:pointer;font-weight:600;flex-shrink:0;transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap}
     .td-alarm-btn:active{transform:scale(.92);background:rgba(0,212,170,.2)}
     .td-alarm-btn.set{background:rgba(0,212,170,.18);border-color:rgba(0,212,170,.6);box-shadow:0 0 6px rgba(0,212,170,.15)}
@@ -239,7 +239,7 @@
     .retry-btn{margin-top:12px;padding:8px 20px;background:rgba(0,212,170,.15);border:1px solid var(--accent);border-radius:10px;color:var(--accent);font-size:13px;cursor:pointer;font-weight:600}
 
     /* ── Toast ── */
-    .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:rgba(10,22,40,.95);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:25px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:300px;text-align:center}
+    .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:rgba(10,22,40,.95);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:25px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;max-width:320px;text-align:center;white-space:normal;line-height:1.5}
     .toast.show{opacity:1}
 
     /* ── Info Banner ── */

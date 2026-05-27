@@ -1,8 +1,8 @@
 
 // ==================== OPENFOOTBALL 数据源 ====================
 // 五大联赛数据（免费、无需API Key）
-const FOOTBALL_CDN = 'https://cdn.jsdelivr.net/gh/openfootball/football.json@master';
-const FOOTBALL_SEASON = '2025-26';
+const FOOTBALL_CDN = (window.CONFIG && CONFIG.cdn && CONFIG.cdn.football) || 'https://cdn.jsdelivr.net/gh/openfootball/football.json@master';
+const FOOTBALL_SEASON = (window.CONFIG && CONFIG.season) || '2025-26';
 
 // 联赛ID映射
 const FOOTBALL_LEAGUES = {

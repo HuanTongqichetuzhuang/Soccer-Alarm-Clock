@@ -4492,6 +4492,26 @@ const server = http.createServer((req, res) => {
 
     if (u.pathname === '/api/refresh') { refreshAll(); return json(res, { msg: 'OK' }); }
 
+    // ==================== Unified League API (v8) ====================
+    // GET /api/leagues/:id?season=2025-26
+    // All leagues route through this single endpoint
+    // Replaces: direct CDN access, cup_data.js, openfootball, etc.
+    if (u.pathname.startsWith('/api/leagues/')) {
+      try {
+        const dataProvider = require('./data-provider');
+        const leagueId = u.pathname.replace('/api/leagues/', '');
+        const season = u.searchParams.get('season') || '2025-26';
+        const result = await dataProvider.fetchLeagueData(leagueId, season, MATCHES);
+        res.writeHead(200, cors);
+        res.end(JSON.stringify(result));
+      } catch(e) {
+        console.error('[api/leagues] Error:', e.message);
+        res.writeHead(500, cors);
+        res.end(JSON.stringify({ error: e.message, matches: [] }));
+      }
+      return;
+    }
+
 
 
 

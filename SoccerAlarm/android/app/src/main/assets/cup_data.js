@@ -67,7 +67,7 @@ const CUP_MATCHES_2025_26 = {
       {date:'2026-04-05',time:'23:30',team1:'West Ham United',team2:'Leeds United',round:'Quarter-finals',score:[2,2]},
       {date:'2026-04-26',time:'00:15',team1:'Manchester City',team2:'Southampton',round:'Semi-finals',score:[2,1]},
       {date:'2026-04-26',time:'22:00',team1:'Chelsea',team2:'Leeds United',round:'Semi-finals',score:[1,0]},
-      {date:'2026-05-16',time:'22:00',team1:'Chelsea',team2:'Manchester City',round:'Final',score:null},
+      {date:'2026-05-16',time:'22:00',team1:'Chelsea',team2:'Manchester City',round:'Final',score:[0,1]},
     ]
   },
   'LC': {
@@ -143,7 +143,7 @@ const CUP_MATCHES_2025_26 = {
       {date:'2026-02-12',time:'03:45',team1:'FC Bayern Munich',team2:'RB Leipzig',round:'Quarter-finals',score:[2,0]},
       {date:'2026-04-23',time:'02:45',team1:'Bayer Leverkusen',team2:'FC Bayern Munich',round:'Semi-finals',score:[0,2]},
       {date:'2026-04-24',time:'02:45',team1:'VfB Stuttgart',team2:'SC Freiburg',round:'Semi-finals',score:[1,1]},
-      {date:'2026-05-24',time:'02:00',team1:'FC Bayern Munich',team2:'VfB Stuttgart',round:'Final',score:null},
+      {date:'2026-05-24',time:'02:00',team1:'FC Bayern Munich',team2:'VfB Stuttgart',round:'Final',score:[3,0]},
     ]
   },
   'CDR': {
@@ -219,7 +219,7 @@ const CUP_MATCHES_2025_26 = {
       {date:'2026-03-06',time:'04:10',team1:'Olympique Lyon',team2:'Racing Club Lens',round:'Quarter-finals',score:[2,2]},
       {date:'2026-04-22',time:'03:10',team1:'Racing Club Lens',team2:'Toulouse FC',round:'Semi-finals',score:[4,1]},
       {date:'2026-04-23',time:'03:00',team1:'Racing Strasbourg',team2:'OGC Nice',round:'Semi-finals',score:[0,2]},
-      {date:'2026-05-23',time:'03:00',team1:'Racing Club Lens',team2:'OGC Nice',round:'Final',score:null},
+      {date:'2026-05-22',time:'03:00',team1:'Racing Club Lens',team2:'OGC Nice',round:'Final',score:[3,1]},
     ]
   },
 };

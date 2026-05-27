@@ -154,9 +154,6 @@
     <div style="padding:8px 16px">
       <button class="test-alarm-btn" onclick="sendTestAlarm()">⏰ 测试闹钟（5秒后响）</button>
     </div>
-    <div style="padding:8px 16px">
-      <button class="test-alarm-btn" onclick="checkAlarmDiagnostics()" style="background:#ff9800;color:white">🔍 闹钟诊断</button>
-    </div>
 
     <!-- Ringtone Selection (可折叠) -->
     <div class="ringtone-collapse-header" id="ringtoneCollapseHeader" onclick="toggleRingtonePanel()">
@@ -283,7 +280,7 @@
         <span style="font-size:14px;color:var(--txt-muted)">›</span>
       </div>
       
-      <div style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px">
+      <div style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px" onclick="showCalendarTip()">
         <div style="display:flex;align-items:center;gap:12px">
           <span style="font-size:24px">📱</span>
           <div style="flex:1">
@@ -355,6 +352,7 @@
   <div id="teamDetailContent" style="padding-top:8px"></div>
 </div>
 
+<script src="config.js"></script>
 <script src="badge_map.js"></script>
 <script src="ringtone_selector.js"></script>
 <script src="cup_data.js"></script>

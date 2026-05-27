@@ -113,17 +113,27 @@ class MainActivity : AppCompatActivity() {
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url?.toString() ?: return false
-                Log.i("SoccerAlarm", "shouldOverride: url=$url")
-                if (url.startsWith("alipays://") || url.startsWith("alipayqr://") ||
-                    url.startsWith("weixin://") || url.startsWith("alipay://")) {
+                // Intent URLs: open other apps
+                if (url.startsWith("intent://")) {
                     try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
-                        Log.i("SoccerAlarm", "shouldOverride: started intent")
                         return true
                     } catch (e: Exception) {
-                        Log.e("SoccerAlarm", "shouldOverride: failed", e)
+                        Log.e("SoccerAlarm", "Intent failed: $url", e)
+                        return true
+                    }
+                }
+                // Scheme URLs: alipay, weixin, etc
+                if (url.startsWith("alipays://") || url.startsWith("alipayqr://") ||
+                    url.startsWith("alipay://") || url.startsWith("weixin://")) {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        return true
+                    } catch (e: Exception) {
                         return true
                     }
                 }
@@ -202,6 +212,21 @@ class WebAppInterface(private val activity: MainActivity) {
     @android.webkit.JavascriptInterface
     fun showToast(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    @android.webkit.JavascriptInterface
+    fun openApp(packageName: String) {
+        try {
+            val intent = activity.packageManager.getLaunchIntentForPackage(packageName)
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                activity.startActivity(intent)
+            } else {
+                Toast.makeText(activity, "未安装", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(activity, "无法打开", Toast.LENGTH_SHORT).show()
+        }
     }
 
     @android.webkit.JavascriptInterface

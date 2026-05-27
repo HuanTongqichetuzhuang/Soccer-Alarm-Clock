@@ -47,6 +47,15 @@ function saveState() {
     localStorage.setItem('soccerAlarmV5State', JSON.stringify({
       favorites, favTeamNames, notifications, customAlarms, tsdbTeams
     }));
+    // 持久化联赛数据缓存（下次进APP秒开）
+    var persist = {};
+    Object.keys(cachedData).forEach(function(k) {
+      var c = cachedData[k];
+      if (c && c.data && k.indexOf('league_') === 0) {
+        persist[k] = { ts: c.ts, ttl: c.ttl || 3600000, data: c.data };
+      }
+    });
+    localStorage.setItem('soccerAlarmCache', JSON.stringify(persist));
   } catch(e) {}
 }
 function cacheSet(key, data, ttl) {
@@ -76,7 +85,7 @@ function fetchWithTimeout(url, ms) {
 }
 
 // ==================== 服务器数据代理 (Kotlin原生HTTP) ====================
-var DATA_SERVER = 'http://8.154.26.92:3000';
+var DATA_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.data) || 'https://足球闹钟.top';
 
 // 同步调用Kotlin桥接（绕过WebView file://限制）
 window.nativeGet = function(url) {
@@ -542,30 +551,118 @@ async function loadAllLeagueData() {
 }
 
 // 获取指定联赛的赛程
-async function fetchNextMatches(leagueId) {
-  const lg = FOOTBALL_LEAGUES[leagueId];
-  if (!lg) return [];
+// ==================== 统一数据获取 (v8) ====================
+// 所有联赛通过服务器 /api/leagues/:id 统一获取
+// 服务器已完成时区转换（北京时间）、比分融合、多数据源合并
 
-  // 缓存检查：同一session内秒开（匹配 httpGet 写入的 league_X_SEASON 格式）
-  const now = Date.now();
-  const season = lg.season || FOOTBALL_SEASON;
-  // 先查 httpGet 写入的 key（league_PL_2025 格式）
-  let cacheKey = 'league_' + leagueId + '_' + (season || '');
-  let cachedDataEntry = cachedData[cacheKey];
-  // 再查直接写入的 key（league_CL 格式，用于 CL/cup/CSL）
-  if (!cachedDataEntry || !cachedDataEntry.data || !cachedDataEntry.data.matches) {
-    cacheKey = 'league_' + leagueId;
-    cachedDataEntry = cachedData[cacheKey];
+async function fetchFromUnifiedAPI(leagueId, season) {
+  var s = season || FOOTBALL_SEASON;
+  var url = DATA_SERVER + '/api/leagues/' + leagueId + '?season=' + s;
+  
+  try {
+    var raw = window.nativeGet ? window.nativeGet(url) : null;
+    if (!raw || raw.error) {
+      var resp = await fetchWithTimeout(url, 15000);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      raw = await resp.json();
+    }
+    if (!raw || !raw.matches || raw.error) return [];
+    
+    return raw.matches.map(function(m) {
+      return {
+        id: m.id || (leagueId + '_' + m.date + '_' + m.team1 + '_' + m.team2).replace(/\s/g, '_'),
+        date: m.date, time: m.time,
+        team1: m.team1, team2: m.team2,
+        homeCn: getTeamCn(m.team1), awayCn: getTeamCn(m.team2),
+        homeBadge: getTeamBadge(m.team1), awayBadge: getTeamBadge(m.team2),
+        homeScore: m.homeScore, awayScore: m.awayScore,
+        isLive: m.isLive || false, isFinished: m.isFinished || false,
+        round: m.round || '', timestamp: m.timestamp || Date.now(),
+        leagueId: leagueId
+      };
+    });
+  } catch(e) {
+    console.error('[unified] fetch error for ' + leagueId + ':', e.message);
+    return [];
   }
+}
+
+async function fetchNextMatches(leagueId) {
+  var lg = FOOTBALL_LEAGUES[leagueId];
+  if (!lg) return [];
+  var season = lg.season || FOOTBALL_SEASON;
+
+  // 缓存检查
+  var now = Date.now();
+  var cacheKey = 'league_' + leagueId + '_' + (season || '');
+  var cachedDataEntry = cachedData[cacheKey];
   if (cachedDataEntry && cachedDataEntry.data && cachedDataEntry.data.matches) {
-    const entryTTL = cachedDataEntry.ttl || 172800000;
+    var entryTTL = cachedDataEntry.ttl || 3600000; // 1h default TTL
     if (now - cachedDataEntry.ts < entryTTL) {
       return cachedDataEntry.data.matches;
     }
   }
 
-  // 世界杯：使用 fixturedownload.com API（2026世界杯完整数据，国内可访问）
-// 获取世界杯赛程（静态数据，时间已是北京时间）
+  // 世界杯：本地静态数据（服务器暂未覆盖）
+  if (lg.wcApi) {
+    var wcMatches = fetchWCMatches();
+    if (wcMatches && wcMatches.length > 0) {
+      cachedData['league_WC'] = { data: { matches: wcMatches }, ts: Date.now(), ttl: 86400000 };
+    }
+    return wcMatches;
+  }
+
+  // 统一走服务器 API
+  var matches = await fetchFromUnifiedAPI(leagueId, season);
+  if (matches && matches.length > 0) {
+    cachedData[cacheKey] = { data: { matches: matches }, ts: Date.now(), ttl: 1800000 }; // 30min TTL
+    return matches;
+  }
+
+  // 服务器失败，尝试旧路径兜底
+  console.log('[fetchNextMatches] Server failed for ' + leagueId + ', trying fallback...');
+  
+  // 杯赛兜底
+  if (lg.cupData) {
+    var cupMatches = fetchCupMatches(leagueId);
+    if (cupMatches && cupMatches.length > 0) {
+      cachedData[cacheKey] = { data: { matches: cupMatches }, ts: Date.now(), ttl: 86400000 };
+      return cupMatches;
+    }
+  }
+  
+  // CDN 兜底（五大联赛）
+  if (lg.file && !lg.serverOnly) {
+    try {
+      var url = FOOTBALL_CDN + '/' + season + '/' + lg.file;
+      var data = await httpGet(url, cacheKey, 48 * 60 * 60 * 1000);
+      if (data && data.matches) {
+        var cdnMatches = [];
+        data.matches.forEach(function(m) {
+          var bj = localToBJ(m.date, m.time || '15:00', leagueId);
+          var hs = m.score && m.score.ft ? m.score.ft[0] : null;
+          var as_ = m.score && m.score.ft ? m.score.ft[1] : null;
+          cdnMatches.push({
+            id: (lg.file + '_' + m.date + '_' + m.team1 + '_' + m.team2).replace(/\s/g, '_'),
+            date: bj.date, time: bj.time,
+            team1: m.team1, team2: m.team2,
+            homeCn: getTeamCn(m.team1), awayCn: getTeamCn(m.team2),
+            homeBadge: getTeamBadge(m.team1), awayBadge: getTeamBadge(m.team2),
+            homeScore: hs, awayScore: as_, isLive: false,
+            isFinished: hs !== null && as_ !== null,
+            round: m.round || '', timestamp: bj.timestamp, leagueId: leagueId
+          });
+        });
+        cachedData[cacheKey] = { data: { matches: cdnMatches }, ts: Date.now(), ttl: 172800000 };
+        return cdnMatches;
+      }
+    } catch(e) { console.error('CDN fallback error:', e.message); }
+  }
+
+  return [];
+}
+
+// 获取世界杯赛程（本地静态数据）
 function fetchWCMatches() {
   var now = new Date();
   return WORLD_CUP_2026_MATCHES.map(function(m, i) {
@@ -591,106 +688,6 @@ function fetchWCMatches() {
       leagueId: 'WC26'
     };
   });
-}
-
-  if (lg.wcApi) {
-    const wcMatches = fetchWCMatches();
-    if (wcMatches && wcMatches.length > 0) {
-      cachedData['league_WC'] = { data: { matches: wcMatches }, ts: Date.now(), ttl: 172800000 };
-    }
-    return wcMatches;
-  }
-
-  // 欧冠：使用 openfootball champions-league 仓库（CC0公共领域，无需API Key）
-  if (lg.clApi) {
-    const matches = await fetchCLMatches();
-    // 写入缓存，使 renderMyMatches/renderTodayMatches 能搜索到欧冠比赛
-    if (matches && matches.length > 0) {
-      cachedData['league_CL'] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
-    }
-    return matches;
-  }
-
-  // 国内杯赛：使用7m.com.cn静态数据（北京时间）
-  if (lg.cupData) {
-    const matches = fetchCupMatches(leagueId);
-    // 写入缓存，使 renderMyMatches/renderTodayMatches 能搜索到杯赛比赛
-    if (matches && matches.length > 0) {
-      cachedData['league_' + leagueId] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
-    }
-    return matches;
-  }
-
-  // Server-only leagues (e.g. CSL): fetch from our API server
-  if (lg.serverOnly) {
-    const serverMatches = await fetchFromServer(leagueId);
-    if (serverMatches && serverMatches.length > 0) {
-      cachedData['league_' + leagueId] = { data: { matches: serverMatches }, ts: Date.now() };
-      return serverMatches;
-    }
-    return [];
-  }
-  try {
-    const season = lg.season || FOOTBALL_SEASON;
-    const url = `${FOOTBALL_CDN}/${season}/${lg.file}`;
-    const data = await httpGet(url, `league_${leagueId}_${season}`, 48 * 60 * 60 * 1000);
-    if (!data || !data.matches) return [];
-
-    const matches = [];
-    data.matches.forEach(m => {
-      // 将欧洲当地时间转换为北京时间
-      const bj = localToBJ(m.date, m.time || '15:00', leagueId);
-      const homeScore = m.score && m.score.ft ? m.score.ft[0] : null;
-      const awayScore = m.score && m.score.ft ? m.score.ft[1] : null;
-      const isFinished = homeScore !== null && awayScore !== null;
-
-      matches.push({
-        id: `${lg.file}_${m.date}_${m.team1}_${m.team2}`.replace(/\s/g, '_'),
-        date: bj.date, time: bj.time,
-        team1: m.team1, team2: m.team2,
-        homeCn: getTeamCn(m.team1), awayCn: getTeamCn(m.team2),
-        homeBadge: getTeamBadge(m.team1), awayBadge: getTeamBadge(m.team2),
-        homeScore, awayScore, isLive: false, isFinished,
-        round: m.round || '', timestamp: bj.timestamp, leagueId
-      });
-    });
-    
-    
-    // === 从服务器补充比分（CDN 没有的） ===
-    try {
-      var scoreRes = window.nativeGet(DATA_SERVER + '/api/scores');
-      if (scoreRes && scoreRes.data) {
-        var scoreMap = {};
-        scoreRes.data.forEach(function(s) {
-          var key = s.homeTeam + '|' + s.awayTeam;
-          scoreMap[key] = s;
-        });
-        matches.forEach(function(m) {
-          // 如果 CDN 已有比分，跳过
-          if (m.homeScore !== null && m.awayScore !== null) return;
-          // 尝试从服务器匹配（用原英文名）
-          var lookupKey = m.team1 + '|' + m.team2;
-          var s = scoreMap[lookupKey];
-          if (!s) {
-            // 也试试用中文名匹配
-            var c1 = m.homeCn || m.team1;
-            var c2 = m.awayCn || m.team2;
-            s = scoreMap[c1 + '|' + c2];
-          }
-          if (s && s.homeScore !== null && s.awayScore !== null) {
-            m.homeScore = s.homeScore;
-            m.awayScore = s.awayScore;
-            m.isFinished = true;
-          }
-        });
-      }
-    } catch(e) { /* server enrich failed, use CDN data as-is */ }
-    cachedData['league_' + leagueId + '_' + season] = { data: { matches: matches }, ts: Date.now(), ttl: 172800000 };
-    return matches;
-  } catch (e) {
-    console.error('fetchNextMatches error:', e);
-    return [];
-  }
 }
 
 // 获取历史赛果
@@ -771,104 +768,39 @@ async function fetchLiveAll() {
   return await estimateLiveMatches();
 }
 
-// 获取联赛球队列表（从 matches 数据中提取）
+// 获取联赛球队列表（从统一 API 的 matches 中提取）
 async function fetchLeagueTeams(leagueId) {
-  const lg = FOOTBALL_LEAGUES[leagueId];
+  var lg = FOOTBALL_LEAGUES[leagueId];
   if (!lg) return [];
 
   try {
-    // WC: extract from WORLD_CUP_2026_MATCHES
-    if(lg.file==='wc_2026'||leagueId==='WC'){var ts=[],s=new Set();var src=WORLD_CUP_2026_MATCHES&&WORLD_CUP_2026_MATCHES.length?WORLD_CUP_2026_MATCHES:(typeof fetchWCMatches==='function'?fetchWCMatches():[]);src.forEach(function(m){if(m.team1&&!s.has(m.team1)){s.add(m.team1);ts.push({idTeam:m.team1.replace(/\s/g,'_'),strTeam:m.team1,strTeamBadge:getTeamBadge(m.team1)});}if(m.team2&&!s.has(m.team2)){s.add(m.team2);ts.push({idTeam:m.team2.replace(/\s/g,'_'),strTeam:m.team2,strTeamBadge:getTeamBadge(m.team2)});}});return ts;}
-    // 世界杯：从API数据提取球队（旧路径）
-    if (lg.wcApi) {
-      const matches = await fetchWCMatches();
-      const teamSet = new Set();
-      const teams = [];
-      matches.forEach(m => {
-        if (m.team1 && !teamSet.has(m.team1)) {
-          teamSet.add(m.team1);
-          teams.push({
-            idTeam: m.team1.replace(/\s/g, '_'),
-            strTeam: m.team1,
-            strTeamBadge: m.homeBadge || getTeamBadge(m.team1)
-          });
-        }
-        if (m.team2 && !teamSet.has(m.team2)) {
-          teamSet.add(m.team2);
-          teams.push({
-            idTeam: m.team2.replace(/\s/g, '_'),
-            strTeam: m.team2,
-            strTeamBadge: m.awayBadge || getTeamBadge(m.team2)
-          });
-        }
+    // WC: 本地静态数据
+    if (lg.wcApi || leagueId === 'WC' || lg.file === 'wc_2026') {
+      var src = WORLD_CUP_2026_MATCHES && WORLD_CUP_2026_MATCHES.length ? WORLD_CUP_2026_MATCHES : fetchWCMatches();
+      var ts = [], s = new Set();
+      src.forEach(function(m) {
+        if (m.team1 && !s.has(m.team1)) { s.add(m.team1); ts.push({idTeam: m.team1.replace(/\s/g,'_'), strTeam: m.team1, strTeamBadge: getTeamBadge(m.team1)}); }
+        if (m.team2 && !s.has(m.team2)) { s.add(m.team2); ts.push({idTeam: m.team2.replace(/\s/g,'_'), strTeam: m.team2, strTeamBadge: getTeamBadge(m.team2)}); }
       });
-      return teams;
+      return ts;
     }
     
-    // 欧冠：从 fixturedownload API 数据中提取球队
-    if (lg.clApi) {
-      const matches = await fetchCLMatches();
-      const teamSet = new Set();
-      const teams = [];
-      matches.forEach(m => {
-        if (m.team1 && !teamSet.has(m.team1)) {
-          teamSet.add(m.team1);
-          teams.push({
-            idTeam: m.team1.replace(/\s/g, '_'),
-            strTeam: m.team1,
-            strTeamBadge: m.homeBadge || getTeamBadge(m.team1)
-          });
-        }
-        if (m.team2 && !teamSet.has(m.team2)) {
-          teamSet.add(m.team2);
-          teams.push({
-            idTeam: m.team2.replace(/\s/g, '_'),
-            strTeam: m.team2,
-            strTeamBadge: m.awayBadge || getTeamBadge(m.team2)
-          });
-        }
-      });
-      return teams;
-    }
-
-    // 中超：服务端数据源，直接返回本地球队（队徽 base64 已嵌入）
-    if (lg.serverOnly) {
-      console.log('[fetchLeagueTeams] CSL server-only, using locals');
-      return (LOCAL_TEAMS[leagueId] || []).map(t => ({
-        idTeam: String(t.id),
-        strTeam: t.name || t.nameEn,
-        strTeamBadge: t.badge || ''
-      }));
-    }
-    const season = lg.season || FOOTBALL_SEASON;
-    const url = `${FOOTBALL_CDN}/${season}/${lg.file}`;
-    const data = await httpGet(url, `league_teams_${leagueId}`, 48 * 60 * 60 * 1000);
-
-    if (!data || !data.matches) return [];
-
-    // 从 matches 中提取唯一球队
-    const teamSet = new Set();
-    const teams = [];
-
-    data.matches.forEach(m => {
+    // 所有其他联赛：走统一 API
+    var matches = await fetchNextMatches(leagueId);
+    if (!matches || !matches.length) return [];
+    
+    var teamSet = new Set();
+    var teams = [];
+    matches.forEach(function(m) {
       if (m.team1 && !teamSet.has(m.team1)) {
         teamSet.add(m.team1);
-        teams.push({
-          idTeam: m.team1.replace(/\s/g, '_'),
-          strTeam: m.team1,
-          strTeamBadge: getTeamBadge(m.team1)
-        });
+        teams.push({idTeam: m.team1.replace(/\s/g,'_'), strTeam: m.team1, strTeamBadge: m.homeBadge || getTeamBadge(m.team1)});
       }
       if (m.team2 && !teamSet.has(m.team2)) {
         teamSet.add(m.team2);
-        teams.push({
-          idTeam: m.team2.replace(/\s/g, '_'),
-          strTeam: m.team2,
-          strTeamBadge: getTeamBadge(m.team2)
-        });
+        teams.push({idTeam: m.team2.replace(/\s/g,'_'), strTeam: m.team2, strTeamBadge: m.awayBadge || getTeamBadge(m.team2)});
       }
     });
-
     return teams;
   } catch (e) {
     console.error('fetchLeagueTeams error:', e);
@@ -1155,9 +1087,13 @@ async function loadSchedule(leagueId, targetDate) {
     }
 
     if (!filtered.length) {
-      const dateStr = targetDate || '近期';
-      document.getElementById('scheduleContent').innerHTML =
-        `<div class="info-banner">⚽ ${dateStr} 暂无赛事安排</div>`;
+      var dateStr = targetDate || '近期';
+      // 如果所有比赛都已结束 → 赛季结束提示
+      var allFinished = matches.length > 0 && matches.every(function(m) { return m.isFinished; });
+      var msg = allFinished
+        ? '<div class="info-banner">&#9917; ' + lg.name + ' 2025-26赛季已结束<br><small style="color:var(--txt-muted)">新赛季赛程发布后将自动更新，敬请期待</small></div>'
+        : '<div class="info-banner">&#9917; ' + dateStr + ' 暂无赛事安排</div>';
+      document.getElementById('scheduleContent').innerHTML = msg;
       return;
     }
 
@@ -2057,18 +1993,18 @@ function loadMyPage() {
 }
 
 async function loadMyMatchesAsync() {
-  // 对所有联赛拉取最新数据（确保主队比赛信息是最新的）
+  // 并行拉取所有联赛（大幅减少等待时间）
   const leagueIds = ['PL', 'PD', 'BL1', 'CLI', 'SA', 'FL1', 'CL', 'WC', 'FAC', 'LC', 'DFB', 'CDR', 'CDF'];
-  let updated = false;
-  for (const lid of leagueIds) {
-    try {
-      const matches = await fetchNextMatches(lid);
+  var updated = false;
+  var ps = leagueIds.map(function(lid) {
+    return fetchNextMatches(lid).then(function(matches) {
       if (matches && matches.length) updated = true;
-    } catch(e) {}
-  }
+    }).catch(function(){});
+  });
+  await Promise.all(ps);
   if (updated) {
     renderMyMatches();
-    renderTodayMatches();  // 同步刷新今日赛事
+    renderTodayMatches();
   }
 }
 
@@ -2533,8 +2469,12 @@ function renderMyMatches() {
   document.getElementById('myMatchesCount').textContent = totalMatches;
 
   if (!totalMatches) {
-    document.getElementById('myMatchesContent').innerHTML =
-      `<div class="fav-empty"><div class="icon">📅</div>暂无主队赛程数据<br><small>浏览赛程页后数据将自动缓存</small></div>`;
+    // 检查是否有历史比赛数据（赛季结束检测）
+    var hasHistory = myMatches.length > 0 || (favTeamNames.length > 0);
+    var emptyMsg = hasHistory
+      ? '<div class="fav-empty"><div class="icon">&#127942;</div>你的主队本赛季比赛已全部结束<br><small>新赛季赛程发布后将自动更新</small></div>'
+      : '<div class="fav-empty"><div class="icon">&#128197;</div>暂无主队赛程数据<br><small>浏览赛程页后数据将自动缓存</small></div>';
+    document.getElementById('myMatchesContent').innerHTML = emptyMsg;
     return;
   }
 
@@ -2922,8 +2862,13 @@ async function loadTeamMatches(teamId, teamName, leagueId) {
   });
   
   // 筛选该球队的比赛（多种匹配方式确保跨联赛匹配）
-  const teamMatches = allMatches.filter(m => {
-    return isTeamMatch(m.team1, teamName, teamId) || isTeamMatch(m.team2, teamName, teamId);
+  const teamMatches = [];
+  const seenMatchIds = new Set();
+  allMatches.forEach(m => {
+    if ((isTeamMatch(m.team1, teamName, teamId) || isTeamMatch(m.team2, teamName, teamId)) && !seenMatchIds.has(m.id)) {
+      seenMatchIds.add(m.id);
+      teamMatches.push(m);
+    }
   });
   
   // Merge cup data (CUP_MATCHES_2025_26 not in FOOTBALL_LEAGUES API)
@@ -3102,7 +3047,7 @@ function renderTeamMatchItem(m, teamName, isPast) {
       </div>
     </div>
     <div class="match-meta-row">${ha(dateStr)} · ${leagueLabelHtml}${m.round ? ' · ' + ha(m.round) : ''}</div>
-    ${alarmHtml}
+    ${alarmHtml ? `<div style="text-align:center">${alarmHtml}</div>` : ''}
   </div>`;
 }
 
@@ -3223,7 +3168,7 @@ function doScheduleWeb(home, away, league, matchTs) {
 // 启动时从服务器拉取一次，缓存到 PAGE_ADS，session 内不刷新
 
 var ALL_PAGES = ['schedule','results','standings','alarm','my','more'];
-var DISMISSED = {};  // session 内已关闭的广告 (in-memory only)
+var DISMISSED = {};  // session 期间已关闭的广告（APP重启后自动清空）
 var PAGE_ADS = {};   // 广告缓存
 var PAGE_SWITCH_COUNT = 0;
 var LAST_INTERSTITIAL_TS = 0;
@@ -3301,8 +3246,11 @@ function renderBannersForPage(page) {
 function renderOneBanner(containerId, ad) {
   var el = document.getElementById(containerId);
   if (!el) return;
-  if (ad && ad.imageUrl && !isAdDismissed(ad.imageUrl)) {
+  // 双重检查：图片URL 或 广告ID 任一被标记即视为已关闭
+  var dismissed = (ad && ad.imageUrl && DISMISSED[ad.imageUrl]) || (ad && ad.id && DISMISSED[ad.id]);
+  if (ad && ad.imageUrl && !dismissed) {
     el.style.display = 'block';
+    el.dataset.adId = ad.id || '';
     var img = el.querySelector('.ad-image');
     if (img && img.src !== ad.imageUrl) {
       img.src = ad.imageUrl;
@@ -3325,8 +3273,10 @@ function dismissAd(el, event) {
   if (event) event.stopPropagation();
   if (!el) return;
   el.style.display = 'none';
+  // 用图片URL + 广告ID双重标记关闭
   var img = el.querySelector('.ad-image');
   if (img && img.src) DISMISSED[img.src] = true;
+  if (el.dataset && el.dataset.adId) DISMISSED[el.dataset.adId] = true;
   try {
     var sibling = null;
     if (el.id && el.id.indexOf('-top') > -1) {
@@ -3349,7 +3299,7 @@ function dismissNativeAd(el, imageUrl, event) {
 }
 
 function isAdDismissed(imageUrl) {
-  return !!(imageUrl && DISMISSED[imageUrl]);
+  return !!(imageUrl && (DISMISSED[imageUrl]));
 }
 
 function initAdLongPress(el, linkUrl) {
@@ -3474,7 +3424,11 @@ function refreshCurrentPage() {
   switch(currentPage) {
     case 'schedule': {
       const lg = FOOTBALL_LEAGUES[currentLeagues.schedule];
-      if (lg) delete cachedData['league_' + currentLeagues.schedule];
+      const s = lg ? (lg.season || FOOTBALL_SEASON) : FOOTBALL_SEASON;
+      if (lg) {
+        delete cachedData['league_' + currentLeagues.schedule + '_' + s];
+        delete cachedData['league_' + currentLeagues.schedule];
+      }
       saveState(); loadSchedule(); break;
     }
       // 清除实时比分缓存
@@ -3482,7 +3436,11 @@ function refreshCurrentPage() {
       saveState(); loadLive(); break;
     case 'results': {
       const lg = FOOTBALL_LEAGUES[currentLeagues.results];
-      if (lg) delete cachedData['league_' + currentLeagues.results];
+      const s = lg ? (lg.season || FOOTBALL_SEASON) : FOOTBALL_SEASON;
+      if (lg) {
+        delete cachedData['league_' + currentLeagues.results + '_' + s];
+        delete cachedData['league_' + currentLeagues.results];
+      }
       saveState(); loadResults(); break;
     }
     case 'standings': {
@@ -3508,12 +3466,16 @@ function refreshCurrentPage() {
 
 // ==================== TOAST ====================
 let toastTimer;
-function showToast(msg) {
+function showToast(msg, duration) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.innerHTML = msg.replace(/\n/g, '<br>');
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+  toastTimer = setTimeout(() => t.classList.remove('show'), duration || 5000);
+}
+
+function showCalendarTip() {
+  showToast('打开日历设置，可将默认提醒方式从"通知提醒"改为"闹钟提醒"', 7000);
 }
 
 // ==================== 日期选择功能 ====================
@@ -3561,6 +3523,14 @@ let currentScheduleDate = null;
 // ==================== INIT ====================
 function init() {
   try {
+    // 从 localStorage 恢复联赛缓存（秒开"我的"页面）
+    try {
+      var savedCache = JSON.parse(localStorage.getItem('soccerAlarmCache') || '{}');
+      Object.keys(savedCache).forEach(function(k) {
+        var c = savedCache[k];
+        if (c && c.data) cachedData[k] = { data: c.data, ts: c.ts, ttl: c.ttl || 86400000 };
+      });
+    } catch(e) {}
     fetchAds();
     sendPing();
     loadState();
@@ -3574,13 +3544,17 @@ function init() {
     // 监听页面可见性变化（用户从设置返回时刷新权限状态）
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'visible') {
-        // 延迟刷新等待系统状态更新
         setTimeout(checkAndRenderPermissions, 500);
+      } else {
+        saveState(); // 切后台时保存缓存
       }
     });
     // 监听窗口focus（某些Android设备不支持visibilitychange）
     window.addEventListener('focus', function() {
       setTimeout(checkAndRenderPermissions, 500);
+    });
+    window.addEventListener('blur', function() {
+      saveState(); // 窗口失焦时保存缓存
     });
   } catch(e) {
     // 如果init崩溃，把错误显示在页面上
@@ -3640,7 +3614,7 @@ if (document.readyState === 'loading') {
 }
 
 // ==================== 检查更新 ====================
-var UPDATE_SERVER = "http://8.154.26.92:3000";
+var UPDATE_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.update) || "https://足球闹钟.top";
 var APP_VERSION_CODE = 46;
 var APP_VERSION_NAME = '2.46';
 
@@ -3686,6 +3660,31 @@ function loadMorePage() {
       + '</div>'
       + '</div>'
       + '</div>');
+
+    // ========== 分享APP ==========
+    moreContent.insertAdjacentHTML('beforeend', ''
+      + '<div onclick="showSharePanel()" style="margin-top:12px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(0,212,170,0.08),rgba(59,130,246,0.06));border:1px solid rgba(0,212,170,0.2);border-radius:14px;padding:14px 16px;cursor:pointer">'
+      + '<span style="font-size:26px;flex-shrink:0">📤</span>'
+      + '<div style="flex:1;text-align:left;min-width:0">'
+      + '<div style="font-size:15px;font-weight:700;color:var(--accent)">分享APP给好友</div>'
+      + '<div style="font-size:12px;color:#94a3b8;margin-top:2px">分享你的赛事提醒，邀请好友一起看球 ⚽</div>'
+      + '</div>'
+      + '<span style="font-size:14px;color:var(--accent)">→</span>'
+      + '</div>'
+      + '<div id="sharePanel" style="display:none;background:#1e293b;border-radius:14px;padding:16px;margin-top:8px;border:1px solid rgba(0,212,170,0.2)">'
+      + '<div id="shareText" style="font-size:13px;color:var(--txt);line-height:1.8;white-space:pre-wrap;max-height:200px;overflow-y:auto;margin-bottom:12px;background:rgba(0,0,0,.3);border-radius:10px;padding:12px"></div>'
+      + '<div style="display:flex;gap:8px">'
+      + '<button id="shareCopyBtn" onclick="copyShareText()" style="flex:1;padding:10px;background:var(--accent);border:none;border-radius:10px;color:#000;font-size:13px;font-weight:600;cursor:pointer">📋 复制文案</button>'
+      + '</div>'
+      + '<div style="font-size:11px;color:var(--txt-muted);text-align:center;margin:10px 0">或一键分享到</div>'
+      + '<div style="display:flex;gap:6px">'
+      + '<button onclick="shareToApp(\'wechat\')" style="flex:1;padding:10px 4px;background:rgba(7,193,96,0.12);border:1px solid rgba(7,193,96,0.25);border-radius:10px;color:#07c160;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><img src="file:///android_asset/share_icons/wechat.png" width="28" height="28" style="border-radius:6px"/>微信</button>'
+      + '<button onclick="shareToApp(\'qq\')" style="flex:1;padding:10px 4px;background:rgba(18,183,245,0.12);border:1px solid rgba(18,183,245,0.25);border-radius:10px;color:#12b7f5;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><img src="file:///android_asset/share_icons/qq.png" width="28" height="28" style="border-radius:6px"/>QQ</button>'
+      + '<button onclick="shareToApp(\'weibo\')" style="flex:1;padding:10px 4px;background:rgba(230,22,45,0.12);border:1px solid rgba(230,22,45,0.25);border-radius:10px;color:#e6162d;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><img src="file:///android_asset/share_icons/weibo.png" width="28" height="28" style="border-radius:6px"/>微博</button>'
+      + '<button onclick="shareToApp(\'bilibili\')" style="flex:1;padding:10px 4px;background:rgba(251,114,153,0.12);border:1px solid rgba(251,114,153,0.25);border-radius:10px;color:#fb7299;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px"><img src="file:///android_asset/share_icons/bilibili.png" width="28" height="28" style="border-radius:6px"/>B站</button>'
+      + '</div>'
+      + '</div>');
+
     // 延迟设置图片src
     setTimeout(function() {
       try {
@@ -3707,6 +3706,115 @@ function loadMorePage() {
   // Update version display
   const vt = document.getElementById('appVersionText');
   if (vt) vt.textContent = '\u7248\u672C v' + APP_VERSION_NAME;
+}
+
+// ==================== 分享APP ====================
+function buildShareText() {
+  var alarms = notifications || [];
+  var lines = [];
+  if (alarms.length > 0) {
+    lines.push('我已经定好了：');
+    var maxShow = Math.min(alarms.length, 5);
+    for (var i = 0; i < maxShow; i++) {
+      var a = alarms[i];
+      // Format date from timestamp
+      var dateStr = '';
+      if (a.ts) {
+        var d = new Date(a.ts);
+        dateStr = (d.getMonth() + 1) + '月' + d.getDate() + '日';
+      }
+      var leagueStr = a.leagueName || '';
+      var timeStr = a.timeStr || '';
+      // 如果 timeStr 包含日期（如 "6/14 03:00"），只取时间部分
+      var m = timeStr.match(/(\d{1,2}:\d{2})/);
+      if (m) timeStr = m[1];
+      var dn = dateStr + ' ' + timeStr + ' ' + leagueStr + ' ' + (a.home || '?') + ' vs ' + (a.away || '?');
+      lines.push(dn);
+    }
+    if (alarms.length > 5) {
+      lines.push('...等' + alarms.length + '场比赛');
+    }
+    lines.push('的提醒闹钟，足球闹钟App——提醒我不错过精彩进球！');
+  } else {
+    lines.push('足球闹钟App——提醒我不错过精彩进球！');
+    lines.push('你也来下载试试？');
+  }
+  var promos = [
+    '⚽ 世界杯+五大联赛+中超+欧冠全覆盖，精准赛事提醒，再也不错过重要比赛！',
+    '⚽ 多联赛赛程一目了然，闹钟自动提醒，看球必备小工具！',
+    '🏆 免费！无广告弹窗！只为给你最纯粹的足球赛事提醒体验！',
+    '⚽ 比赛时间记得住，闹钟一响不错过，足球迷的贴心小助手！',
+    '📱 轻量省电，极速启动！你的私人足球赛事管家，从不错过任何一场好球！'
+  ];
+  var idx = 0;
+  if (typeof lastPromoIndex === 'undefined' || promos.length <= 1) {
+    idx = Math.floor(Math.random() * promos.length);
+  } else {
+    do {
+      idx = Math.floor(Math.random() * promos.length);
+    } while (idx === lastPromoIndex);
+  }
+  lastPromoIndex = idx;
+  lines.push('⚽ 足球闹钟App — ' + promos[idx]);
+  lines.push('👉 https://www.足球闹钟.top');
+  lines.push('点击下载📥 https://xn--5eyx16c61esnb.top/dl');
+  return lines.join('\n');
+}
+
+function showSharePanel() {
+  var panel = document.getElementById('sharePanel');
+  if (!panel) return;
+  if (panel.style.display === 'none' || !panel.style.display) {
+    panel.style.display = 'block';
+    var textEl = document.getElementById('shareText');
+    if (textEl) textEl.textContent = buildShareText();
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function copyShareText() {
+  var text = buildShareText();
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('文案已复制，去粘贴分享给你的好友吧！');
+  } catch(e) {
+    showToast('复制失败，请重试');
+  }
+}
+
+function shareToApp(app) {
+  var text = buildShareText();
+  // Copy first
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch(e) {}
+  // Launch app via native Android interface
+  var pkgs = {
+    wechat: 'com.tencent.mm',
+    qq: 'com.tencent.mobileqq',
+    weibo: 'com.sina.weibo',
+    bilibili: 'tv.danmaku.bili'
+  };
+  var names = { wechat: '微信', qq: 'QQ', weibo: '微博', bilibili: 'B站' };
+  var pkg = pkgs[app];
+  if (!pkg) return;
+  if (window.AndroidInterface && AndroidInterface.openApp) {
+    AndroidInterface.openApp(pkg);
+  }
+  showToast('已复制文案，正在跳转' + (names[app] || '') + '...');
 }
 
 // ==================== CSL 手动刷新 ====================
