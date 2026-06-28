@@ -877,6 +877,49 @@ const WORLD_CUP_2026_MATCHES = [
   {date:'2026-06-28',time:'07:30',team1:'DR Congo',team2:'Uzbekistan',group:'K',matchday:3},
   {date:'2026-06-28',time:'10:00',team1:'Algeria',team2:'Austria',group:'J',matchday:3},
   {date:'2026-06-28',time:'10:00',team1:'Jordan',team2:'Argentina',group:'J',matchday:3},
+
+  // === 淘汰赛 ===
+  // Round of 32 — 6月29日-7月4日
+  {date:'2026-06-29',time:'03:00',team1:'South Africa',team2:'Canada',round:'Round of 32',matchday:4},
+  {date:'2026-06-30',time:'01:00',team1:'Brazil',team2:'Japan',round:'Round of 32',matchday:4},
+  {date:'2026-06-30',time:'04:30',team1:'Germany',team2:'Paraguay',round:'Round of 32',matchday:4},
+  {date:'2026-06-30',time:'09:00',team1:'Netherlands',team2:'Morocco',round:'Round of 32',matchday:4},
+  {date:'2026-07-01',time:'01:00',team1:'Ivory Coast',team2:'Norway',round:'Round of 32',matchday:4},
+  {date:'2026-07-01',time:'05:00',team1:'France',team2:'Sweden',round:'Round of 32',matchday:4},
+  {date:'2026-07-01',time:'09:00',team1:'Mexico',team2:'Ecuador',round:'Round of 32',matchday:4},
+  {date:'2026-07-02',time:'00:00',team1:'England',team2:'DR Congo',round:'Round of 32',matchday:4},
+  {date:'2026-07-02',time:'04:00',team1:'Belgium',team2:'Senegal',round:'Round of 32',matchday:4},
+  {date:'2026-07-02',time:'08:00',team1:'USA',team2:'Bosnia & Herzegovina',round:'Round of 32',matchday:4},
+  {date:'2026-07-03',time:'03:00',team1:'Spain',team2:'Austria',round:'Round of 32',matchday:4},
+  {date:'2026-07-03',time:'07:00',team1:'Portugal',team2:'Croatia',round:'Round of 32',matchday:4},
+  {date:'2026-07-03',time:'11:00',team1:'Switzerland',team2:'Algeria',round:'Round of 32',matchday:4},
+  {date:'2026-07-04',time:'02:00',team1:'Australia',team2:'Egypt',round:'Round of 32',matchday:4},
+  {date:'2026-07-04',time:'06:00',team1:'Argentina',team2:'Cape Verde',round:'Round of 32',matchday:4},
+  {date:'2026-07-04',time:'09:30',team1:'Colombia',team2:'Ghana',round:'Round of 32',matchday:4},
+
+  // Round of 16 — 7月5-8日
+  {date:'2026-07-05',time:'01:00',team1:'W73',team2:'W75',round:'Round of 16',matchday:5},
+  {date:'2026-07-05',time:'05:00',team1:'W74',team2:'W77',round:'Round of 16',matchday:5},
+  {date:'2026-07-06',time:'04:00',team1:'W76',team2:'W78',round:'Round of 16',matchday:5},
+  {date:'2026-07-06',time:'08:00',team1:'W79',team2:'W80',round:'Round of 16',matchday:5},
+  {date:'2026-07-07',time:'03:00',team1:'W83',team2:'W84',round:'Round of 16',matchday:5},
+  {date:'2026-07-07',time:'08:00',team1:'W81',team2:'W82',round:'Round of 16',matchday:5},
+  {date:'2026-07-08',time:'00:00',team1:'W86',team2:'W88',round:'Round of 16',matchday:5},
+  {date:'2026-07-08',time:'04:00',team1:'W85',team2:'W87',round:'Round of 16',matchday:5},
+
+  // Quarter-finals — 7月10-12日
+  {date:'2026-07-10',time:'04:00',team1:'W89',team2:'W90',round:'Quarter-final',matchday:6},
+  {date:'2026-07-11',time:'03:00',team1:'W93',team2:'W94',round:'Quarter-final',matchday:6},
+  {date:'2026-07-12',time:'05:00',team1:'W91',team2:'W92',round:'Quarter-final',matchday:6},
+  {date:'2026-07-12',time:'09:00',team1:'W95',team2:'W96',round:'Quarter-final',matchday:6},
+
+  // Semi-finals — 7月15-16日
+  {date:'2026-07-15',time:'03:00',team1:'W97',team2:'W98',round:'Semi-final',matchday:7},
+  {date:'2026-07-16',time:'03:00',team1:'W99',team2:'W100',round:'Semi-final',matchday:7},
+
+  // 3rd place + Final
+  {date:'2026-07-19',time:'05:00',team1:'L101',team2:'L102',round:'Match for third place',matchday:8},
+  {date:'2026-07-20',time:'03:00',team1:'W101',team2:'W102',round:'Final',matchday:9},
 ];
 
 // 获取世界杯赛程（静态数据，国内无需外网）

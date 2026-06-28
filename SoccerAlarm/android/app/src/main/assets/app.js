@@ -665,10 +665,42 @@ async function fetchNextMatches(leagueId) {
 // 获取世界杯赛程（本地静态数据）
 function fetchWCMatches() {
   var now = new Date();
+  
+  // Try to fetch scores from server API  
+  var serverScores = {};
+  try {
+    var scoreUrl = DATA_SERVER + '/api/leagues/WC?season=2026';
+    var scoreData = window.nativeGet ? window.nativeGet(scoreUrl) : null;
+    if (scoreData && scoreData.matches) {
+      scoreData.matches.forEach(function(s) {
+        var key = s.team1 + '|' + s.team2;
+        serverScores[key] = s;
+      });
+    }
+  } catch(e) {}
+  
   return WORLD_CUP_2026_MATCHES.map(function(m, i) {
     var matchDate = new Date(m.date + 'T' + m.time + ':00+08:00');
     var isLive = now >= matchDate && now < new Date(matchDate.getTime() + 120 * 60 * 1000);
     var isFinished = now >= new Date(matchDate.getTime() + 120 * 60 * 1000);
+    
+    // Try to get scores from server
+    var scoreKey = m.team1 + '|' + m.team2;
+    var serverMatch = serverScores[scoreKey];
+    var homeScore = serverMatch ? serverMatch.homeScore : null;
+    var awayScore = serverMatch ? serverMatch.awayScore : null;
+    if (serverMatch && serverMatch.isFinished) isFinished = true;
+    
+    // Generate round display text
+    var roundText = '';
+    if (m.round) {
+      roundText = m.round;
+    } else if (m.group) {
+      roundText = m.group + '组 第' + m.matchday + '轮';
+    } else {
+      roundText = '淘汰赛';
+    }
+    
     return {
       id: 'wc2026_' + i,
       date: m.date,
@@ -679,11 +711,11 @@ function fetchWCMatches() {
       awayCn: getTeamCn(m.team2),
       homeBadge: getTeamBadge(m.team1),
       awayBadge: getTeamBadge(m.team2),
-      homeScore: null,
-      awayScore: null,
-      isLive: isLive,
+      homeScore: homeScore,
+      awayScore: awayScore,
+      isLive: isLive && (homeScore === null || homeScore === undefined),
       isFinished: isFinished,
-      round: m.group + '组 第' + m.matchday + '轮',
+      round: roundText,
       timestamp: matchDate.getTime(),
       leagueId: 'WC26'
     };
