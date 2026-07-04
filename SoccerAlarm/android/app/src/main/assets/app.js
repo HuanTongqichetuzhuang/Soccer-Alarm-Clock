@@ -666,15 +666,38 @@ async function fetchNextMatches(leagueId) {
 function fetchWCMatches() {
   var now = new Date();
   
-  // Try to fetch scores from server API  
+  // Try to fetch all match data from server API (has real team names + scores)
+  try {
+    var apiUrl = DATA_SERVER + '/api/leagues/WC?season=2026';
+    var apiData = window.nativeGet ? window.nativeGet(apiUrl) : null;
+    if (apiData && apiData.matches && apiData.matches.length > 0) {
+      return apiData.matches.map(function(m, i) {
+        var matchDate = new Date(m.date + 'T' + (m.time || '15:00') + ':00+08:00');
+        var isFinished = m.isFinished || false;
+        var isLive = !isFinished && now >= matchDate && now < new Date(matchDate.getTime() + 120 * 60 * 1000);
+        var roundText = m.round || m.group || '';
+        return {
+          id: 'wc_api_' + i,
+          date: m.date, time: m.time,
+          team1: m.team1, team2: m.team2,
+          homeCn: getTeamCn(m.team1), awayCn: getTeamCn(m.team2),
+          homeBadge: getTeamBadge(m.team1), awayBadge: getTeamBadge(m.team2),
+          homeScore: m.homeScore, awayScore: m.awayScore,
+          isLive: isLive, isFinished: isFinished,
+          round: roundText, timestamp: matchDate.getTime(), leagueId: 'WC26'
+        };
+      });
+    }
+  } catch(e) {}
+  
+  // Fallback: use static data with score overlay
   var serverScores = {};
   try {
     var scoreUrl = DATA_SERVER + '/api/leagues/WC?season=2026';
     var scoreData = window.nativeGet ? window.nativeGet(scoreUrl) : null;
     if (scoreData && scoreData.matches) {
       scoreData.matches.forEach(function(s) {
-        var key = s.team1 + '|' + s.team2;
-        serverScores[key] = s;
+        serverScores[s.team1 + '|' + s.team2] = s;
       });
     }
   } catch(e) {}
@@ -684,40 +707,23 @@ function fetchWCMatches() {
     var isLive = now >= matchDate && now < new Date(matchDate.getTime() + 120 * 60 * 1000);
     var isFinished = now >= new Date(matchDate.getTime() + 120 * 60 * 1000);
     
-    // Try to get scores from server
     var scoreKey = m.team1 + '|' + m.team2;
     var serverMatch = serverScores[scoreKey];
     var homeScore = serverMatch ? serverMatch.homeScore : null;
     var awayScore = serverMatch ? serverMatch.awayScore : null;
     if (serverMatch && serverMatch.isFinished) isFinished = true;
     
-    // Generate round display text
-    var roundText = '';
-    if (m.round) {
-      roundText = m.round;
-    } else if (m.group) {
-      roundText = m.group + '组 第' + m.matchday + '轮';
-    } else {
-      roundText = '淘汰赛';
-    }
+    var roundText = m.round || (m.group ? m.group + '组 第' + m.matchday + '轮' : '淘汰赛');
     
     return {
-      id: 'wc2026_' + i,
-      date: m.date,
-      time: m.time,
-      team1: m.team1,
-      team2: m.team2,
-      homeCn: getTeamCn(m.team1),
-      awayCn: getTeamCn(m.team2),
-      homeBadge: getTeamBadge(m.team1),
-      awayBadge: getTeamBadge(m.team2),
-      homeScore: homeScore,
-      awayScore: awayScore,
+      id: 'wc2026_' + i, date: m.date, time: m.time,
+      team1: m.team1, team2: m.team2,
+      homeCn: getTeamCn(m.team1), awayCn: getTeamCn(m.team2),
+      homeBadge: getTeamBadge(m.team1), awayBadge: getTeamBadge(m.team2),
+      homeScore: homeScore, awayScore: awayScore,
       isLive: isLive && (homeScore === null || homeScore === undefined),
       isFinished: isFinished,
-      round: roundText,
-      timestamp: matchDate.getTime(),
-      leagueId: 'WC26'
+      round: roundText, timestamp: matchDate.getTime(), leagueId: 'WC26'
     };
   });
 }
@@ -3644,6 +3650,19 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// 启动后自动检查更新（延迟3秒，不影响首页加载）
+setTimeout(function() {
+  if (!window.AndroidInterface || !AndroidInterface.nativeFetch) return;
+  try {
+    var verData = JSON.parse(AndroidInterface.nativeFetch(UPDATE_SERVER + '/api/version'));
+    if (verData && verData.versionCode > APP_VERSION_CODE) {
+      showUpdateDialog(verData);
+    }
+  } catch(e) {
+    // 静默失败，不打扰用户
+  }
+}, 3000);
 
 // ==================== 检查更新 ====================
 var UPDATE_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.update) || "https://足球闹钟.top";
