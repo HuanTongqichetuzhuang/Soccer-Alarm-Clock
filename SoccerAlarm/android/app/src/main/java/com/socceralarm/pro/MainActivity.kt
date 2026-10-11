@@ -214,6 +214,33 @@ class WebAppInterface(private val activity: MainActivity) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
 
+    // 版本号从系统运行时读取，避免 JS 里硬编码长期漂移
+    // （历史上 app.js 写死 2.46，导致更新检查永远提示"发现新版本"）
+    @android.webkit.JavascriptInterface
+    fun getAppVersionName(): String {
+        return try {
+            activity.packageManager.getPackageInfo(activity.packageName, 0).versionName ?: ""
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    @android.webkit.JavascriptInterface
+    fun getAppVersionCode(): Int {
+        return try {
+            @Suppress("DEPRECATION")
+            val pi = activity.packageManager.getPackageInfo(activity.packageName, 0)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                pi.longVersionCode.toInt()
+            } else {
+                @Suppress("DEPRECATION")
+                pi.versionCode
+            }
+        } catch (e: Exception) {
+            0
+        }
+    }
+
     @android.webkit.JavascriptInterface
     fun openApp(packageName: String) {
         try {
