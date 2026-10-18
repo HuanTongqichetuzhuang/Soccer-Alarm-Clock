@@ -2144,7 +2144,7 @@ function openOverlaySettings() {
   } else if (window.AndroidAlarm && window.AndroidAlarm.requestBatteryWhitelist) {
     window.AndroidAlarm.requestBatteryWhitelist();
   } else {
-    showToast("请手动前往系统设置 → 应用 → 足球闹钟App → 显示悬浮窗 开启");
+    showToast("请手动前往系统设置 → 应用 → 足球闹钟App → 通知 开启");
   }
 }function checkAndRenderPermissions() {
   const permList = document.getElementById('permissionList');
@@ -2201,7 +2201,7 @@ function openOverlaySettings() {
       {
         key: 'overlay',
         icon: '📱',
-        label: '悬浮窗/锁屏弹出',
+        label: '锁屏全屏弹出',
         desc: '闹钟响铃时在锁屏上全屏显示',
         granted: permissionStatus.overlay,
         action: 'openOverlaySettings',
@@ -3661,7 +3661,7 @@ function checkAndAutoGuidePermissions() {
         'exactAlarm': '精确闹钟',
         'notification': '通知权限',
         'batteryWhitelist': '电池优化',
-        'overlay': '悬浮窗'
+        'overlay': '锁屏弹出'
       };
       const names = list.map(k => permNames[k] || k).join('、');
       showToast(`⚠️ 缺少${names}，请前往「我的」页面开启`);
@@ -3676,9 +3676,20 @@ if (document.readyState === 'loading') {
   init();
 }
 
+// 渠道判断：应用商店渠道禁止应用内自更新（须走商店更新渠道，否则违反商店政策）
+function isStoreChannel() {
+  try {
+    if (window.AndroidInterface && window.AndroidInterface.getChannel) {
+      return String(window.AndroidInterface.getChannel()) === 'store';
+    }
+  } catch (e) {}
+  return false;
+}
+
 // 启动后自动检查更新（延迟3秒，不影响首页加载）
 setTimeout(function() {
   if (!window.AndroidInterface || !AndroidInterface.nativeFetch) return;
+  if (isStoreChannel()) return;
   try {
     var verData = JSON.parse(AndroidInterface.nativeFetch(UPDATE_SERVER + '/api/version'));
     if (verData && verData.versionCode > APP_VERSION_CODE) {
@@ -3970,6 +3981,13 @@ function checkForUpdate() {
   el.style.opacity = '0.6';
   var desc = el.querySelectorAll('div')[1] && el.querySelectorAll('div')[1].querySelectorAll('div')[1];
   if (desc) desc.textContent = '检查中...';
+
+  if (isStoreChannel()) {
+    flashMessage('请通过应用商店更新到最新版本');
+    el.style.opacity = '1';
+    if (desc) desc.textContent = '检查并下载最新版本';
+    return;
+  }
 
   if (!window.AndroidInterface || !AndroidInterface.nativeFetch) {
     flashMessage('网络不可用，请连接网络后重试');

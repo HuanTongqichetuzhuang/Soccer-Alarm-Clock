@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        应用商店渠道专用 Manifest 覆盖。
+        商店政策不允许应用内下载安装 APK（必须走商店更新渠道），
+        因此在此移除该权限；官网 official 渠道仍保留。
+    -->
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:node="remove" />
+
+</manifest>

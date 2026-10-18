@@ -143,9 +143,74 @@ class MainActivity : AppCompatActivity() {
 
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidAlarm")
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidInterface")
-        webView.loadUrl("file:///android_asset/index.html")
 
+        // 合规：未同意隐私政策前，不加载页面、不申请权限、不发起任何网络请求
+        if (PrivacyConsent.hasAgreed(this)) {
+            startApp(webView)
+        } else {
+            showPrivacyDialog(webView)
+        }
+    }
+
+    private fun startApp(webView: WebView) {
+        webView.loadUrl("file:///android_asset/index.html")
         requestNotificationPermissionIfNeeded()
+    }
+
+    /**
+     * 首次启动隐私政策弹窗。
+     * 用户必须明确同意后才能使用；点击"不同意"直接退出应用。
+     */
+    private fun showPrivacyDialog(webView: WebView) {
+        val message = android.text.SpannableStringBuilder()
+        message.append("“足球闹钟App”尊重并保护您的个人信息。\n\n")
+        message.append("为向您提供赛事提醒服务，我们会在您使用过程中处理以下信息：\n")
+        message.append("· 本地随机生成的设备标识（用于匿名统计，不含个人身份信息）\n")
+        message.append("· 应用运行日志与崩溃信息（用于改进服务）\n\n")
+        message.append("我们不会收集您的通讯录、短信、位置、相册、通话记录等敏感信息，也不会向任何第三方出售或共享您的个人信息。\n\n")
+        message.append("请您在使用前完整阅读")
+        val start = message.length
+        message.append("《隐私政策》")
+        val end = message.length
+        message.append("。点击“同意并继续”即表示您已阅读并同意上述内容。")
+
+        val span = object : android.text.style.ClickableSpan() {
+            override fun onClick(widget: android.view.View) {
+                openUrl(PrivacyConsent.PRIVACY_URL)
+            }
+
+            override fun updateDrawState(ds: android.text.TextPaint) {
+                ds.isUnderlineText = true
+                ds.color = 0xFF1565C0.toInt()
+            }
+        }
+        message.setSpan(span, start, end, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        AlertDialog.Builder(this)
+            .setTitle("隐私政策")
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("同意并继续") { _, _ ->
+                PrivacyConsent.setAgreed(this)
+                startApp(webView)
+            }
+            .setNegativeButton("不同意") { _, _ ->
+                finishAffinity()
+            }
+            .setNeutralButton("查看全文") { _, _ ->
+                openUrl(PrivacyConsent.PRIVACY_URL)
+            }
+            .show()
+    }
+
+    private fun openUrl(url: String) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+        } catch (e: Exception) {
+            Toast.makeText(this, "无法打开链接，请检查网络", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun launchRingtonePicker() {
@@ -222,6 +287,16 @@ class WebAppInterface(private val activity: MainActivity) {
             activity.packageManager.getPackageInfo(activity.packageName, 0).versionName ?: ""
         } catch (e: Exception) {
             ""
+        }
+    }
+
+    /** 分发渠道：official（官网直装）/ store（应用商店）。商店渠道禁止应用内自更新 */
+    @android.webkit.JavascriptInterface
+    fun getChannel(): String {
+        return try {
+            BuildConfig.CHANNEL
+        } catch (e: Exception) {
+            "official"
         }
     }
 
@@ -363,7 +438,12 @@ class WebAppInterface(private val activity: MainActivity) {
             put("notifications", NotificationManagerCompat.from(activity).areNotificationsEnabled())
             put("exactAlarm", AlarmScheduler.canScheduleExactAlarms(activity))
             put("batteryWhitelist", BatteryOptimizationHelper.isIgnoringBatteryOptimizations(activity))
-            put("overlay", android.provider.Settings.canDrawOverlays(activity))
+            // 锁屏全屏弹出能力（Android 14+ 需用户授权 USE_FULL_SCREEN_INTENT）
+            // 本应用不创建悬浮窗，SYSTEM_ALERT_WINDOW 权限已移除
+            put("overlay", if (Build.VERSION.SDK_INT >= 34) {
+                activity.getSystemService(android.app.NotificationManager::class.java)
+                    ?.canUseFullScreenIntent() ?: true
+            } else true)
             put("romType", BatteryOptimizationHelper.getBatteryOptimizationStatus(activity).romType.name)
             put("manufacturer", Build.MANUFACTURER)
             put("model", Build.MODEL)
@@ -527,23 +607,8 @@ class WebAppInterface(private val activity: MainActivity) {
 
     @android.webkit.JavascriptInterface
     fun openOverlaySettings() {
-        try {
-            val intent = android.content.Intent(
-                android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                android.net.Uri.parse("package:" + activity.packageName)
-            )
-            intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-            activity.startActivity(intent)
-        } catch (e: Exception) {
-            try {
-                activity.startActivity(android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = android.net.Uri.parse("package:" + activity.packageName)
-                    flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-                })
-            } catch (e2: Exception) {
-                android.util.Log.e("WebAppInterface", "打开悬浮窗设置失败", e2)
-            }
-        }
+        // 锁屏全屏弹出依赖通知（USE_FULL_SCREEN_INTENT），不再引导开启悬浮窗
+        openNotificationSettings()
     }
     
 

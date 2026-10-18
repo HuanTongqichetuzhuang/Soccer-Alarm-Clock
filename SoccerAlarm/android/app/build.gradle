@@ -3,6 +3,14 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// 签名信息从 android/keystore.properties 读取（该文件已被 .gitignore 排除，不入库）
+// 若文件缺失则回退到环境变量，便于 CI
+def keystorePropsFile = rootProject.file('keystore.properties')
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+}
+
 android {
     namespace 'com.socceralarm.pro'
     compileSdk 35
@@ -11,17 +19,34 @@ android {
         applicationId "com.socceralarm.pro"
         minSdk 24
         targetSdk 35
-        versionCode 52
-        versionName "2.52"
+        versionCode 53
+        versionName "2.53"
     }
 
     signingConfigs {
         release {
-            storeFile file('socceralarm-release.keystore')
-            storePassword 'SoccerAlarm2026!'
-            keyAlias 'socceralarm'
-            keyPassword 'SoccerAlarm2026!'
+            storeFile file(keystoreProps.getProperty('storeFile', 'socceralarm-release.keystore'))
+            storePassword keystoreProps.getProperty('storePassword', System.getenv('SOCCER_STORE_PASSWORD') ?: '')
+            keyAlias keystoreProps.getProperty('keyAlias', 'socceralarm')
+            keyPassword keystoreProps.getProperty('keyPassword', System.getenv('SOCCER_KEY_PASSWORD') ?: '')
         }
+    }
+
+    // 渠道维度：official（官网直装，保留应用内更新）/ store（应用商店，禁止自更新）
+    flavorDimensions "channel"
+    productFlavors {
+        official {
+            dimension "channel"
+            buildConfigField "String", "CHANNEL", '"official"'
+        }
+        store {
+            dimension "channel"
+            buildConfigField "String", "CHANNEL", '"store"'
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     buildTypes {
