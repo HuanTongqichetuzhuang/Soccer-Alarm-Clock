@@ -236,22 +236,6 @@
     <div class="team-search"><input type="text" id="teamSearchInput" placeholder="搜索球队..." oninput="filterTeams()"></div>
     <div class="team-grid" id="teamGridContent"></div>
 
-    <!-- 关于 / 备案信息（工信部要求 APP 备案号在应用内显著位置展示） -->
-    <div class="section-title">ℹ️ 关于</div>
-    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px;font-size:12px;line-height:2;color:var(--txt-muted)">
-      <div>足球闹钟App <span id="aboutVersion" style="opacity:.7"></span></div>
-      <div>
-        <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://beian.miit.gov.cn/')" style="color:#7cb3f0;text-decoration:none">桂ICP备2026009634号-2A</a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://xn--5eyx16c61esnb.top/privacy')" style="color:#7cb3f0;text-decoration:none">隐私政策</a>
-        <span style="margin:0 8px;opacity:.35">|</span>
-        <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://xn--5eyx16c61esnb.top')" style="color:#7cb3f0;text-decoration:none">官方网站</a>
-      </div>
-      <div style="opacity:.75">联系邮箱：477570216@qq.com</div>
-    </div>
-
-  
   <div class="ad-container ad-bottom" id="ad-my" style="display:none">
     <div class="ad-touch-zone">
       <div class="ad-progress-border">
@@ -296,12 +280,25 @@
         <span style="font-size:14px;color:var(--txt-muted)">›</span>
       </div>
       
-      <div style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px" onclick="showCalendarTip()">
-        <div style="display:flex;align-items:center;gap:12px">
+      <div style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px">
+        <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="showCalendarTip()">
           <span style="font-size:24px">📱</span>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:600;margin-bottom:3px">关于足球闹钟App</div>
             <div style="font-size:11px;color:var(--txt-muted)" id="appVersionText">版本</div>
+          </div>
+          <span style="font-size:14px;color:var(--txt-muted)">›</span>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--s10);font-size:11px;line-height:2">
+          <div>
+            <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://beian.miit.gov.cn/')" style="color:#7cb3f0;text-decoration:none">桂ICP备2026009634号-2A</a>
+          </div>
+          <div>
+            <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://xn--5eyx16c61esnb.top/privacy')" style="color:#7cb3f0;text-decoration:none">隐私政策</a>
+            <span style="margin:0 8px;opacity:.35">|</span>
+            <a href="javascript:void(0)" onclick="AndroidInterface.openBrowser('https://xn--5eyx16c61esnb.top')" style="color:#7cb3f0;text-decoration:none">官方网站</a>
+            <span style="margin:0 8px;opacity:.35">|</span>
+            <span style="color:var(--txt-muted)">477570216@qq.com</span>
           </div>
         </div>
       </div>

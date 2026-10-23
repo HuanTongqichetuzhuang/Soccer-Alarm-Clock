@@ -4294,29 +4294,3 @@ function copyDonateAlipay() {
     showToast('\u26a0\ufe0f \u590d\u5236\u5931\u8d25');
   }
 }
-
-
-// ==================== 关于页：填充版本号 ====================
-(function fillAboutVersion() {
-  function apply() {
-    try {
-      var el = document.getElementById('aboutVersion');
-      if (!el) return false;
-      var v = '';
-      if (window.AndroidAlarm && window.AndroidAlarm.getAppVersionName) {
-        v = window.AndroidAlarm.getAppVersionName();
-      }
-      if (!v && window.CONFIG && CONFIG.version && CONFIG.version.name) {
-        v = CONFIG.version.name;
-      }
-      if (v) el.textContent = 'v' + v;
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-  if (!apply()) {
-    document.addEventListener('DOMContentLoaded', apply);
-    setTimeout(apply, 1200);
-  }
-})();

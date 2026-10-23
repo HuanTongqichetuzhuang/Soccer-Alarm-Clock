@@ -8,7 +8,7 @@ function __currentSeason() {
 // ==================== SoccerAlarmPro 统一配置 ====================
 // 所有环境相关变量集中在这里，构建时可由 Gradle 脚本自动替换
 window.CONFIG = {
-  version: { code: 55, name: "2.55" },
+  version: { code: 56, name: "2.56" },
   servers: {
     data:   "https://足球闹钟.top",
     update: "https://足球闹钟.top"
