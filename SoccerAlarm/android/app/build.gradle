@@ -19,8 +19,8 @@ android {
         applicationId "com.socceralarm.pro"
         minSdk 24
         targetSdk 35
-        versionCode 56
-        versionName "2.56"
+        versionCode 57
+        versionName "2.57"
     }
 
     signingConfigs {

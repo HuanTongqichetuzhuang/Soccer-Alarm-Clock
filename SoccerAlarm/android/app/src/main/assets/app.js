@@ -3676,20 +3676,41 @@ if (document.readyState === 'loading') {
   init();
 }
 
-// 渠道判断：应用商店渠道禁止应用内自更新（须走商店更新渠道，否则违反商店政策）
-function isStoreChannel() {
+// ==================== 更新通道判断 ====================
+// 关键：不能只看打包渠道，必须看「用户是从哪儿装的」。
+// 商店渠道包如果被侧载安装（官网下载/文件管理器），用户在商店里搜不到这个应用，
+// 一旦提示"请去应用商店更新"就等于死路——这是 v2.54 实测踩到的坑。
+var STORE_PACKAGES = [
+  'com.android.vending',                  // Google Play
+  'com.tencent.android.qqdownloader',     // 应用宝
+  'com.xiaomi.market',                    // 小米应用商店
+  'com.huawei.appmarket',                 // 华为应用市场
+  'com.oppo.market', 'com.heytap.market', // OPPO / 一加 软件商店
+  'com.bbk.appstore', 'com.vivo.appstore',// vivo 应用商店
+  'com.coolapk.market',                   // 酷安
+  'com.sec.android.app.samsungapps',      // 三星
+  'com.hihonor.appmarket'                 // 荣耀
+];
+
+// 是否真的从应用商店安装的（决定更新走商店还是走官网）
+function isInstalledFromStore() {
+  var installer = '';
   try {
-    if (window.AndroidInterface && window.AndroidInterface.getChannel) {
-      return String(window.AndroidInterface.getChannel()) === 'store';
+    if (window.AndroidInterface && window.AndroidInterface.getInstallerPackage) {
+      installer = String(window.AndroidInterface.getInstallerPackage() || '');
     }
   } catch (e) {}
+  if (!installer) return false;
+  for (var i = 0; i < STORE_PACKAGES.length; i++) {
+    if (installer === STORE_PACKAGES[i]) return true;
+  }
   return false;
 }
 
 // 启动后自动检查更新（延迟3秒，不影响首页加载）
 setTimeout(function() {
   if (!window.AndroidInterface || !AndroidInterface.nativeFetch) return;
-  if (isStoreChannel()) return;
+  if (isInstalledFromStore()) return;   // 商店版由商店负责提醒，App 内不打扰
   try {
     var verData = JSON.parse(AndroidInterface.nativeFetch(UPDATE_SERVER + '/api/version'));
     if (verData && verData.versionCode > APP_VERSION_CODE) {
@@ -3982,8 +4003,9 @@ function checkForUpdate() {
   var desc = el.querySelectorAll('div')[1] && el.querySelectorAll('div')[1].querySelectorAll('div')[1];
   if (desc) desc.textContent = '检查中...';
 
-  if (isStoreChannel()) {
-    flashMessage('请通过应用商店更新到最新版本');
+  // 从应用商店安装的版本必须走商店渠道更新（商店政策要求），其余一律走官网
+  if (isInstalledFromStore()) {
+    flashMessage('当前为应用商店版本，请在应用商店内更新');
     el.style.opacity = '1';
     if (desc) desc.textContent = '检查并下载最新版本';
     return;

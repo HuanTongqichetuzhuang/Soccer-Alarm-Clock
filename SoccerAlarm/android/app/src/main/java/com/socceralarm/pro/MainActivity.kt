@@ -290,13 +290,39 @@ class WebAppInterface(private val activity: MainActivity) {
         }
     }
 
-    /** 分发渠道：official（官网直装）/ store（应用商店）。商店渠道禁止应用内自更新 */
+    /** 打包渠道：official（官网直装）/ store（应用商店包）。
+     *  注意：这只表示「这个包装备了什么能力」，不代表用户是从哪儿装的。
+     *  判断更新走哪条路请用 getInstallerPackage() 看真实安装来源。 */
     @android.webkit.JavascriptInterface
     fun getChannel(): String {
         return try {
             BuildConfig.CHANNEL
         } catch (e: Exception) {
             "official"
+        }
+    }
+
+    /**
+     * 真实安装来源的包名（谁把这个 APK 装到手机上的）。
+     * - 从应用商店装：返回商店包名，如 com.tencent.android.qqdownloader
+     * - 侧载（官网下载 / 文件管理器 / 浏览器）：返回空串或安装器包名
+     *
+     * 判断"该不该走商店更新"必须用这个，不能只看打包渠道——
+     * 商店渠道包被侧载安装时，用户在商店里根本搜不到这个应用，会卡死无路可走。
+     */
+    @android.webkit.JavascriptInterface
+    fun getInstallerPackage(): String {
+        return try {
+            val pm = activity.packageManager
+            val name = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                pm.getInstallSourceInfo(activity.packageName).installingPackageName
+            } else {
+                @Suppress("DEPRECATION")
+                pm.getInstallerPackageName(activity.packageName)
+            }
+            name ?: ""
+        } catch (e: Exception) {
+            ""
         }
     }
 
