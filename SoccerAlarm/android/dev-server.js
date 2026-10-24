@@ -19,6 +19,9 @@ const { exec } = require('child_process');
 
 const PORT = 8080;
 const ASSETS_DIR = path.join(__dirname, 'app', 'src', 'main', 'assets');
+// mock-android.js 只用于浏览器预览，故意放在 assets 之外，
+// 否则会被一起打进正式 APK（里面是假数据 + mock 关键字，商店静态扫描会当测试代码）。
+const DEV_ASSETS_DIR = path.join(__dirname, 'dev-assets');
 const PROXY_HOST = 'xn--5eyx16c61esnb.top'; // Punycode of 足球闹钟.top
 const PROXY_PORT = 443;
 
@@ -82,10 +85,11 @@ const server = http.createServer(function(req, res) {
 
   // 静态文件请求
   var filePath = req.url === '/' ? '/index.html' : req.url;
-  filePath = path.join(ASSETS_DIR, filePath);
+  var isDevAsset = (filePath === '/mock-android.js');
+  filePath = path.join(isDevAsset ? DEV_ASSETS_DIR : ASSETS_DIR, filePath);
 
   // 安全检查：防止目录遍历
-  if (!filePath.startsWith(ASSETS_DIR)) {
+  if (!filePath.startsWith(ASSETS_DIR) && !filePath.startsWith(DEV_ASSETS_DIR)) {
     res.writeHead(403);
     return res.end('Forbidden');
   }

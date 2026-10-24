@@ -17,6 +17,7 @@ SoccerAlarmPro 发版构建 + 自动校验
   6. 正式包不得加载 mock-android.js（会顶掉原生桥）
   7. res/raw 的 13 个铃声必须全在（资源收缩曾误删 4 个）
   8. config.js 的服务器地址必须是 punycode（原生请求不认中文域名）
+  9. APK 内不得出现 mock 文件（开发用 mock 只放 android/dev-assets/）
 """
 import os
 import re
@@ -132,6 +133,13 @@ def inspect_apk(aapt2, apk, expect_install):
         html = z.read('assets/index.html').decode('utf-8')
         if re.search(r'src\s*=\s*["\']mock-android\.js["\']', html):
             problems.append('index.html 仍在加载 mock-android.js —— 正式包会顶掉原生桥，闹钟会静默失效')
+
+    # mock 文件本身也不许进包（v2.58 的残留：虽然不加载，但文件仍在 APK 里，
+    # 内含假数据 + mock 关键字，商店静态扫描可能判为"包含测试代码"）
+    mock_entries = [n for n in names if os.path.basename(n).startswith('mock')]
+    if mock_entries:
+        problems.append('APK 内仍含 mock 文件：%s —— 应放在 android/dev-assets/，不要留在 assets/'
+                        % ', '.join(mock_entries[:3]))
 
     # 铃声完整性：res/raw 下 13 个音频必须全在（资源收缩曾误删 4 个 mp3）
     audio = [n for n in names if re.match(r'res/[^/]+\.(mp3|wav|ogg)$', n)]
