@@ -30,10 +30,16 @@ class AlarmForegroundService : Service() {
             val intent = Intent(context, AlarmForegroundService::class.java).apply {
                 action = ACTION_START
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
+            // 前台服务只是"锦上添花"（防国产 ROM 杀后台），任何异常都不能影响闹钟本身：
+            // 通知权限被收、厂商限制后台启动、FGS 类型权限缺失等都只记录不抛。
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent)
+                } else {
+                    context.startService(intent)
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "启动前台服务失败（不影响闹钟）：${e.message}")
             }
         }
 
@@ -41,7 +47,12 @@ class AlarmForegroundService : Service() {
             val intent = Intent(context, AlarmForegroundService::class.java).apply {
                 action = ACTION_STOP
             }
-            context.startService(intent)
+            // Android 8+ 后台 startService 会抛 IllegalStateException，这里吞掉即可
+            try {
+                context.startService(intent)
+            } catch (e: Exception) {
+                Log.w(TAG, "停止前台服务失败：${e.message}")
+            }
         }
     }
 
@@ -64,8 +75,16 @@ class AlarmForegroundService : Service() {
             else -> {
                 // 启动前台服务，显示持久通知
                 val notification = buildNotification()
-                startForeground(NOTIFICATION_ID, notification)
-                Log.i(TAG, "前台服务已启动，通知已显示")
+                try {
+                    startForeground(NOTIFICATION_ID, notification)
+                    Log.i(TAG, "前台服务已启动，通知已显示")
+                } catch (e: Exception) {
+                    // 例如 FGS 类型权限缺失 / 后台启动被系统限制。
+                    // 必须 stopSelf()，否则系统会因"未在 5 秒内调用 startForeground"而崩掉应用。
+                    Log.w(TAG, "startForeground 失败，退化为普通服务：${e.message}")
+                    stopSelf()
+                    return START_NOT_STICKY
+                }
             }
         }
         // START_STICKY 崩溃后会自动重启（ColorOS 关键）

@@ -180,6 +180,13 @@ class AlarmTriggerActivity : AppCompatActivity() {
             val selectedRingtone = prefs.getString("selected_ringtone", "default")
             Log.i("AlarmTriggerActivity", "📋 用户选择的铃声ID: $selectedRingtone")
 
+            // 用户明确选了"静音（无铃声无震动）"：不播放任何声音。
+            // 之前这里漏判，导致选静音后仍会回退到系统默认闹铃（静音选项形同虚设）。
+            if (selectedRingtone == "silent") {
+                Log.i("AlarmTriggerActivity", "🔇 静音模式，不播放铃声")
+                return
+            }
+
             mediaPlayer = MediaPlayer()
 
             // 设置音频属性为闹钟类型

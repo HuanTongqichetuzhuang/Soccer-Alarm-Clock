@@ -51,7 +51,12 @@ class AlarmReceiver : BroadcastReceiver() {
         Log.i("AlarmReceiver", "⏰ 闹钟触发: $homeTeam vs $awayTeam")
 
         // === 0. 启动前台服务，防止闹钟响铃期间被系统杀进程 ===
-        AlarmForegroundService.start(context)
+        // 这只是增强项，失败也不能影响后面真正的响铃流程
+        try {
+            AlarmForegroundService.start(context)
+        } catch (e: Exception) {
+            Log.w("AlarmReceiver", "前台服务启动失败（忽略）：${e.message}")
+        }
 
         // === 1. 获取WakeLock确保CPU唤醒 ===
         acquireWakeLock(context)

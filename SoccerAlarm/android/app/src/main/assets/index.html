@@ -8,7 +8,8 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>足球闹钟App</title>
-  <script src="mock-android.js"></script>
+  <!-- 注意：mock-android.js 只在浏览器预览时由 dev-server.js 动态注入，
+       正式包不能加载它（否则会顶掉原生 JS 桥，闹钟静默失效）。 -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -262,7 +263,7 @@
     <div class="section-title">⚙️ 更多功能</div>
     
     <div style="display:flex;flex-direction:column;gap:12px;padding:0 2px">
-      <div id="checkUpdateBtn" id="checkUpdateBtn" onclick="checkForUpdate()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
+      <div id="checkUpdateBtn" onclick="checkForUpdate()" style="background:var(--bg2);border:1px solid var(--s10);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s">
         <span style="font-size:24px">🔄</span>
         <div style="flex:1">
           <div style="font-size:14px;font-weight:600;margin-bottom:3px">检查更新</div>

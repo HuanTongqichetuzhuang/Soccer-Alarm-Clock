@@ -14,6 +14,9 @@ SoccerAlarmPro 发版构建 + 自动校验
   3. store  渠道必须不含 REQUEST_INSTALL_PACKAGES（否则商店拒审）
   4. assets/ 下不允许残留 .bak / ~ / .orig 临时文件（会被打进 APK）
   5. badge_map.js 里每条映射指向的图片必须真实存在于包内
+  6. 正式包不得加载 mock-android.js（会顶掉原生桥）
+  7. res/raw 的 13 个铃声必须全在（资源收缩曾误删 4 个）
+  8. config.js 的服务器地址必须是 punycode（原生请求不认中文域名）
 """
 import os
 import re
@@ -33,6 +36,7 @@ except Exception:
 HERE = os.path.dirname(os.path.abspath(__file__))
 GRADLE = os.path.join(HERE, 'gradlew.bat' if os.name == 'nt' else 'gradlew')
 ASSETS_BASE = 'file:///android_asset/'
+EXPECTED_AUDIO = 13   # res/raw 下内置铃声数量（keep.xml 保证不被资源收缩误删）
 
 CHANNELS = [
     # (渠道, APK 相对路径, 是否应包含 REQUEST_INSTALL_PACKAGES)
@@ -122,6 +126,24 @@ def inspect_apk(aapt2, apk, expect_install):
                         badge_missing.append(k)
     if badge_missing:
         problems.append('队徽映射指向的图片缺失 %d 个：%s' % (len(badge_missing), ', '.join(badge_missing[:5])))
+
+    # 正常包不得加载开发用 mock（会顶掉原生 JS 桥 → 闹钟静默失效）
+    if 'assets/index.html' in names:
+        html = z.read('assets/index.html').decode('utf-8')
+        if re.search(r'src\s*=\s*["\']mock-android\.js["\']', html):
+            problems.append('index.html 仍在加载 mock-android.js —— 正式包会顶掉原生桥，闹钟会静默失效')
+
+    # 铃声完整性：res/raw 下 13 个音频必须全在（资源收缩曾误删 4 个 mp3）
+    audio = [n for n in names if re.match(r'res/[^/]+\.(mp3|wav|ogg)$', n)]
+    if len(audio) < EXPECTED_AUDIO:
+        problems.append('铃声资源只有 %d 个，应为 %d 个（res/raw/keep.xml 是否丢失？）'
+                        % (len(audio), EXPECTED_AUDIO))
+
+    # 原生 nativeFetch 不认中文域名，API 基址必须是 punycode
+    if 'assets/config.js' in names:
+        cfg = z.read('assets/config.js').decode('utf-8')
+        if re.search(r'https://[^"\']*[\u4e00-\u9fff]', cfg):
+            problems.append('config.js 里的服务器地址含中文域名 —— 原生请求会 UnknownHostException')
 
     info = {
         'pkg': pkg, 'code': code, 'name': name,

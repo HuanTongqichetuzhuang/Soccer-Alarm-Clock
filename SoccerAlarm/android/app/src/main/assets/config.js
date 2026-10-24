@@ -8,10 +8,11 @@ function __currentSeason() {
 // ==================== SoccerAlarmPro 统一配置 ====================
 // 所有环境相关变量集中在这里，构建时可由 Gradle 脚本自动替换
 window.CONFIG = {
-  version: { code: 57, name: "2.57" },
+  version: { code: 58, name: "2.58" },
   servers: {
-    data:   "https://足球闹钟.top",
-    update: "https://足球闹钟.top"
+    // 必须用 punycode：原生 nativeFetch 走 java.net.URL，不认中文域名（UnknownHostException）
+    data:   "https://xn--5eyx16c61esnb.top",
+    update: "https://xn--5eyx16c61esnb.top"
   },
   cdn: {
     football: "https://cdn.jsdelivr.net/gh/openfootball/football.json@master",

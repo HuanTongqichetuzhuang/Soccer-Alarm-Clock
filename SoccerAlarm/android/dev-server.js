@@ -103,6 +103,16 @@ const server = http.createServer(function(req, res) {
       return res.end('Internal Server Error');
     }
     res.writeHead(200, { 'Content-Type': contentType });
+    // 浏览器预览专用：把 mock 层注入到 HTML 里。
+    // 正式 APK 的 index.html 不再引用 mock-android.js，
+    // 避免开发用的 mock 顶掉原生 JS 桥导致闹钟失效。
+    if (ext === '.html') {
+      var html = content.toString('utf8').replace(
+        '</head>',
+        '  <script src="mock-android.js"></script>\n</head>'
+      );
+      return res.end(html);
+    }
     res.end(content);
   });
 });

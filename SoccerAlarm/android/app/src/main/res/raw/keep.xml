@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  铃声资源必须全部保留。
+
+  R.raw 是通过反射遍历的（MainActivity.getAvailableRingtones 里
+  `R.raw::class.java.fields`），资源收缩器静态分析看不到这层引用，
+  曾经在 v2.57 把 13 个铃声中的 4 个 mp3 从 APK 里删掉，
+  导致用户在铃声列表里选中后播放失败、只能回退系统默认铃声。
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/*" />

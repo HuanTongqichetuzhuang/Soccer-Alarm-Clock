@@ -66,7 +66,17 @@ object AlarmScheduler {
         )
 
         val alarmInfo = AlarmManager.AlarmClockInfo(triggerTimeMs, pendingIntent)
-        alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+        // 精确闹钟被系统/用户限制时会抛 SecurityException。
+        // 这里调用点包括开机恢复（BootReceiver），一旦抛出去就是开机即崩，必须兜住。
+        try {
+            alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "创建闹钟被拒绝（缺少精确闹钟权限）: matchId=$matchId ${e.message}")
+            return
+        } catch (e: Exception) {
+            Log.e(TAG, "创建闹钟失败: matchId=$matchId ${e.message}")
+            return
+        }
 
         // 持久化存储，重启后可恢复
         saveAlarmToPrefs(context, matchId, homeTeam, awayTeam, triggerTimeMs)
@@ -179,7 +189,9 @@ object AlarmScheduler {
         )
 
         // 5秒后触发测试闹钟
-        val triggerTime = SystemClock.elapsedRealtime() + 5000
+        // 注意：AlarmClockInfo 的 triggerTime 必须是「epoch 毫秒」（System.currentTimeMillis），
+        // 不能传 SystemClock.elapsedRealtime()（开机后毫秒数），否则会被当成 1970 年 → 立即触发。
+        val triggerTime = System.currentTimeMillis() + 5000
         val alarmInfo = AlarmManager.AlarmClockInfo(triggerTime, pendingIntent)
         alarmManager.setAlarmClock(alarmInfo, pendingIntent)
 

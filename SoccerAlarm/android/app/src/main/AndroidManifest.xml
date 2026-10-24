@@ -26,8 +26,11 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <!-- 前台服务 -->
+    <!-- Android 14（targetSdk 34+）起，前台服务必须声明与 foregroundServiceType 对应的类型权限，
+         否则 startForeground() 直接抛 SecurityException。服务类型是 dataSync，
+         因此必须声明 FOREGROUND_SERVICE_DATA_SYNC（缺它 = 每次闹钟触发都崩）。 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
     <!-- 调用系统闹钟应用权限 -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
@@ -54,10 +57,12 @@
             </intent-filter>
         </activity>
 
-        <!-- 闹钟全屏弹出 Activity（锁屏显示关键配置） -->
+        <!-- 闹钟全屏弹出 Activity（锁屏显示关键配置）
+             只由本应用的 PendingIntent（AlarmManager / 全屏通知）拉起，
+             不需要对外导出；exported=true 会让任意应用都能弹全屏闹钟界面。 -->
         <activity
             android:name=".AlarmTriggerActivity"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:showWhenLocked="true"

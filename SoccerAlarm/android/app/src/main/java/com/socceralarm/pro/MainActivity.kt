@@ -144,6 +144,65 @@ class MainActivity : AppCompatActivity() {
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidAlarm")
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidInterface")
 
+        // JS alert / confirm / prompt → 原生对话框。
+        // 不设置 WebChromeClient 时，WebView 默认实现会直接忽略这些调用：
+        // alert 什么也不显示，confirm 恒返回 false，prompt 恒返回 null。
+        // 本项目 app.js 里有 12 处用到它们（权限引导、更新下载确认等），
+        // 不接这个就是"点了没反应"，用户完全不知道发生了什么。
+        webView.webChromeClient = object : WebChromeClient() {
+            private fun alive(): Boolean = !isFinishing && !isDestroyed
+
+            override fun onJsAlert(
+                view: WebView?, url: String?, message: String?, result: JsResult?
+            ): Boolean {
+                if (!alive()) { result?.cancel(); return true }
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("足球闹钟")
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton("确定") { _, _ -> result?.confirm() }
+                    .setOnCancelListener { result?.cancel() }
+                    .show()
+                return true
+            }
+
+            override fun onJsConfirm(
+                view: WebView?, url: String?, message: String?, result: JsResult?
+            ): Boolean {
+                if (!alive()) { result?.cancel(); return true }
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("足球闹钟")
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton("确定") { _, _ -> result?.confirm() }
+                    .setNegativeButton("取消") { _, _ -> result?.cancel() }
+                    .setOnCancelListener { result?.cancel() }
+                    .show()
+                return true
+            }
+
+            override fun onJsPrompt(
+                view: WebView?, url: String?, message: String?, defaultValue: String?,
+                result: JsPromptResult?
+            ): Boolean {
+                if (!alive()) { result?.cancel(); return true }
+                val input = android.widget.EditText(this@MainActivity).apply {
+                    setText(defaultValue ?: "")
+                    setSelection(text?.length ?: 0)
+                }
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("足球闹钟")
+                    .setMessage(message)
+                    .setView(input)
+                    .setCancelable(false)
+                    .setPositiveButton("确定") { _, _ -> result?.confirm(input.text.toString()) }
+                    .setNegativeButton("取消") { _, _ -> result?.cancel() }
+                    .setOnCancelListener { result?.cancel() }
+                    .show()
+                return true
+            }
+        }
+
         // 合规：未同意隐私政策前，不加载页面、不申请权限、不发起任何网络请求
         if (PrivacyConsent.hasAgreed(this)) {
             startApp(webView)
@@ -508,14 +567,16 @@ class WebAppInterface(private val activity: MainActivity) {
     fun getAvailableRingtones(): String {
         return try {
             val ringtones = mutableListOf<MutableMap<String, String>>()
+            // 注意：这两个 id 的行为在 AlarmTriggerActivity.playAlarmSound() 里硬编码，
+            // 名称必须与实际行为一致，否则用户选了"静音"却照样响铃。
             val defaultMap = mutableMapOf<String, String>()
             defaultMap["id"] = "default"
-            defaultMap["name"] = "无铃声仅震动"
+            defaultMap["name"] = "系统默认铃声"
             defaultMap["source"] = "system"
             ringtones.add(defaultMap)
             val silentMap = mutableMapOf<String, String>()
             silentMap["id"] = "silent"
-            silentMap["name"] = "铃声静音，震动关闭"
+            silentMap["name"] = "静音（无铃声无震动）"
             silentMap["source"] = "system"
             ringtones.add(silentMap)
             val fields = R.raw::class.java.fields
@@ -538,7 +599,24 @@ class WebAppInterface(private val activity: MainActivity) {
         } catch (e: Exception) { "[]" }
     }
 
-    private fun buildDisplayName(rawName: String): String = rawName
+    /** 内置铃声的中文显示名。raw 资源名是英文标识，直接展示会变成
+     *  "rich_v2_1_orchestra" 这种开发者标识，用户看不懂。 */
+    private fun buildDisplayName(rawName: String): String = when (rawName) {
+        "alarm_clock_1"           -> "经典电子闹钟"
+        "mechanical_alarm"        -> "机械闹铃"
+        "melody_4_alarm_melody"   -> "轻快旋律"
+        "rich20_1_inspiring"      -> "激昂号角"
+        "rich20_2_gentle"         -> "轻柔唤醒"
+        "rich20_10_emotional"     -> "抒情长音"
+        "rich_v2_1_orchestra"     -> "管弦晨曲"
+        "rich_v2_3_cinematic"     -> "恢弘开场"
+        "tower_clock_chime"       -> "钟楼报时"
+        "cyprus_eas_alarm"        -> "塞浦路斯警报"
+        "estonia_eas_alarm"       -> "爱沙尼亚警报"
+        "greece_eas_alarm"        -> "希腊警报"
+        "kuwait_eas_alarm"        -> "科威特警报"
+        else                      -> rawName
+    }
 
     @android.webkit.JavascriptInterface
     fun setSelectedRingtone(ringtoneId: String) {
@@ -657,10 +735,23 @@ class WebAppInterface(private val activity: MainActivity) {
     @android.webkit.JavascriptInterface
     fun nativeFetch(url: String): String {
         return try {
-            val connection = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            // 关键：java.net.URL 不做 IDN 转换，传入 "https://足球闹钟.top/..." 会直接
+            // UnknownHostException。WebView 里的 fetch() 走 Chromium 能自动转 punycode，
+            // 所以网页侧的数据请求正常，而这个原生通道会静默失败——
+            // 历史上「检查更新」永远提示"已是最新"、广告取不到、/api/ping 统计全丢，都是这个原因。
+            val parsed = java.net.URL(url)
+            val rawHost = parsed.host
+            val asciiHost = try {
+                java.net.IDN.toASCII(rawHost)
+            } catch (e: Exception) {
+                rawHost
+            }
+            val safeUrl = if (asciiHost != rawHost) url.replace(rawHost, asciiHost) else url
+
+            val connection = java.net.URL(safeUrl).openConnection() as java.net.HttpURLConnection
             connection.connectTimeout = 10000
             connection.readTimeout = 10000
-            connection.setRequestProperty("User-Agent", "SoccerAlarm App/2.35")
+            connection.setRequestProperty("User-Agent", "SoccerAlarm App/${BuildConfig.VERSION_NAME}")
             val code = connection.responseCode
             if (code in 200..299) {
                 connection.inputStream.bufferedReader().use { it.readText() }

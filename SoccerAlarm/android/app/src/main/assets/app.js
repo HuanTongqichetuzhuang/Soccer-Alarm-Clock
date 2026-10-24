@@ -85,7 +85,7 @@ function fetchWithTimeout(url, ms) {
 }
 
 // ==================== 服务器数据代理 (Kotlin原生HTTP) ====================
-var DATA_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.data) || 'https://足球闹钟.top';
+var DATA_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.data) || 'https://xn--5eyx16c61esnb.top';
 
 // 同步调用Kotlin桥接（绕过WebView file://限制）
 window.nativeGet = function(url) {
@@ -3722,7 +3722,7 @@ setTimeout(function() {
 }, 3000);
 
 // ==================== 检查更新 ====================
-var UPDATE_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.update) || "https://足球闹钟.top";
+var UPDATE_SERVER = (window.CONFIG && CONFIG.servers && CONFIG.servers.update) || "https://xn--5eyx16c61esnb.top";
 // 版本号运行时从原生读取（Kotlin 桥接 getAppVersionName/Code），
 // 避免像以前那样硬编码在 JS 里长期漂移——曾导致更新检查永远提示"发现新版本"。
 var APP_VERSION_NAME = (function () {
@@ -3883,7 +3883,7 @@ function buildShareText() {
   lastPromoIndex = idx;
   lines.push('⚽ 足球闹钟App — ' + promos[idx]);
   lines.push('👉 https://www.足球闹钟.top');
-  lines.push('点击下载📥 https://xn--5eyx16c61esnb.top/dl');
+  lines.push('点击下载📥 https://xn--5eyx16c61esnb.top/download');
   return lines.join('\n');
 }
 

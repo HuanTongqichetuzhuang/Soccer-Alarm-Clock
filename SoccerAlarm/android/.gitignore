@@ -25,3 +25,7 @@ keystore.properties
 
 # 发版产物输出目录（build-release.py 默认输出到 ./dist）
 dist/
+
+# 从 assets 移出的废弃产物（旧 HTML 备份 / 废弃 Expo 包），仅供留档，禁止打进 APK
+_legacy/
+_icon_preview.png
